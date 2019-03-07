@@ -1,0 +1,95 @@
+{{ form_start(set_cacheList_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'set-cacheList-ajax'|default('form')} }) }}
+{{ form_end(set_cacheList_form_ajax) }}
+
+{{ form_start(get_cacheList_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-cacheList-ajax'|default('form')} }) }}
+{{ form_end(get_cacheList_form_ajax) }}
+
+{{ form_start(set_cacheListVideo_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'set-cacheListVideo-ajax'|default('form')} }) }}
+{{ form_end(set_cacheListVideo_form_ajax) }}
+
+{{ form_start(get_cacheListVideo_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-cacheListVideo-ajax'|default('form')} }) }}
+{{ form_end(get_cacheListVideo_form_ajax) }}
+<div style="position: absolute;
+     top: 0px;
+     left: 0px;">
+    <p>HISTORIAL</p>
+</div>
+<div id="cacheContent-listBundle"
+     style="overflow-y: scroll;
+     position: absolute;
+     top: 20px;
+     bottom: 0px;
+     left: 0px;
+     right: 0px;">
+</div>
+
+<script>
+    var cacheIconButton = document.getElementById('cacheIconButton');
+    
+    window.onload = set_cacheList(); // by default
+    my_video.onload = set_cacheListVideo(); // by default
+    cacheIconButton.addEventListener("click", get_cacheList, false);
+    
+            
+        // load website : event
+        function set_cacheList()
+        {
+            var form = $('#set-cacheList-ajax');
+            var url = form.attr('action');
+
+            $.post(url, function (data)
+            {
+
+            }).fail(function () {
+                alert('ERROR');
+            });
+        }
+        // load new video : event
+        function set_cacheListVideo()
+        {
+            var form = $('#set-cacheList-ajax');
+            var url = form.attr('action');
+
+            $.post(url, function (data)
+            {
+
+            }).fail(function () {
+                alert('ERROR');
+            });
+        }
+        // load new video : event
+        function get_cacheList()
+        {
+    {#        var form = $('#get-cacheList-ajax');
+            var url = form.attr('action');
+
+            $.post(url, function (data)
+            {
+                var cachelistId = data[0].cachelistId;
+                var userId = data[0].userId;
+
+                cacheContent-listBundle.innerHTML = "<p>CACHE LIST</p>";
+
+            }).fail(function () {
+                alert('ERROR');
+            });#}
+        }
+        // load new video : event
+        function get_cacheListVideo()
+        {
+    {#        var form = $('#get-cacheListVideo-ajax');
+            var url = form.attr('action');
+
+            $.post(url, function (data)
+            {
+                var cachelistvideoId = data[0].cachelistvideoId;
+                var cachelistId = data[0].cachelistId;
+                var videoId = data[0].videoId;
+
+                cacheContent-listBundle.innerHTML = "<p>CACHE LIST VIDEO</p>";
+
+            }).fail(function () {
+                alert('ERROR');
+            });#}
+        }
+</script>

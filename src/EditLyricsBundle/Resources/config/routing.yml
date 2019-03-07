@@ -1,0 +1,3 @@
+edit_lyrics_homepage:
+    path:     /EditLyricsBundle
+    defaults: { _controller: EditLyricsBundle:Default:index }

@@ -1,0 +1,3 @@
+index_addSugerencesCurrentVideo:
+    path:     /addSugerencesCurrentVideo
+    defaults: { _controller: HomeBundle:f_Presentation:addSugerencesCurrentVideo }

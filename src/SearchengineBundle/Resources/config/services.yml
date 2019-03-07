@@ -1,0 +1,4 @@
+services:
+#    searchengine.example:
+#        class: SearchengineBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

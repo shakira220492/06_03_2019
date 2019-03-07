@@ -1,0 +1,3 @@
+play_banner_homepage:
+    path:     /playBanner
+    defaults: { _controller: PlayBannerBundle:Default:index }

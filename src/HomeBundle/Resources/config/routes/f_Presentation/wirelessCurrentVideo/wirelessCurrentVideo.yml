@@ -1,0 +1,3 @@
+index_wirelessCurrentVideo:
+    path:     /wirelessCurrentVideo
+    defaults: { _controller: HomeBundle:f_Presentation:wirelessCurrentVideo }

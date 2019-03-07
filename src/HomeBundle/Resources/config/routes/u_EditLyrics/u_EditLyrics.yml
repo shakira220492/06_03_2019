@@ -1,0 +1,24 @@
+get_lyric_form:
+    path:     /getLyric
+    defaults: { _controller: EditLyricsBundle:Default:getLyric }
+    methods:  POST
+    
+save_lyricsWord_form:
+    path:     /saveLyricsWord
+    defaults: { _controller: EditLyricsBundle:Default:saveLyricsWord }
+    methods:  POST
+    
+delete_lyricsWord_form:
+    path:     /deleteLyricsWord
+    defaults: { _controller: EditLyricsBundle:Default:deleteLyricsWord }
+    methods:  POST
+    
+edit_lyricsWord_form:
+    path:     /editLyricsWord
+    defaults: { _controller: EditLyricsBundle:Default:editLyricsWord }
+    methods:  POST
+    
+get_lyrics_frame_form:
+    path:     /getLyricsFrame
+    defaults: { _controller: EditLyricsBundle:Default:getLyricsFrame }
+    methods:  POST

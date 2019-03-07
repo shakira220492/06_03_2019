@@ -1,0 +1,194 @@
+{{ form_start(get_followers_profile_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-followers-profile-ajax'|default('form')} }) }}
+{{ form_end(get_followers_profile_form_ajax) }}
+
+{{ form_start(get_follower_information_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-follower-information-ajax'|default('form')} }) }}
+{{ form_end(get_follower_information_form_ajax) }}
+
+<style>
+    #profileFollower {
+        position: absolute;
+        font-size: smaller;
+        {#background-color: #1ab7ea;#}
+        top: 0px;
+        height: 100px;
+        width: 100%;
+        transition-property: all;
+        transition-duration: 0.4s;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    
+    #listFollowers {
+        position: absolute;
+        font-size: smaller;
+        {#background-color: #2EA265;#}
+        top: 100px;
+        bottom: 0px;
+        left: 0px;
+        right: 100px;
+        transition-property: all;
+        transition-duration: 0.4s;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    
+    #reportFollowers {
+        position: absolute;
+        font-size: smaller;
+        {#background-color: #DE3152;#}
+        top: 100px;
+        bottom: 0px;
+        right: 0px;
+        width: 100px;
+        transition-property: all;
+        transition-duration: 0.4s;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    
+    #contentProfileFollower {
+        position: absolute;
+        right: 0px;
+        left: 0px;
+        height: 100px;
+        top: 0px;
+        z-index: 1;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    
+    #photoProfileFollower {
+        text-align: center;
+        position: absolute;
+        top: 0px;
+        right: 50px;
+        width: 100px;
+        height: 100px;
+        z-index: 2;
+    }
+</style>
+
+<div id="profileFollower">
+    <div id='closeProfileFollower'
+         style='
+         position: absolute;
+         cursor: pointer; 
+         background-color: red; 
+         padding: 5px; 
+         opacity: 0.4; 
+         color: white; 
+         width: 40px; 
+         height: 30px;
+         right: 10px;
+         z-index: 2;' 
+         onmouseout="hidePortrait('closeProfileFollower');" 
+         onmouseover="highlightPortrait('closeProfileFollower');"
+         onclick="closeProfileFollower();">
+        <center>
+            X
+        </center>
+    </div>
+    
+    <div id='contentProfileFollower'>
+    </div>
+    
+    <div id='photoProfileFollower'>
+    </div>
+        
+</div>
+
+<div id="listFollowers">
+    2
+</div>
+
+<div id="reportFollowers">
+    3
+</div>
+
+
+<script>
+    
+    function FollowerBundle()
+    {
+        getFollowersProfile();
+    }
+    
+    // pasar a su respectivo bundle; este bundle se activa (refresca) solamente cuando el usuario inicia la sesion... o en un intervalo de 1 hora
+    function getFollowersProfile()
+    {
+        var form = $('#get-followers-profile-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            var amountFollowers = data[0].amountFollowers;
+            for (i = 0; i < amountFollowers; i++)
+            {
+                var userId = data[i].userId;
+                var userName = data[i].userName;
+                var userFirstgivenname = data[i].userFirstgivenname;
+                var userFirstfamilyname = data[i].userFirstfamilyname;
+                                
+                $("#listFollowers").append(
+                    "<div id='userPortrait_Follower"+userId+"' style='opacity:0.4; width:100%; cursor: pointer;' "+
+                    "onclick='getFollowerInformation("+userId+");' "+
+                    "onmouseover='highlightPortrait(\"userPortrait_Follower"+userId+"\");' "+
+                    "onmouseout='hidePortrait(\"userPortrait_Follower"+userId+"\");' >"+
+                        "<table>"+
+                            "<tr>"+
+                                "<td>"+
+                                    userName+" - "+userFirstgivenname+" "+userFirstfamilyname+
+                                "<td>"+
+                            "</tr>"+
+                        "</table>"+
+                    "</div>"
+                );
+            }
+                    
+        }).fail(function () {
+            alert('GET FOLLOWERS PROFILE ERROR');
+        });
+        
+    }
+    
+    function getFollowerInformation(userId)
+    {
+        var form = $('#get-follower-information-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {userId: userId}, function (data)
+        {
+            var userId = data[0].userId;
+            var userName = data[0].userName;
+            var userFirstgivenname = data[0].userFirstgivenname;
+            var userSecondgivenname = data[0].userSecondgivenname;
+            var userFirstfamilyname = data[0].userFirstfamilyname;
+            var userSecondfamilyname = data[0].userSecondfamilyname;
+            var userEmail = data[0].userEmail;
+            var userBiography = data[0].userBiography;
+            var userProfilephoto = data[0].userProfilephoto;
+            var amountFollowers = data[0].amountFollowers;
+            
+            var contentProfileFollower = document.getElementById("contentProfileFollower");
+            contentProfileFollower.innerHTML = 
+                "USERNAME: "+userName+
+                "<br>"+userFirstgivenname+" "+userSecondgivenname+" "+userFirstfamilyname+" "+userSecondfamilyname+
+                "<br>"+userEmail+
+                "<br>FOLLOWERS: "+amountFollowers+
+                "<br>FOLLOWING: "+
+                "<br>BIOGRAPHY: "+userBiography;
+        
+            var photoProfileFollower = document.getElementById("photoProfileFollower");
+            photoProfileFollower.innerHTML = 
+            "<img style='"
+            +"height:100%; cursor: pointer;"
+            +"opacity: 0.9; "
+            +"z-index: 1;' "
+            +"src='"+userProfilephoto+"' "
+            +"alt='Mountain View'>";
+        }).fail(function () {
+            alert('ERROR... GET FOLLOWER INFORMATION');
+        });
+    }
+    
+</script>

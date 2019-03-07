@@ -1,0 +1,3 @@
+index_editDescriptionCurrentVideo:
+    path:     /editDescriptionCurrentVideo
+    defaults: { _controller: HomeBundle:f_Presentation:editDescriptionCurrentVideo }

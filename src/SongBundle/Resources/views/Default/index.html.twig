@@ -1,0 +1,407 @@
+{{ form_start(get_similar_songs_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-similar-songs-ajax'|default('form')} }) }}
+{{ form_end(get_similar_songs_form_ajax) }}
+
+{{ form_start(get_specific_information_video_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-specific-information-video-ajax'|default('form')} }) }}
+{{ form_end(get_specific_information_video_form_ajax) }}
+
+{{ form_start(get_similar_playlist_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-similar-playlist-ajax'|default('form')} }) }}
+{{ form_end(get_similar_playlist_form_ajax) }}
+
+{{ form_start(show_similar_playlist_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'show-similar-playlist-ajax'|default('form')} }) }}
+{{ form_end(show_similar_playlist_form_ajax) }}
+
+{{ form_start(increase_amount_views_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'increase-amount-views-ajax'|default('form')} }) }}
+{{ form_end(increase_amount_views_form_ajax) }}
+
+<div id="songInformation">
+    
+    <div id="videoUpdatedate" class="animatedButton"> {#LINK: STADISTICS REPORTS AMONG THE TIME#}
+    </div>
+    <div id="videoAmountViews" class="animatedButton"> {#LINK: STATISTICS REPORT GEOGRAPHICALLY, THAT IS TO SAY: PER COUNTRY#}
+    </div>
+    <div id="videoAmountComments" class="animatedButton"> {#LINK: COMMENTS ABOUT THE VIDEO#}
+    </div>
+    <div id="videoPunctuation" class="animatedButton"> {#LINK: STADISTICS REPORTS ABOUT THE VALORATION#}
+    </div>
+
+</div>
+
+    
+<div id="similarSongsLabel" class="animatedButton">
+    LIST - SIMILAR SONGS (Bundle)
+</div>
+    
+<div id="similarplaylists">
+    LIST - OTHER PLAYLISTS (Bundle)
+</div>
+    
+<div id="similarSongs">
+    SONG-BUNDLE
+</div>
+
+<div id="songsFromSimilarplaylist">
+    {#SONGS FROM SIMILAR PLAYLIST#}
+</div>
+    
+    
+<div id="commentSection">
+    {{ include('@CommentVideo/Default/index.html.twig') }}
+</div>
+
+<script>
+    
+    {#REORGANIZAR ESTO#}
+    
+    function getSimilarSongs()
+    {
+        var form = $('#get-similar-songs-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            var similarSongs = document.getElementById("similarSongs");
+            similarSongs.style.display = "block";
+            similarSongs.style.overflow = "scroll";
+            similarSongs.style.color = "white";
+            similarSongs.innerHTML = "";
+            similarSongs.zIndex = "10";
+            
+            var amountVideos = data[0].amountVideos;
+            
+            for (i = 0; i < amountVideos; i++)
+            {
+                var videoId = data[i].videoId;
+                var videoName = data[i].videoName;
+                var videoDescription = data[i].videoDescription;
+                var videoImage = data[i].videoImage;
+                var videoContent = data[i].videoContent;
+                var videoUpdatedate = data[i].videoUpdatedate;
+                var videoAmountViews = data[i].videoAmountViews;
+                var videoAmountComments = data[i].videoAmountComments;
+                var videoLikes = data[i].videoLikes;
+                var videoDislikes = data[i].videoDislikes;
+                var userId = data[i].userId;
+                var userName = data[i].userName;
+                var amountVideos = data[i].amountVideos;
+                
+                var percentageLikes = (100 * videoLikes) / (videoLikes + videoDislikes);
+                var percentageDislikes = (100 * videoDislikes) / (videoLikes + videoDislikes);
+                
+                $("#similarSongs").append(
+                    "<div id='videoPortrait_Song"+videoId+"' style='opacity:0.4; cursor: pointer;' "
+                        +"onclick='showVideo("+videoId+", \""+videoName+"\", \""+videoDescription+"\", \""+videoImage+"\", \""+videoContent+"\", \""+videoUpdatedate+"\", "+videoAmountViews+", "+videoAmountComments+", "+videoLikes+", "+videoDislikes+", "+userId+", \""+userName+"\");' "
+                        +"onmouseover='highlightPortrait(\"videoPortrait_Song"+videoId+"\");' "
+                        +"onmouseout='hidePortrait(\"videoPortrait_Song"+videoId+"\");'>"
+
+                        +"<table border='0' width='100%'>"
+                        +"<tr height='100px'>"
+                            +"<td width='170px' height='100px'>"
+                                +"<div style='overflow:hidden; height:100px; width:170px; text-align:center; background-color: white;'>"
+                                    +"<img style='"
+                                    +"height:100%; cursor: pointer;"
+                                    +"opacity: 0.9; "
+                                    +"z-index: 1;' "
+                                    +"src='files/"+videoImage+"' "
+                                    +"alt='Mountain View'>"
+                                +"</div>"
+                            +"</td>"
+                            +"<td>"
+                                +"<div>"
+                                    +" <b>"+videoName+"</b><br>"
+                                    +" "+videoUpdatedate+"<br>"
+                                    +" "+videoAmountViews+" views<br>"
+                                    +" "+videoAmountComments+" comments<br>"
+                                    +" <div style='height: 5px; width: 100%;'>"
+                                        +"<div style='display: inline-block; height: 5px; width: "+percentageLikes+"%; background-color: blue; '></div>"
+                                        +"<div style='display: inline-block; height: 5px; width: "+percentageDislikes+"%; background-color: red; '></div>"
+                                    +" </div>"
+                                +"</div>"
+                            +"</td>"
+                        +"</tr>"
+                        +"</table>"
+                    +"</div>"
+                );
+              
+            }
+            
+        }).fail(function () {
+            alert('ERROR');
+        });
+    }
+    
+    window.onload = getSimilarPlaylist();
+    
+    function getSimilarPlaylist()
+    {
+        var form = $('#get-similar-playlist-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            
+            var similarplaylists = document.getElementById("similarplaylists");
+            similarplaylists.innerHTML = "";
+            
+            var amountSpecificList = data[0].amountSpecificList;
+            
+            for (i = 0; i < amountSpecificList; i++)
+            {
+                var specificlistId = data[i].specificlistId;
+                var specificlistName = data[i].specificlistName;
+                
+                $("#similarplaylists").append(
+                "<div id='similarplaylists"+specificlistId+"' style='cursor: pointer; opacity:0.4;' onclick='showSimilarplaylists("+specificlistId+");' onmouseover='highlightSimilarplaylists("+specificlistId+");' onmouseout='hideSimilarplaylists("+specificlistId+");'>"
+
+                    +"<table border='1' width='100%'  borderColor=white>"
+                    +"<tr height='20px'>"
+                        +"<td width='250px' height='20px'>"
+                            +"<div style='overflow:hidden; height:20px; width:250px; text-align:left;'>"
+                                +specificlistName
+                            +"</div>"
+                        +"</td>"
+                    +"</tr>"
+                    +"</table>"
+
+                +"</div>"
+                );
+            }
+        }).fail(function () {
+            alert('ERROR');
+        });
+    }
+    
+  
+    window.onload = getSpecificInformationVideo();
+    
+    function getSpecificInformationVideo()
+    {
+        var form = $('#get-specific-information-video-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            var videoId_value = data[0].videoId;
+            var videoName_value = data[0].videoName;
+            var videoDescription_value = data[0].videoDescription;
+            var videoImage_value = data[0].videoImage;
+            var videoContent_value = data[0].videoContent;
+            var videoUpdatedate_value = data[0].videoUpdatedate;
+            var videoAmountViews_value = data[0].videoAmountViews;
+            var videoAmountComments_value = data[0].videoAmountComments;
+            var videoLikes_value = data[0].videoLikes;
+            var videoDislikes_value = data[0].videoDislikes;
+            
+            var percentageLikes = (100 * videoLikes_value) / (videoLikes_value + videoDislikes_value);
+            var percentageDislikes = (100 * videoDislikes_value) / (videoLikes_value + videoDislikes_value);
+            
+            var videoUpdatedate = document.getElementById("videoUpdatedate");
+            var videoAmountViews = document.getElementById("videoAmountViews");
+            var videoAmountComments = document.getElementById("videoAmountComments");
+            var videoPunctuation = document.getElementById("videoPunctuation");
+            
+            videoUpdatedate.innerHTML = videoUpdatedate_value;
+            videoAmountViews.innerHTML = videoAmountViews_value + " views";
+            videoAmountComments.innerHTML = videoAmountComments_value + " comments";
+            videoPunctuation.innerHTML = 
+            " <div style='height: 5px; width: 100%;'>"
+                +"<div style='display: inline-block; height: 5px; width: "+percentageLikes+"%; background-color: blue; '></div>"
+                +"<div style='display: inline-block; height: 5px; width: "+percentageDislikes+"%; background-color: red; '></div>"
+            +" </div>";
+            
+        }).fail(function () {
+            alert('ERROR');
+        });
+    }
+
+</script>
+
+<script>
+    function showSimilarplaylists(specificlistId)
+    {
+        var similarSongs = document.getElementById("similarSongs");
+        var commentSection = document.getElementById("commentSection");
+        
+        similarSongs.style.display = "block";
+        commentSection.style.display = "none";   
+        
+        var form = $('#show-similar-playlist-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {specificlistId: specificlistId}, function (data)
+        {
+            var amountSpecificList = data[0].amountSpecificList;
+            
+            var similarSongs = document.getElementById("similarSongs");
+            similarSongs.style.display = "block";
+            similarSongs.style.overflow = "scroll";
+            similarSongs.style.color = "white";
+            similarSongs.innerHTML = "";
+            similarSongs.zIndex = "10";
+            
+            var amountVideos = data[0].amountVideos;
+
+            var videoId = data[0].videoId;
+            var videoName = data[0].videoName;
+            var videoDescription = data[0].videoDescription;
+            var videoImage = data[0].videoImage;
+            var videoContent = data[0].videoContent;
+            var videoUpdatedate = data[0].videoUpdatedate;
+            var videoAmountViews = data[0].videoAmountViews;
+            var videoAmountComments = data[0].videoAmountComments;
+            var videoLikes = data[0].videoLikes;
+            var videoDislikes = data[0].videoDislikes;
+            var userId = data[0].userId;
+            var userName = data[0].userName;
+            var amountVideos = data[0].amountVideos;
+            
+            for (i = 0; i < amountVideos; i++)
+            {
+                var videoId = data[i].videoId;
+                var videoName = data[i].videoName;
+                var videoDescription = data[i].videoDescription;
+                var videoImage = data[i].videoImage;
+                var videoContent = data[i].videoContent;
+                var videoUpdatedate = data[i].videoUpdatedate;
+                var videoAmountViews = data[i].videoAmountViews;
+                var videoAmountComments = data[i].videoAmountComments;
+                var videoLikes = data[i].videoLikes;
+                var videoDislikes = data[i].videoDislikes;
+                var userId = data[i].userId;
+                var userName = data[i].userName;
+                var amountVideos = data[i].amountVideos;
+                
+                var percentageLikes = (100 * videoLikes) / (videoLikes + videoDislikes);
+                var percentageDislikes = (100 * videoDislikes) / (videoLikes + videoDislikes);
+                
+                $("#similarSongs").append(
+                    "<div id='videoPortrait_SimilarSong"+videoId+"' style='opacity:0.4; cursor: pointer;' "
+                    +"onclick='showVideo("+videoId+", \""+videoName+"\", \""+videoDescription+"\", \""+videoImage+"\", \""+videoContent+"\", \""+videoUpdatedate+"\", "+videoAmountViews+", "+videoAmountComments+", "+videoLikes+", "+videoDislikes+", "+userId+", \""+userName+"\");' "
+                    +"onmouseover='highlightPortrait(\"videoPortrait_SimilarSong"+videoId+"\");' "
+                    +"onmouseout='hidePortrait(\"videoPortrait_SimilarSong"+videoId+"\");'>"
+                    
+                        +"<table border='0' width='100%'>"
+                        +"<tr height='100px'>"
+                            +"<td width='170px' height='100px'>"
+                                +"<div style='overflow:hidden; height:100px; width:170px; text-align:center; background-color: white;'>"
+                                    +"<img style='"
+                                    +"height:100%; cursor: pointer;"
+                                    +"opacity: 0.9; "
+                                    +"z-index: 1;' "
+                                    +"src='files/"+videoImage+"' "
+                                    +"alt='Mountain View'>"
+                                +"</div>"
+                            +"</td>"
+                            +"<td>"
+                                +"<div>"
+                                    +" <b>"+videoName+"</b><br>"
+                                    +" "+videoUpdatedate+"<br>"
+                                    +" "+videoAmountViews+" views<br>"
+                                    +" "+videoAmountComments+" comments<br>"
+                                    +" <div style='height: 5px; width: 100%;'>"
+                                        +"<div style='display: inline-block; height: 5px; width: "+percentageLikes+"%; background-color: blue; '></div>"
+                                        +"<div style='display: inline-block; height: 5px; width: "+percentageDislikes+"%; background-color: red; '></div>"
+                                    +" </div>"
+                                +"</div>"
+                            +"</td>"
+                        +"</tr>"
+                        +"</table>"
+                    +"</div>"
+                );
+            }
+            
+            if (amountVideos === 0)
+            {
+                document.getElementById("similarSongs").innerHTML = "There aren't videos that belong to this list.";
+            }
+            
+        }).fail(function () {
+            alert('ERROR get-artist-information-ajax');
+        });
+    }
+    
+    function highlightSimilarplaylists(specificlistId)
+    {
+        {#alert(specificlistId);#}
+        var similarplaylists = "similarplaylists"+specificlistId;
+        document.getElementById(similarplaylists).style.transitionProperty = "all";
+        document.getElementById(similarplaylists).style.transitionDuration = "0.4s";
+        document.getElementById(similarplaylists).style.opacity = 1;
+    }
+    
+    function hideSimilarplaylists(specificlistId)
+    {
+        {#alert(specificlistId);#}
+        var similarplaylists = "similarplaylists"+specificlistId;
+        document.getElementById(similarplaylists).style.transitionProperty = "all";
+        document.getElementById(similarplaylists).style.transitionDuration = "0.4s";
+        document.getElementById(similarplaylists).style.opacity = 0.4;
+    }
+</script>
+
+<script>
+    var videoUpdatedate = document.getElementById("videoUpdatedate");
+    var videoAmountViews = document.getElementById("videoAmountViews");
+    var videoAmountComments = document.getElementById("videoAmountComments");
+    var videoPunctuation = document.getElementById("videoPunctuation");
+    var similarSongsLabel = document.getElementById("similarSongsLabel");
+    
+    videoUpdatedate.addEventListener("click", show_videoUpdatedate, false);
+    videoAmountViews.addEventListener("click", show_videoAmountViews, false);
+    videoAmountComments.addEventListener("click", show_videoAmountComments, false);
+    videoPunctuation.addEventListener("click", show_videoPunctuation, false);
+    similarSongsLabel.addEventListener("click", show_similarSongsLabel, false);
+    
+    function show_videoUpdatedate()
+    {
+        alert("show_videoUpdatedate");
+    }
+    
+    function show_videoAmountViews()
+    {
+        alert("show_videoAmountViews");
+    }
+    
+    function show_videoAmountComments()
+    {
+        var similarSongs = document.getElementById("similarSongs");
+        var commentSection = document.getElementById("commentSection");
+        
+        similarSongs.style.display = "none";
+        commentSection.style.display = "block";        
+    }
+    
+    function show_videoPunctuation()
+    {
+        alert("show_videoPunctuation");
+    }
+    
+    function show_similarSongsLabel()
+    {
+        var similarSongs = document.getElementById("similarSongs");
+        var commentSection = document.getElementById("commentSection");
+        
+        similarSongs.style.display = "block";
+        commentSection.style.display = "none";
+        
+        getSimilarSongs();
+    }
+    
+</script>
+
+<script>
+ 
+ 
+function increaseAmountViews_crud()
+{
+    var form = $('#increase-amount-views-ajax');
+    var url = form.attr('action');
+
+    $.post(url, {current_video_id: current_video_id}, function (data)
+    {
+        {#alert("increase-amount-views-ajax");#}
+    }).fail(function () {
+        alert('ERROR increase-amount-views-ajax');
+    });
+}
+    
+</script>

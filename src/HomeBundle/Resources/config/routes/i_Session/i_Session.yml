@@ -1,0 +1,57 @@
+check_session_form:
+    path:     /checkSession
+    defaults: { _controller: SessionBundle:Default:checkSession }
+    methods:  POST
+    
+log_in_user_form:
+    path:     /logInUser
+    defaults: { _controller: SessionBundle:Default:logInUser }
+    methods:  POST    
+    
+re_log_in_form:
+    path:     /reLogIn
+    defaults: { _controller: SessionBundle:Default:reLogIn }
+    methods:  POST
+    
+log_out_user_form:
+    path:     /logOutUser
+    defaults: { _controller: SessionBundle:Default:logOutUser }
+    methods:  POST
+
+
+
+sign_up_form:
+    path:     /signUp
+    defaults: { _controller: SessionBundle:Default:signUp }
+    methods:  POST
+    
+get_city_form:
+    path:     /getCity
+    defaults: { _controller: SessionBundle:Default:getCity }
+    methods:  POST
+    
+get_country_form:
+    path:     /getCountry
+    defaults: { _controller: SessionBundle:Default:getCountry }
+    methods:  POST
+    
+upload_profile_photo_form:
+    path:     /uploadProfilePhoto
+    defaults: { _controller: SessionBundle:Default:uploadProfilePhoto }
+    methods:  POST
+
+
+
+
+
+
+
+
+    
+    
+
+
+
+index_session:
+    path:     /session
+    defaults: { _controller: HomeBundle:i_Session:index }

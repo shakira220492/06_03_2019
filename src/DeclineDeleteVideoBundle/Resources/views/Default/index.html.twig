@@ -1,0 +1,139 @@
+{{ form_start(get_videos_to_delete_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-videos-to-delete-ajax'|default('form')} }) }}
+{{ form_end(get_videos_to_delete_form_ajax) }}
+
+{{ form_start(decline_delete_video_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'decline-delete-video-ajax'|default('form')} }) }}
+{{ form_end(decline_delete_video_form_ajax) }}
+
+<div id="videoListToDelete_123">
+</div>
+
+<script>
+    
+    function DeclineDeleteVideoBundle()
+    {
+        getVideosToDelete();
+    }
+    
+    function getVideosToDelete()
+    {
+        var form = $('#get-videos-to-delete-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            var amountVideos = data[0].amountVideos;
+            draw_videosToDelete(amountVideos);
+            document.getElementById("videoListToDelete_123").innerHTML = "";
+            
+            for (i=0; i<amountVideos; i++)
+            {
+                var videoId = data[i].videoId;
+                var videoName = data[i].videoName;
+                var videoDescription = data[i].videoDescription;
+                var videoImage = data[i].videoImage;
+                var videoContent = data[i].videoContent;
+                var videoUpdatedate = data[i].videoUpdatedate;
+                var videoAmountViews = data[i].videoAmountViews;
+                var videoAmountComments = data[i].videoAmountComments;
+                var videoLikes = data[i].videoLikes;
+                var videoDislikes = data[i].videoDislikes;
+                var userId = data[i].userId;
+                var userName = data[i].userName;
+                var datetodelete = data[i].datetodelete;
+                
+                
+                $("#videoListToDelete_123").append(
+                    "<div id='videoToDelete"+videoId+"' "+
+                    "data-id1='" + videoId + "' "+
+                    "data-id2='" + videoName + "' "+
+                    "data-id3='" + videoDescription + "' "+
+                    "data-id4='" + videoImage + "' "+
+                    "data-id5='" + videoContent + "' "+
+                    "data-id6='" + videoUpdatedate + "' "+
+                    "data-id7='" + videoAmountViews + "' "+
+                    "data-id8='" + videoAmountComments + "' "+
+                    "data-id9='" + videoLikes + "' "+
+                    "data-id10='" + videoDislikes + "' "+
+                    "data-id11='" + userId + "' "+
+                    "data-id12='" + userName + "' "+
+                    "data-id13='" + datetodelete + "' "+
+                    ">"+
+                        videoName + ": " + datetodelete+
+                    "</div>"
+                );
+        
+                $('#videoToDelete'+videoId)
+                .click(function () {
+                    edit_video_id = $(this).data('id1');
+                    edit_video_name = $(this).data('id2');
+                    edit_video_description = $(this).data('id3');
+                    edit_video_image = $(this).data('id4');
+                    edit_video_content = $(this).data('id5');
+                    edit_video_updateDate = $(this).data('id6');
+                    edit_video_amount_views = $(this).data('id7');
+                    edit_video_amount_comments = $(this).data('id8');
+                    edit_video_likes = $(this).data('id9');
+                    edit_video_dislikes = $(this).data('id10');
+                    edit_video_userId = $(this).data('id11');
+                    edit_video_userName = $(this).data('id12');
+                    var datetodelete = $(this).data('id13');
+                    
+                    draw_declineDeleteVideoForm(datetodelete);
+                    
+                })
+                .mouseover(function () {
+                    var videoId = $(this).data('id1');
+                    var videoToDeleteId = "videoToDelete"+videoId;
+                    var videoToDelete = document.getElementById(videoToDeleteId);
+                    videoToDelete.style.backgroundColor = "#ccc";
+                })
+                .mouseout(function () {
+                    var videoId = $(this).data('id1');
+                    var videoToDeleteId = "videoToDelete"+videoId;
+                    var videoToDelete = document.getElementById(videoToDeleteId);
+                    videoToDelete.style.backgroundColor = "transparent";
+                });
+                
+            }
+        
+        }).fail(function () {
+            alert('ERROR .. getVideosToDelete-ajax');
+        });
+    }
+    
+    function draw_videosToDelete(amountVideos)
+    {
+        var videoListToDelete_123 = document.getElementById("videosToDeleteButton");
+        var content_logOutUser_2 = document.getElementById("content_logOutUser_2");
+        
+        if (amountVideos === 0)
+        { 
+            videoListToDelete_123.style.height = "0px";
+            videoListToDelete_123.style.borderBottomWidth = "0px";
+            content_logOutUser_2.style.top = "0px";
+        } else
+        { 
+            videoListToDelete_123.style.height = "50px";
+            videoListToDelete_123.style.borderBottomWidth = "3px";
+            content_logOutUser_2.style.top = "50px";
+        }
+    }
+    
+    function draw_declineDeleteVideoForm(datetodelete)
+    {
+        var image_DeclineDeleteVideoBundle = document.getElementById("image_DeclineDeleteVideoBundle");
+        image_DeclineDeleteVideoBundle.src = "files/"+edit_video_image;
+        
+        var videoInformation_DeclineDeleteVideoBundle = document.getElementById("videoInformation_DeclineDeleteVideoBundle");
+        videoInformation_DeclineDeleteVideoBundle.innerHTML = 
+            "Name: "+edit_video_name+"<br>"+
+            "Update date: "+edit_video_updateDate+"<br>"+
+            "Views: "+edit_video_amount_views+"<br>"+
+            "Comments: "+edit_video_amount_comments+"<br>"+
+            "Likes: "+edit_video_likes+"<br>"+
+            "Dislikes: "+edit_video_dislikes;
+            
+        document.getElementById("inputUserNameDeclineDeleteVideo").value = "";
+        document.getElementById("inputPasswordDeclineDeleteVideo").value = "";
+    }
+</script>

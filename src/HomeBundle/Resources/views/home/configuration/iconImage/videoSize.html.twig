@@ -1,0 +1,115 @@
+<style>
+    #increasePresentationArea {
+        position: absolute;
+        height: 15px;
+        width: 15px;
+        top: 159px;
+        left: -1px;
+        z-index: 3;
+        background-color: cornflowerblue;
+        border-top-left-radius: 15px;
+        opacity: 1;
+    }
+</style>
+
+<div id='increasePresentationArea' class='animatedButton'>
+</div>
+
+
+
+
+<script>
+    var increasePresentationArea = document.getElementById('increasePresentationArea');
+    increasePresentationArea.addEventListener("click", increasePresentationAreaF, false);
+    
+    function increasePresentationAreaF()
+    {
+        // if session and configuration are hidden put "videoSize" at 1 or 2:         
+        if (displaceDivs === 3)
+        {
+            two_movements();
+        } else if (displaceDivs === 4 || displaceDivs === 2)
+        {
+            three_movements();
+        } else if (displaceDivs === 1)
+        {
+            four_movements();
+        }
+    }
+    
+    function two_movements()
+    {
+        document.getElementById('presentationArea').style.transitionProperty = "all";
+        document.getElementById('presentationArea').style.transitionDuration = 0.5 + "s";
+        if (videoSize === 1)
+        {
+            var newDimension = 0;
+            document.getElementById('presentationArea').style.width = $(window).width() - newDimension + "px";
+            videoSize = 2;
+            document.getElementById('increasePresentationArea').style.backgroundColor = "#1ab7ea";
+        } else if (videoSize === 2)
+        {
+            var newDimension = 180;
+            document.getElementById('presentationArea').style.width = $(window).width() - newDimension + "px";
+            videoSize = 1;
+            document.getElementById('increasePresentationArea').style.backgroundColor = "gray";
+        }
+    }
+    
+    function three_movements()
+    {
+        document.getElementById('presentationArea').style.transitionProperty = "all";
+        document.getElementById('presentationArea').style.transitionDuration = 0.5 + "s";
+        if (videoSize === 1)
+        {
+            var newDimension = 0;
+            document.getElementById('presentationArea').style.width = $(window).width() - newDimension + "px";
+            videoSize = 2;
+            document.getElementById('increasePresentationArea').style.backgroundColor = "#1ab7ea";
+        } else if (videoSize === 2)
+        {
+            var newDimension = 180;
+            document.getElementById('presentationArea').style.width = $(window).width() - newDimension + "px";
+            videoSize = 3;
+            document.getElementById('increasePresentationArea').style.backgroundColor = "gray";
+        } else if (videoSize === 3)
+        {
+            var newDimension = sessionArea_width + 180;
+            document.getElementById('presentationArea').style.width = $(window).width() - newDimension + "px";
+            videoSize = 1;
+            document.getElementById('increasePresentationArea').style.backgroundColor = "#1ab7ea";
+        }
+    }
+    
+    function four_movements()
+    {
+        document.getElementById('presentationArea').style.transitionProperty = "all";
+        document.getElementById('presentationArea').style.transitionDuration = 0.5 + "s";
+        if (videoSize === 1)
+        {
+            var newDimension = 0;
+            document.getElementById('presentationArea').style.width = $(window).width() - newDimension + "px";
+            videoSize = 2;
+            document.getElementById('increasePresentationArea').style.backgroundColor = "#1ab7ea";
+        } else if (videoSize === 2)
+        {
+            var newDimension = 180;
+            document.getElementById('presentationArea').style.width = $(window).width() - newDimension + "px";
+            videoSize = 3;
+            document.getElementById('increasePresentationArea').style.backgroundColor = "gray";
+        } else if (videoSize === 3)
+        {
+            var newDimension = sessionArea_width + 180;
+            document.getElementById('presentationArea').style.width = $(window).width() - newDimension + "px";
+            videoSize = 4;
+            document.getElementById('increasePresentationArea').style.backgroundColor = "#1ab7ea";
+        } else if (videoSize === 4)
+        {
+            var newDimension = configurationArea_width + sessionArea_width + 180;
+            document.getElementById('presentationArea').style.width = $(window).width() - newDimension + "px";
+            videoSize = 1;
+            document.getElementById('increasePresentationArea').style.backgroundColor = "gray";
+        }
+    }
+    
+</script>

@@ -1,0 +1,3 @@
+video_homepage:
+    path:     /videoBundle
+    defaults: { _controller: VideoBundle:Default:index }

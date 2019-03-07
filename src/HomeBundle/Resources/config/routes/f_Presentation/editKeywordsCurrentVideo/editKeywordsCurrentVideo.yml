@@ -1,0 +1,3 @@
+index_editKeywordsCurrentVideo:
+    path:     /editKeywordsCurrentVideo
+    defaults: { _controller: HomeBundle:f_Presentation:editKeywordsCurrentVideo }

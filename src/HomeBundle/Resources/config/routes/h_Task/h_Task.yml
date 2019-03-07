@@ -1,0 +1,8 @@
+index_task:
+    path:     /task
+    defaults: { _controller: HomeBundle:h_Task:index }
+    
+get_task_properties_form:
+    path:     /getTaskProperties
+    defaults: { _controller: HomeBundle:h_Task:getTaskProperties }
+    methods:  POST

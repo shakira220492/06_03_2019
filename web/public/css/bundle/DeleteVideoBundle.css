@@ -1,0 +1,102 @@
+#videoImage_deleteVideoBundle {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 150px; 
+    width: 200px; 
+    cursor: pointer; 
+    opacity: 0.9; 
+    z-index: 1;
+    text-align:center;
+    overflow: hidden;
+
+    border-bottom-color: gray;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+}
+
+#image_deleteVideoBundle {
+    width: 100%;
+    z-index: 1;
+}
+
+#videoInformation_deleteVideoBundle {
+    position: absolute; 
+    top: 0px; 
+    left: 200px; 
+    height: 150px;
+    right: 0px;
+    overflow: scroll;
+
+    border-bottom-color: gray;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+}
+
+#paragraphWarning1DeleteVideo {
+    position: absolute; 
+    top: 150px; 
+    left: 0px; 
+    height: 30px;
+}
+
+#labelUserNameDeleteVideo {
+    position: absolute; 
+    top: 190px; 
+    left: 0px; 
+    height: 30px;
+}
+
+#inputUserNameDeleteVideo {
+    position: absolute; 
+    top: 220px; 
+    left: 0px; 
+    height: 30px;
+    color: black;
+}
+
+#labelPasswordDeleteVideo {
+    position: absolute; 
+    top: 260px; 
+    left: 0px; 
+    height: 30px;
+}
+
+#inputPasswordDeleteVideo {
+    position: absolute; 
+    top: 290px; 
+    left: 0px; 
+    height: 30px;
+    color: black;
+}
+
+#paragraphWarning2DeleteVideo {
+    position: absolute; 
+    top: 320px; 
+    left: 0px; 
+    height: 50px;
+}
+
+#divYesDeleteVideo {
+    position: absolute; 
+    top: 370px; 
+    left: 0px; 
+    height: 30px;
+}
+
+#divDontDeleteVideo {
+    position: absolute; 
+    top: 400px; 
+    left: 0px; 
+    height: 30px;
+}
+
+#divSendRequestDeleteVideo {
+    position: absolute; 
+    top: 440px; 
+    left: 0px; 
+    height: 30px; 
+    background-color: #1ab7ea;
+    cursor: pointer;
+    color: black;
+}

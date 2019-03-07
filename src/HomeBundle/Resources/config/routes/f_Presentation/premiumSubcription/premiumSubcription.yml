@@ -1,0 +1,3 @@
+index_premiumSubcription:
+    path:     /premiumSubcription
+    defaults: { _controller: HomeBundle:f_Presentation:premiumSubcription }

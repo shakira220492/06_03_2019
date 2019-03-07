@@ -1,0 +1,87 @@
+<div class="animatedButton">
+    <div id="playBannerProgress">
+    </div>
+
+    <div id="playBannerProgress_background">
+    </div>
+</div>
+
+<div
+    style="z-index: 2;
+    position: absolute;
+    width: 100%;
+    height: 10px;
+    justify-content: center;
+    display: flex;">
+    
+    <div
+        style="
+        position: absolute;
+        width: 470px;
+        height: 30px;
+        border-radius: 15px;">
+        <div style="
+             position: absolute;
+             z-index: 2;">            
+            {#left: 0px#}
+            {{ include('@PlayBanner/playBanner/iconImage/previous.html.twig') }}{#width: 30px#}
+            {#left: 30px#}
+            {{ include('@PlayBanner/playBanner/iconImage/playPause.html.twig') }}{#width: 30px#}
+            {#left: 60px#}
+            {{ include('@PlayBanner/playBanner/iconImage/volume.html.twig') }}{#width: 110px#}
+            {#left: 170px#}
+            {{ include('@PlayBanner/playBanner/iconImage/captions.html.twig') }}{#width: 30px#}
+            {#left: 200px#}
+            {{ include('@PlayBanner/playBanner/iconImage/currentTime.html.twig') }}{#width: 40px#}
+            {#left: 240px#}
+            {{ include('@PlayBanner/playBanner/iconImage/duration.html.twig') }}{#width: 40px#}
+            {#left: 280px#}
+            {{ include('@PlayBanner/playBanner/iconImage/replay.html.twig') }}{#width: 30px#}
+            {#left: 310px#}
+            {{ include('@PlayBanner/playBanner/iconImage/totalScreen.html.twig') }}{#width: 30px#}
+            {#left: 340px#}
+            {{ include('@PlayBanner/playBanner/iconImage/speed.html.twig') }}{#width: 100px#}
+            {#left: 440px#}
+            {{ include('@PlayBanner/playBanner/iconImage/next.html.twig') }}{#width: 30px#}
+            {#470px#}
+        </div>
+        <div style="
+            position: absolute;
+            background-color: white;
+            width: 100%;
+            height: 100%;
+            opacity: 0.4;
+            border-radius: 15px;
+            z-index: 1;">
+        </div>
+    </div>
+</div>
+    
+<script>
+    
+    var playBannerProgress_background = document.getElementById("playBannerProgress_background");
+    
+    $('#playBannerProgress')
+    .click(function (e) {
+        moveVideo(e);
+    });
+    
+    $('#playBannerProgress_background')
+    .click(function (e) {
+        moveVideo(e);
+    });
+    
+    function moveVideo(e)
+    {
+        var v = document.getElementById("my_video");
+        
+        var windowSize = $(window).width(); // 100%
+        var xPosition = e.clientX; // x%
+        
+        var videoDuration = parseInt(v.duration); // 100 time
+        var currentTime = videoDuration * xPosition / windowSize; // x time (ESTE ES EL VALOR QUE DEBEMOS AVERIGUAR)
+        
+        v.currentTime = currentTime;        
+    }
+    
+</script>

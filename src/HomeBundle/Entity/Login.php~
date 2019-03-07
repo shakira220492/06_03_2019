@@ -1,0 +1,50 @@
+<?php
+
+namespace HomeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Login
+ *
+ * @ORM\Table(name="logIn", indexes={@ORM\Index(name="user_id", columns={"user_id"})})
+ * @ORM\Entity
+ */
+class Login
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="logIn_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $loginId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="logIn_hour", type="string", length=255, nullable=false)
+     */
+    private $loginHour;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="logIn_geolocalization", type="string", length=255, nullable=false)
+     */
+    private $loginGeolocalization;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
+     * })
+     */
+    private $user;
+
+
+}
+

@@ -1,0 +1,234 @@
+<style>
+    #filterIconButton {
+        position: absolute;
+        height: 15px;
+        width: 15px;
+        top: 159px;
+        left: 16px;
+        z-index: 3;
+        background-color: white;
+        border-top-right-radius: 15px;
+    }
+    
+</style>
+
+<div id='filterIconButton' class='animatedButton'>
+    
+</div>
+
+<script>
+    
+    $('#filterIconButton')
+    .click(function () 
+        getWindowProperties();
+    })
+    .mouseover(function () {
+        document.getElementById("filterIconButton").style.backgroundColor = "orange";
+    })
+    .mouseout(function () {
+        document.getElementById("filterIconButton").style.backgroundColor = "#1ab7ea";
+    });
+    
+    window.onload = getWindowProperties();
+    
+{#    window.onbeforeunload = function (e) {
+        e = e || window.event;
+
+        if (tuVariableDeSession == "open") {
+            if (e) {
+                e.returnValue = 'Sure?';
+            }
+            // Esta es para Safari
+            return 'Sure?';
+        }
+        alert("cvdghsbcdhjs");
+    };#}
+    
+{#    $(window).on("beforeunload", function() { 
+        Cerrar123();
+    });
+    
+    
+    
+    window.onbeforeunload = function() {
+        Cerrar123();
+    };
+    function Cerrar123()
+    {
+        alert("ctgcjhdgskjchdhsj csdhbcjdhs");
+    }#}
+    
+    
+    // crud al iniciar la session o al cargar la página web de getNewWindowProperties() from globalVariables
+    // crud al cerrar la session o al cerrar la página web setNewWindowProperties() to globalVariables
+    // graphic cada momento que se oprima el boton filterIconFunction() set globalVariables
+    
+    function getWindowProperties()
+    {
+        var form = $('#get-window-properties-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            windowId = data[0].windowId;
+            windowVideospeed = data[0].windowVideospeed;
+            windowGeolocalization = data[0].windowGeolocalization;
+            windowVolume = data[0].windowVolume;
+            windowVideosize = data[0].windowVideosize;
+            windowConfigurationareasize = data[0].windowConfigurationareasize;
+            windowCurrentvideo = data[0].windowCurrentvideo;
+            windowCurrentlist = data[0].windowCurrentlist;
+            windowReplay = data[0].windowReplay;
+            windowThemeconfigurationarea = data[0].windowThemeconfigurationarea;
+            windowThemesessionarea = data[0].windowThemesessionarea;
+            windowThemepresentationarea = data[0].windowThemepresentationarea;
+            windowThemecolor = data[0].windowThemecolor;
+            filterIconFunction();
+{#            alert("get-window-properties-ajax");#}
+        }).fail(function () {
+            alert('ERROR load-window-properties-ajax');
+        });
+    }
+    
+    function filterIconFunction()
+    {
+        var window_background = document.getElementById("window_background"); // PresentationBundle
+        var configurationArea_1Content = document.getElementById("configurationArea_1Content"); // ConfigurationBundle // eliminar
+        var sessionArea = document.getElementById("sessionArea"); // SessionBundle // eliminar
+        var searchArea = document.getElementById("searchArea"); // SessionBundle // eliminar
+        var filterIconButton = document.getElementById("filterIconButton"); // HomeBundle // eliminar
+        
+        
+        // about borders' style
+        var artistInformation_extraInfo = document.getElementById("artistInformation_extraInfo");
+        var logInForm = document.getElementById("logInForm");
+        var logOutForm = document.getElementById("logOutForm");
+        var songInformation = document.getElementById("songInformation");
+        var ContactInfoProfile = document.getElementById("ContactInfoProfile");
+        var videosToDeleteButton = document.getElementById("videosToDeleteButton");
+        var artistIconButton = document.getElementById("artistIconButton");
+        var donateArea = document.getElementById("donateArea"); // ConfigurationBundle
+        var videoImage_deleteVideoBundle = document.getElementById("videoImage_deleteVideoBundle"); // EditVideoBundle
+        var videoInformation_deleteVideoBundle = document.getElementById("videoInformation_deleteVideoBundle"); // EditVideoBundle
+        
+        
+        
+        // ICONS
+        var uploadVideoIconButton_border = document.getElementById("uploadVideoIconButton_border");
+        var uploadVideoIconButton_background = document.getElementById("uploadVideoIconButton_background");
+        var historyButton_border = document.getElementById("historyButton_border");
+        var historyButton_background = document.getElementById("historyButton_background");
+        var dataminingButton_border = document.getElementById("dataminingButton_border");
+        var dataminingButton_background = document.getElementById("dataminingButton_background");
+        
+        
+        
+        if (windowThemecolor === 1)
+        {
+            window_background.style.backgroundColor = "black";
+            configurationArea_1Content.style.color = "white";
+            sessionArea.style.color = "white";
+            searchArea.style.color = "white";
+            filterIconButton.style.backgroundColor = "white";
+            
+            configurationArea_1Content.style.textShadow = "0px 0px 5px black";
+            sessionArea.style.textShadow = "0px 0px 5px black";
+            
+            
+            
+
+            artistInformation_extraInfo.style.borderBottomColor = "white";
+            logInForm.style.borderBottomColor = "white";
+            logOutForm.style.borderBottomColor = "white";
+            songInformation.style.borderBottomColor = "white";
+            ContactInfoProfile.style.borderBottomColor = "white";
+            videosToDeleteButton.style.borderBottomColor = "white";
+            artistIconButton.style.borderBottomColor = "white";
+            donateArea.style.borderBottomColor = "white";
+            videoImage_deleteVideoBundle.style.borderBottomColor = "white";
+            videoInformation_deleteVideoBundle.style.borderBottomColor = "white";
+            
+            
+            
+            // icons
+            uploadVideoIconButton_border.classList.add("light_icon_border");
+            uploadVideoIconButton_border.classList.remove("dark_icon_border");
+            uploadVideoIconButton_background.classList.add("light_icon_background");
+            uploadVideoIconButton_background.classList.remove("dark_icon_background");
+            
+            historyButton_border.classList.add("light_icon_border");
+            historyButton_border.classList.remove("dark_icon_border");
+            historyButton_background.classList.add("light_icon_background");
+            historyButton_background.classList.remove("dark_icon_background");
+            
+            dataminingButton_border.classList.add("light_icon_border");
+            dataminingButton_border.classList.remove("dark_icon_border");
+            dataminingButton_background.classList.add("light_icon_background");
+            dataminingButton_background.classList.remove("dark_icon_background");
+            
+            var theme = 0;
+            set_windowThemecolor(theme);
+            
+        } else if (windowThemecolor === 0)
+        {
+            window_background.style.backgroundColor = "white";
+            configurationArea_1Content.style.color = "black"; //
+            sessionArea.style.color = "black"; //
+            searchArea.style.color = "black"; //
+            filterIconButton.style.backgroundColor = "black";
+            
+            configurationArea_1Content.style.textShadow = "0px 0px 5px white";
+            sessionArea.style.textShadow = "0px 0px 5px white";
+            
+            
+            
+            
+
+            artistInformation_extraInfo.style.borderBottomColor = "black";
+            logInForm.style.borderBottomColor = "black";
+            logOutForm.style.borderBottomColor = "black";
+            songInformation.style.borderBottomColor = "black";
+            ContactInfoProfile.style.borderBottomColor = "black";
+            videosToDeleteButton.style.borderBottomColor = "black";
+            artistIconButton.style.borderBottomColor = "black";
+            donateArea.style.borderBottomColor = "black";
+            videoImage_deleteVideoBundle.style.borderBottomColor = "black";
+            videoInformation_deleteVideoBundle.style.borderBottomColor = "black";
+            
+            
+            
+            // icons
+            uploadVideoIconButton_border.classList.add("dark_icon_border");
+            uploadVideoIconButton_border.classList.remove("light_icon_border");
+            uploadVideoIconButton_background.classList.add("dark_icon_background");
+            uploadVideoIconButton_background.classList.remove("light_icon_background");
+            
+            historyButton_border.classList.add("dark_icon_border");
+            historyButton_border.classList.remove("light_icon_border");
+            historyButton_background.classList.add("dark_icon_background");
+            historyButton_background.classList.remove("light_icon_background");
+            
+            dataminingButton_border.classList.add("dark_icon_border");
+            dataminingButton_border.classList.remove("light_icon_border");
+            dataminingButton_background.classList.add("dark_icon_background");
+            dataminingButton_background.classList.remove("light_icon_background");
+            var theme = 1;
+            set_windowThemecolor(theme);
+        }
+    }
+    
+    function set_windowThemecolor(theme)
+    { 
+        var form = $('#set-window-theme-color-ajax');
+        var url = form.attr('action');
+        
+        $.post(url, {theme: theme}, function (data)
+        {
+            windowThemecolor = data[0].windowThemecolor;
+        }).fail(function () {
+            alert('ERROR set-window-theme-color-ajax');
+        });
+    }
+    
+    
+</script>

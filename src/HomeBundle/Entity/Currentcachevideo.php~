@@ -1,0 +1,134 @@
+<?php
+
+namespace HomeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Currentcachevideo
+ *
+ * @ORM\Table(name="currentCacheVideo", indexes={@ORM\Index(name="currentCache_id", columns={"currentCache_id"}), @ORM\Index(name="video_id", columns={"video_id"})})
+ * @ORM\Entity
+ */
+class Currentcachevideo
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="currentCacheVideo_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $currentcachevideoId;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="currentCacheVideo_date", type="date", nullable=false)
+     */
+    private $currentcachevideoDate;
+
+    /**
+     * @var \Currentcache
+     *
+     * @ORM\ManyToOne(targetEntity="Currentcache")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="currentCache_id", referencedColumnName="currentCache_id")
+     * })
+     */
+    private $currentcache;
+
+    /**
+     * @var \Video
+     *
+     * @ORM\ManyToOne(targetEntity="Video")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="video_id", referencedColumnName="video_id")
+     * })
+     */
+    private $video;
+
+
+
+    /**
+     * Get currentcachevideoId
+     *
+     * @return integer
+     */
+    public function getCurrentcachevideoId()
+    {
+        return $this->currentcachevideoId;
+    }
+
+    /**
+     * Set currentcachevideoDate
+     *
+     * @param \DateTime $currentcachevideoDate
+     *
+     * @return Currentcachevideo
+     */
+    public function setCurrentcachevideoDate($currentcachevideoDate)
+    {
+        $this->currentcachevideoDate = $currentcachevideoDate;
+
+        return $this;
+    }
+
+    /**
+     * Get currentcachevideoDate
+     *
+     * @return \DateTime
+     */
+    public function getCurrentcachevideoDate()
+    {
+        return $this->currentcachevideoDate;
+    }
+
+    /**
+     * Set currentcache
+     *
+     * @param \HomeBundle\Entity\Currentcache $currentcache
+     *
+     * @return Currentcachevideo
+     */
+    public function setCurrentcache(\HomeBundle\Entity\Currentcache $currentcache = null)
+    {
+        $this->currentcache = $currentcache;
+
+        return $this;
+    }
+
+    /**
+     * Get currentcache
+     *
+     * @return \HomeBundle\Entity\Currentcache
+     */
+    public function getCurrentcache()
+    {
+        return $this->currentcache;
+    }
+
+    /**
+     * Set video
+     *
+     * @param \HomeBundle\Entity\Video $video
+     *
+     * @return Currentcachevideo
+     */
+    public function setVideo(\HomeBundle\Entity\Video $video = null)
+    {
+        $this->video = $video;
+
+        return $this;
+    }
+
+    /**
+     * Get video
+     *
+     * @return \HomeBundle\Entity\Video
+     */
+    public function getVideo()
+    {
+        return $this->video;
+    }
+}

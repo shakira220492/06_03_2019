@@ -1,0 +1,3 @@
+upload_video_homepage:
+    path:     /uploadVideo
+    defaults: { _controller: UploadVideoBundle:Default:index }

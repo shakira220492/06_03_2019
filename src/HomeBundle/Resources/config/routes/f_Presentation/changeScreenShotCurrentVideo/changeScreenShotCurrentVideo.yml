@@ -1,0 +1,3 @@
+index_changeScreenShotCurrentVideo:
+    path:     /changeScreenShotCurrentVideo
+    defaults: { _controller: HomeBundle:f_Presentation:changeScreenShotCurrentVideo }

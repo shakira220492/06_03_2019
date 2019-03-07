@@ -1,0 +1,3 @@
+index_announces:
+    path:     /announces
+    defaults: { _controller: HomeBundle:f_Presentation:announces }

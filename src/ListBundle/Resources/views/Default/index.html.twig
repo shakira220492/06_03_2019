@@ -1,0 +1,1092 @@
+{{ form_start(set_specificList_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'set-specificList-ajax'|default('form')} }) }}
+{{ form_end(set_specificList_form_ajax) }}
+
+{{ form_start(get_specificList_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-specificList-ajax'|default('form')} }) }}
+{{ form_end(get_specificList_form_ajax) }}
+
+{{ form_start(set_specificListVideo_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'set-specificListVideo-ajax'|default('form')} }) }}
+{{ form_end(set_specificListVideo_form_ajax) }}
+
+{{ form_start(get_specificListVideo_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-specificListVideo-ajax'|default('form')} }) }}
+{{ form_end(get_specificListVideo_form_ajax) }}
+
+{{ form_start(delete_specificList_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'delete-specificList-ajax'|default('form')} }) }}
+{{ form_end(delete_specificList_form_ajax) }}
+
+{{ form_start(delete_specificListVideo_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'delete-specificListVideo-ajax'|default('form')} }) }}
+{{ form_end(delete_specificListVideo_form_ajax) }}
+
+{{ form_start(edit_specificListVideo_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'edit-specificListVideo-ajax'|default('form')} }) }}
+{{ form_end(edit_specificListVideo_form_ajax) }}
+
+{{ form_start(edit_specificList_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'edit-specificList-ajax'|default('form')} }) }}
+{{ form_end(edit_specificList_form_ajax) }}
+
+{{ form_start(play_specific_list_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'play-specific-list-ajax'|default('form')} }) }}
+{{ form_end(play_specific_list_form_ajax) }}
+
+<div id='newSpecificListIcon'>
+    <input type='text' 
+           placeholder="Write the new List's name" 
+           id='newSpecificListName' 
+           name='newSpecificListName'/>
+    <img id='newSpecificListNameIcon' 
+         src="files/images/icons/list/newSpecificList.png"
+         alt="Mountain View">
+</div>
+
+<div id="specificContent-listBundle">
+</div>
+
+<script>
+    
+    function ListBundle()
+    {
+        get_specificList();
+    }
+    
+    $('#newSpecificListNameIcon').click(function () {
+
+        var newSpecificListName = document.getElementById("newSpecificListName").value;
+        set_specificList(newSpecificListName);
+
+    });
+    
+    function get_specificList()
+    {
+        var specificContentListBundle = document.getElementById("specificContent-listBundle");
+        specificContentListBundle.innerHTML = "";
+
+        var form = $('#get-specificList-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            var i = 0;
+            var amountLists = data[0].amountLists;
+
+            while (i < amountLists)
+            {
+                var specificlistId = data[i].specificlistId;
+                var specificlistName = data[i].specificlistName;
+                var userId = data[i].userId;
+                var userName = data[i].userName;
+                var amountLists = data[i].amountLists;
+
+                draw_specificList(specificlistId, specificlistName, userId, userName);
+
+                get_specificListVideo(specificlistId);
+                i++;
+            }
+
+        }).fail(function () {
+            alert("ERROR #get-specificList-ajax");
+        });
+    }
+    
+    function play_specificList(specificlistId, i)
+    {
+        current_specificlistId = specificlistId;
+        current_videoPosition = i;
+        
+        var form = $('#get-specificListVideo-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {specificlistId: specificlistId}, function (data)
+        {
+            var respectly_video = data[0].videoId;
+
+            if (respectly_video)
+            {
+                var specificlistvideoId = data[i].specificlistvideoId;
+                var specificlist = data[i].specificlist;
+                var userId = data[i].userId;
+                var userName = data[i].userName;
+                var amountVideos = data[i].amountVideos;
+                var videoId = data[i].videoId;
+                var videoName = data[i].videoName;
+                var videoDescription = data[i].videoDescription;
+                var videoImage = data[i].videoImage;
+                var videoContent = data[i].videoContent;
+                var videoUpdateDate = data[i].videoUpdatedate;
+                var videoAmountViews = data[i].videoAmountViews;
+                var videoLikes = data[i].videoLikes;
+                var videoDislikes = data[i].videoDislikes;
+                var videoAmountComments = 0;
+                
+                if (i === 0)
+                {
+                    
+                } else
+                {
+                    var l = i - 1;
+                    previous_video_image = data[l].videoImage;
+                }
+                
+                var k = i + 1;
+                if (data[k].videoId)
+                {
+                    next_video_image = data[k].videoImage;
+                } else
+                {
+                    
+                }
+                
+                showVideo(
+                    videoId, 
+                    videoName, 
+                    videoDescription, 
+                    videoImage, 
+                    videoContent, 
+                    videoUpdateDate, 
+                    videoAmountViews, 
+                    videoAmountComments, 
+                    videoLikes, 
+                    videoDislikes, 
+                    userId, 
+                    userName
+                );
+                
+            } else
+            {
+                {#reproducir de nuevo el primer video de la lista (o de la siguiente lista)#}
+                {#alert("NO existe un video en esta posicion ");#}
+            }
+
+            $("#my_video").on('ended', function(){
+                i++;
+                
+                play_specificList(specificlistId, i);
+                
+            });
+            
+        }).fail(function () {
+            alert('get-specificListVideo-ajax ERROR');
+        });
+    }
+    
+    function explainNextVideo_22()
+    {
+        alert("next video... 22");
+    }
+    
+    function explainPreviousVideo_22()
+    {
+        alert("previous video... 22");
+    }
+
+    function set_specificList(nameOfListId)
+    {
+        var form = $('#set-specificList-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {nameOfListId: nameOfListId}, function (data)
+        {
+            var specificlistId = data[0].specificlistId;
+            var specificlistName = data[0].specificlistName;
+            var userId = data[0].userId;
+
+            draw_specificList(specificlistId, specificlistName, userId, 0);
+
+            get_specificListVideo(specificlistId);
+
+        }).fail(function () {
+            alert('ERROR');
+        });
+    }
+
+    function delete_specificList(specificlistId)
+    {
+        var form = $('#delete-specificList-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {specificlistId: specificlistId}, function (data)
+        {
+
+        }).fail(function () {
+            alert('ERROR #delete-specificList-ajax');
+        });
+    }
+
+    function draw_specificList(specificlistId, specificlistName, userId, userName)
+    {
+        $("#specificContent-listBundle").append(
+        "<div id='specificList" + specificlistId + "' style='opacity: 1;'>"+
+        "<div class='accordion22' id='list" + specificlistId + "' data-id22='" + specificlistId + "'>" +
+            "<table border='0' width='100%'>"+
+            "<tr>"+
+            "<td width='10%' colspan='6'>"+
+                "<div class='emergentGuide' style='text-align:right; width:100%;' id='emergentGuide" + specificlistId + "' data-id3='" + specificlistId + "'><br>"+
+                "</div>"+
+            "</td>"+
+            "</tr>"+
+
+            "<tr>"+
+            "<td width='60%'>"+
+            "<div id='specificlistName" + specificlistId + "'>"+specificlistName+
+            "</div>"+
+            "</td>"+
+
+            "<td width='10%'>"+
+                "<div class='addToListVideo' id='addToListVideo" + specificlistId + "' data-id3='" + specificlistId + "'>ok"+
+                "</div>"+
+            "</td>"+
+
+            "<td width='10%'>"+
+                "<div class='playListVideo' id='playListVideo" + specificlistId + "' data-id3='" + specificlistId + "'>>"+
+                "</div>"+
+            "</td>"+
+
+            "<td width='10%'>"+
+                "<div class='editListVideo' id='editListVideo" + specificlistId + "' data-id3='" + specificlistId + "'>e"+
+                "</div>"+
+            "</td>"+
+
+            "<td width='10%'>"+
+                "<div class='openFrame' id='openFrame" + specificlistId + "'>-"+
+                "</div>"+
+                "<div class='closeFrame' id='closeFrame" + specificlistId + "'>+"+
+                "</div>"+
+            "</td>"+
+
+            "<td width='10%'>"+
+                "<div class='deleteListVideo' id='deleteListVideo" + specificlistId + "' data-id3='" + specificlistId + "'>x"+
+                "</div>"+
+            "</td>"+
+
+            "</tr>"+
+            "</table>"+
+        "</div>" +
+        "<div class='panel22' id='videosFromList" + specificlistId + "' data-id2='" + specificlistId + "'>" +
+            "<p></p>"+
+
+            "<br>"+
+        "</div>"+
+        "</div>"
+        );
+
+
+
+        $('#addToListVideo'+specificlistId)
+        .mouseover(function () {
+            var addToListVideoId = "addToListVideo"+specificlistId;
+            var addToListVideo = document.getElementById(addToListVideoId);
+
+            var emergentGuideId = "emergentGuide"+specificlistId;
+            var emergentGuide = document.getElementById(emergentGuideId);
+
+            emergentGuide.innerHTML = "Add this current video to the play list";
+            addToListVideo.style.backgroundColor = "#1ab7ea";
+            addToListVideo.style.opacity = 1;
+        })
+        .mouseout(function () {
+            var addToListVideoId = "addToListVideo"+specificlistId;
+            var addToListVideo = document.getElementById(addToListVideoId);
+
+            addToListVideo.style.backgroundColor = "#ccc";
+            addToListVideo.style.opacity = 0;
+        })
+        .click(function () {
+            set_specificListVideo(specificlistId);
+            draw_specificListVideo(
+                current_specificListVideoId,
+                specificlistId,
+                current_video_userName, {#userName#} {#userId#} // este dato es con repecto al video
+                0, {#amountVideos#}
+                current_video_id,
+                current_video_name,
+                current_video_description,
+                current_video_image,
+                current_video_content,
+                current_video_updateDate,
+                current_video_amount_views,
+                current_video_amount_comments,
+                current_video_likes,
+                current_video_dislikes,
+                current_video_userId
+            );
+
+            var nextId = "videosFromList" + specificlistId;
+            var nextElement = document.getElementById(nextId);
+            nextElement.style.maxHeight = null;
+            nextElement.style.maxHeight = nextElement.scrollHeight + "px";
+        });
+
+        $('#playListVideo'+specificlistId)
+        .mouseover(function () {
+            var playListVideoId = "playListVideo"+specificlistId;
+            var playListVideo = document.getElementById(playListVideoId);
+
+            var emergentGuideId = "emergentGuide"+specificlistId;
+            var emergentGuide = document.getElementById(emergentGuideId);
+
+            emergentGuide.innerHTML = "Play this list";
+            playListVideo.style.backgroundColor = "#1ab7ea";
+            playListVideo.style.opacity = 1;
+        })
+        .mouseout(function () {
+            var playListVideoId = "playListVideo"+specificlistId;
+            var playListVideo = document.getElementById(playListVideoId);
+
+            playListVideo.style.backgroundColor = "#ccc";
+            playListVideo.style.opacity = 0;
+        })
+        .click(function () {
+            var i = 0;
+            play_specificList(specificlistId, i);
+        });
+
+        $('#editListVideo'+specificlistId)
+        .mouseover(function () {
+            var editListVideoId = "editListVideo"+specificlistId;
+            var editListVideo = document.getElementById(editListVideoId);
+
+            var emergentGuideId = "emergentGuide"+specificlistId;
+            var emergentGuide = document.getElementById(emergentGuideId);
+
+            emergentGuide.innerHTML = "Edit this list";
+            editListVideo.style.backgroundColor = "#1ab7ea";
+            editListVideo.style.opacity = 1;
+        })
+        .mouseout(function () {
+            var editListVideoId = "editListVideo"+specificlistId;
+            var editListVideo = document.getElementById(editListVideoId);
+
+            editListVideo.style.backgroundColor = "#ccc";
+            editListVideo.style.opacity = 0;
+        })
+        .click(function () {
+            var respectlyFormId = document.getElementById("emergentWindow");
+
+            var respectlyListId = "specificList" + specificlistId;
+
+
+            respectlyFormId.style.width = "100%";
+            respectlyFormId.style.height = "100%";
+            respectlyFormId.style.opacity = "0.9";
+            respectlyFormId.style.zIndex = "20";
+            respectlyFormId.style.position = "absolute";
+
+            respectlyFormId.innerHTML = 
+                "<center>"+
+                "<div style='background-color: gray; position: absolute; height: 100%; width:100%; padding: 200px;'>"+
+                "<table width='250px' border='0'>"+
+                "<tr>"+
+                    "<td colspan='2' align='right'>"+
+                    "<div id='closeEditListWindow' style='cursor:pointer; background-color:red; padding:5px; opacity: 0.5; color: white; width:40px; height:30px;'><center>X</center></div>"+
+                    "</td>"+
+                "</tr>"+
+                "<tr>"+
+                    "<td colspan='2'>"+
+                    "<br>Write the new name you want to the new list.<br><br>"+
+                    "</td>"+
+                "</tr>"+
+                "<tr>"+
+                    "<td colspan='2'>"+
+                        "<input id='newListName' type='text'"+
+                        "placeholder=''"+
+                        "id='nameOfList'"+
+                        "style='width: 100%;"+
+                        "height: 30px;"+
+                        "opacity: 0.5;"+
+                        "border: 0;"+
+                        "align-content: center;'/>"+
+                        "<br><br>"+
+                    "</td>"+
+                "</tr>"+
+                "<tr>"+
+                    "<td>"+
+                    "<center><div id='acceptEditListWindow' style='cursor:pointer; background-color:white; padding:5px; opacity: 0.5; width:60px; height:30px;'>Accept</div></center>"+
+                    "</td>"+
+                    "<td>"+
+                    "<center><div id='cancelEditListWindow' style='cursor:pointer; background-color:white; padding:5px; opacity: 0.5; width:60px; height:30px;'>Cancel</div></center>"+
+                    "</td>"+
+                "</tr>"+
+                "</table>"+
+                "</div>"+
+                "</center>";
+
+                $('#closeEditListWindow').click(function () {
+                var respectlyFormId = document.getElementById("emergentWindow");
+
+                    respectlyFormId.style.width = "100%";
+                    respectlyFormId.style.height = "100%";
+                    respectlyFormId.style.opacity = "0";
+                    respectlyFormId.style.zIndex = "1";
+                    respectlyFormId.style.position = "absolute";
+
+                    respectlyFormId.innerHTML = "";
+                });
+                $('#acceptEditListWindow').click(function () {
+
+                    var newName = document.getElementById("newListName").value;
+
+                    var respectlySpecificlistName = "specificlistName" + specificlistId;
+
+                    edit_specificList(specificlistId, newName);
+                    draw_specificListName(newName, respectlySpecificlistName);
+
+                var respectlyFormId = document.getElementById("emergentWindow");
+
+                    respectlyFormId.style.width = "100%";
+                    respectlyFormId.style.height = "100%";
+                    respectlyFormId.style.opacity = "0";
+                    respectlyFormId.style.zIndex = "1";
+                    respectlyFormId.style.position = "absolute";
+                    respectlyFormId.innerHTML = "";
+                });
+                $('#cancelEditListWindow').click(function () {
+                var respectlyFormId = document.getElementById("emergentWindow");
+
+                    respectlyFormId.style.width = "100%";
+                    respectlyFormId.style.height = "100%";
+                    respectlyFormId.style.opacity = "0";
+                    respectlyFormId.style.zIndex = "1";
+                    respectlyFormId.style.position = "absolute";
+
+                    respectlyFormId.innerHTML = "";
+                });
+        });
+
+        $('#openFrame'+specificlistId)
+        .mouseover(function () {
+            var openFrameId = "openFrame"+specificlistId;
+            var openFrame = document.getElementById(openFrameId);
+
+            var emergentGuideId = "emergentGuide"+specificlistId;
+            var emergentGuide = document.getElementById(emergentGuideId);
+
+            emergentGuide.innerHTML = "Hide this list";
+            openFrame.style.backgroundColor = "#1ab7ea";
+            openFrame.style.opacity = 1;
+        })
+        .mouseout(function () {
+            var openFrameId = "openFrame"+specificlistId;
+            var openFrame = document.getElementById(openFrameId);
+
+            openFrame.style.backgroundColor = "#ccc";
+            openFrame.style.opacity = 0;
+        })
+        .click(function () {
+            var nextId = "videosFromList" + specificlistId;
+            var nextElement = document.getElementById(nextId);
+
+
+            nextElement.style.maxHeight = null;
+
+            buttonId = "openFrame" + specificlistId;
+            buttonId2 = "closeFrame" + specificlistId;
+            var currentButton = document.getElementById(buttonId);
+            var currentButton2 = document.getElementById(buttonId2);
+            currentButton.style.display = 'none';
+            currentButton2.style.display = 'block';
+        });
+
+        $('#closeFrame'+specificlistId)
+        .mouseover(function () {
+            var closeFrameId = "closeFrame"+specificlistId;
+            var closeFrame = document.getElementById(closeFrameId);
+
+            var emergentGuideId = "emergentGuide"+specificlistId;
+            var emergentGuide = document.getElementById(emergentGuideId);
+
+            emergentGuide.innerHTML = "Show this list";
+            closeFrame.style.backgroundColor = "#1ab7ea";
+            closeFrame.style.opacity = 1;
+        })
+        .mouseout(function () {
+            var closeFrameId = "closeFrame"+specificlistId;
+            var closeFrame = document.getElementById(closeFrameId);
+
+            closeFrame.style.backgroundColor = "#ccc";
+            closeFrame.style.opacity = 0;
+        })
+        .click(function () {
+            var nextId = "videosFromList" + specificlistId;
+            var nextElement = document.getElementById(nextId);
+
+            nextElement.style.maxHeight = nextElement.scrollHeight + "px";
+            buttonId = "openFrame" + specificlistId;
+            buttonId2 = "closeFrame" + specificlistId;
+            var currentButton = document.getElementById(buttonId);
+            var currentButton2 = document.getElementById(buttonId2);
+            currentButton.style.display = 'block';
+            currentButton2.style.display = 'none';
+        });
+
+        $('#deleteListVideo'+specificlistId)
+        .mouseover(function () {
+            var deleteListVideoId = "deleteListVideo"+specificlistId;
+            var deleteListVideo = document.getElementById(deleteListVideoId);
+
+            var emergentGuideId = "emergentGuide"+specificlistId;
+            var emergentGuide = document.getElementById(emergentGuideId);
+
+            emergentGuide.innerHTML = "Delete this list";
+            deleteListVideo.style.backgroundColor = "#1ab7ea";
+            deleteListVideo.style.opacity = 1;
+        })
+        .mouseout(function () {
+            var deleteListVideoId = "deleteListVideo"+specificlistId;
+            var deleteListVideo = document.getElementById(deleteListVideoId);
+
+            deleteListVideo.style.backgroundColor = "#ccc";
+            deleteListVideo.style.opacity = 0;
+        })
+        .click(function () {
+            var respectlyFormId = document.getElementById("emergentWindow");
+
+            var respectlyListId = "specificList" + specificlistId;
+
+            respectlyFormId.style.width = "100%";
+            respectlyFormId.style.height = "100%";
+            respectlyFormId.style.opacity = "0.9";
+            respectlyFormId.style.zIndex = "20";
+            respectlyFormId.style.position = "absolute";
+
+            respectlyFormId.innerHTML = 
+                "<center>"+
+                "<div style='background-color: gray; position: absolute; height: 100%; width:100%; padding: 200px;'>"+
+                "<table width='250px' border='0'>"+
+                "<tr>"+
+                    "<td colspan='2' align='right'>"+
+                    "<div id='closeVideoListWindow' style='cursor:pointer; background-color:red; padding:5px; opacity: 0.5; color: white; width:40px; height:30px;'><center>X</center></div>"+
+                    "</td>"+
+                "</tr>"+
+                "<tr>"+
+                    "<td colspan='2'>"+
+                    "<br>Are you sure you want to delete this list?<br><br>"+
+                    "</td>"+
+                "</tr>"+
+                "<tr>"+
+                    "<td>"+
+                    "<center><div id='yesVideoListWindow' style='cursor:pointer; background-color:white; padding:5px; opacity: 0.5; width:40px; height:30px;'>YES</div></center>"+
+                    "</td>"+
+                    "<td>"+
+                    "<center><div id='notVideoListWindow' style='cursor:pointer; background-color:white; padding:5px; opacity: 0.5; width:40px; height:30px;'>NOT</div></center>"+
+                    "</td>"+
+                "</tr>"+
+                "</table>"+
+                "</div>"+
+                "</center>";
+
+                $('#closeVideoListWindow').click(function () {
+                var respectlyFormId = document.getElementById("emergentWindow");
+
+                    respectlyFormId.style.width = "100%";
+                    respectlyFormId.style.height = "100%";
+                    respectlyFormId.style.opacity = "0";
+                    respectlyFormId.style.zIndex = "1";
+                    respectlyFormId.style.position = "absolute";
+
+                    respectlyFormId.innerHTML = "";
+                });
+                $('#yesVideoListWindow').click(function () {
+
+                    delete_specificList(specificlistId);
+
+                    var respectlyListId2 = document.getElementById(respectlyListId);    
+                    respectlyListId2.style.opacity = "0";
+                    respectlyListId2.innerHTML = "";
+
+                    respectlyFormId.style.width = "100%";
+                    respectlyFormId.style.height = "100%";
+                    respectlyFormId.style.opacity = "0";
+                    respectlyFormId.style.zIndex = "1";
+                    respectlyFormId.style.position = "absolute";
+                    respectlyFormId.innerHTML = "";
+                });
+                $('#notVideoListWindow').click(function () {
+                var respectlyFormId = document.getElementById("emergentWindow");
+
+                    respectlyFormId.style.width = "100%";
+                    respectlyFormId.style.height = "100%";
+                    respectlyFormId.style.opacity = "0";
+                    respectlyFormId.style.zIndex = "1";
+                    respectlyFormId.style.position = "absolute";
+
+                    respectlyFormId.innerHTML = "";
+                });
+
+        });
+
+        $('#list'+specificlistId)
+        .mouseover(function (){
+        var id = $(this).data('id22');
+
+        var addToListVideoId = "addToListVideo"+id;
+        var playListVideoId = "playListVideo"+id;
+        var editListVideoId = "editListVideo"+id;
+        var openFrameId = "openFrame"+id;
+        var closeFrameId = "closeFrame"+id;
+        var deleteListVideoId = "deleteListVideo"+id;
+
+        var addToListVideo = document.getElementById(addToListVideoId);
+        var playListVideo = document.getElementById(playListVideoId);
+        var editListVideo = document.getElementById(editListVideoId);
+        var openFrame = document.getElementById(openFrameId);
+        var closeFrame = document.getElementById(closeFrameId);
+        var deleteListVideo = document.getElementById(deleteListVideoId);
+
+        addToListVideo.style.opacity = 1;
+        playListVideo.style.opacity = 1;
+        editListVideo.style.opacity = 1;
+        openFrame.style.opacity = 1;
+        closeFrame.style.opacity = 1;
+        deleteListVideo.style.opacity = 1;
+
+
+        var listId = "list"+id;
+        var list = document.getElementById(listId);
+
+        list.style.backgroundColor = "#ccc";
+    })
+        .mouseout(function (){
+        var id = $(this).data('id22');
+
+        var emergentGuideId = "emergentGuide"+id;
+        var emergentGuide = document.getElementById(emergentGuideId);
+        emergentGuide.innerHTML = "<br>";
+
+        var listId = "list"+id;
+        var list = document.getElementById(listId);
+        list.style.backgroundColor = null;
+
+
+        var addToListVideoId = "addToListVideo"+id;
+        var playListVideoId = "playListVideo"+id;
+        var editListVideoId = "editListVideo"+id;
+        var openFrameId = "openFrame"+id;
+        var closeFrameId = "closeFrame"+id;
+        var deleteListVideoId = "deleteListVideo"+id;
+
+        var addToListVideo = document.getElementById(addToListVideoId);
+        var playListVideo = document.getElementById(playListVideoId);
+        var editListVideo = document.getElementById(editListVideoId);
+        var openFrame = document.getElementById(openFrameId);
+        var closeFrame = document.getElementById(closeFrameId);
+        var deleteListVideo = document.getElementById(deleteListVideoId);
+
+        addToListVideo.style.opacity = 0;
+        playListVideo.style.opacity = 0;
+        editListVideo.style.opacity = 0;
+        openFrame.style.opacity = 0;
+        closeFrame.style.opacity = 0;
+        deleteListVideo.style.opacity = 0;
+    });
+
+    }
+
+    function edit_specificList(specificlistId, specificlistName)
+    {
+        var form = $('#edit-specificList-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {specificlistId: specificlistId, specificlistName: specificlistName}, function (data)
+        {
+
+        }).fail(function () {
+            alert('ERROR #edit-specificList-ajax');
+        });
+    }
+
+    function draw_specificListName(specificlistName, respectlyListId)
+    {
+        var respectlyListId2 = document.getElementById(respectlyListId);
+        respectlyListId2.innerHTML = specificlistName;
+    }
+
+
+
+
+
+
+
+    {#adicionar nuevo video a una lista#}
+    function set_specificListVideo(specificlistId)
+    {
+        var form = $('#set-specificListVideo-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {specificlistId: specificlistId, videoId: current_video_id}, function (data)
+        {
+            current_specificListVideoId = data[0].specificListVideoId;
+        }).fail(function () {
+            alert('ERROR #set-specificListVideo-ajax');
+        });
+
+    }
+
+    function draw_specificListVideo(
+        specificlistvideoId,
+        specificlist,
+        userName,
+        amountVideos,
+        videoId,
+        videoName,
+        videoDescription,
+        videoImage,
+        videoContent,
+        videoUpdatedate,
+        videoAmountViews,
+        videoAmountComments,
+        videoLikes,
+        videoDislikes,
+        userId
+    )
+    {
+
+        $("#videosFromList"+specificlist).append(
+            "<div class='respectlyVideo' id='respectlyVideoBtn"+specificlistvideoId+"' data-id1='"+specificlistvideoId+"'>"+
+            "<table border='0' width='100%' height='50px'>"+
+            "<tr>"+
+            "<td width='75px' height='50px'>"+
+                "<div class='imageVideo' id='imageVideo"+specificlistvideoId+"' data-id1='"+specificlistvideoId+"'>"+
+                "<img class='imageVideoContent' src='files/"+videoImage+"' alt='Mountain View'>"+
+                "</div>"+
+            "</td>"+
+            "<td> "+
+                "<div class='infoVideo' id='infoVideo"+specificlistvideoId+"' data-id1='"+specificlistvideoId+"'>"+
+                videoName+"<br>"+userName+
+                "</div>"+
+            "</td>"+
+            "<td width='20px'>"+
+                "<div class='replayVideo' id='replayVideoBtn"+specificlistvideoId+"' data-id1='"+specificlistvideoId+"'>R"+
+                "</div>"+
+            "</td>"+
+            "<td width='20px'>"+
+                "<div class='playVideo' id='playVideoBtn"+specificlistvideoId+"' "+
+
+                "data-id1='"+specificlistvideoId+"' "+
+                "data-id2='"+specificlist+"' "+
+                "data-id3='"+userName+"' "+
+                "data-id4='"+amountVideos+"' "+
+                "data-id5='"+videoId+"' "+
+                "data-id6='"+videoName+"' "+
+                "data-id7='"+videoDescription+"' "+
+                "data-id8='"+videoImage+"' "+
+                "data-id9='"+videoContent+"' "+
+                "data-id10='"+videoUpdatedate+"' "+
+                "data-id11='"+videoAmountViews+"' "+
+                "data-id12='"+videoAmountComments+"' "+
+                "data-id13='"+videoLikes+"' "+
+                "data-id14='"+videoDislikes+"' "+
+                "data-id15='"+userId+"' >>"+
+
+                "</div>"+
+            "</td>"+
+            "<td width='20px'>"+
+                "<div class='deleteVideo' id='deleteVideoBtn"+specificlistvideoId+"' data-id1='"+specificlistvideoId+"'>x"+
+                "</div>"+
+            "</td>"+
+            "</tr>"+
+            "</table>"+
+            "</div>"
+        );
+
+        $('#respectlyVideoBtn'+specificlistvideoId)
+        .mouseout(function (){
+                var id = $(this).data('id1');
+
+                var replayVideoBtnId = "replayVideoBtn" + id;
+                var playVideoBtnId = "playVideoBtn" + id;
+                var deleteVideoBtnId = "deleteVideoBtn" + id;
+
+                var replayVideoBtn = document.getElementById(replayVideoBtnId);
+                var playVideoBtn = document.getElementById(playVideoBtnId);
+                var deleteVideoBtn = document.getElementById(deleteVideoBtnId);
+
+                replayVideoBtn.style.opacity = "0";
+                playVideoBtn.style.opacity = "0";
+                deleteVideoBtn.style.opacity = "0";
+            })
+        .mouseover(function (){
+                var id = $(this).data('id1');
+
+                var replayVideoBtnId = "replayVideoBtn" + id;
+                var playVideoBtnId = "playVideoBtn" + id;
+                var deleteVideoBtnId = "deleteVideoBtn" + id;
+
+                var replayVideoBtn = document.getElementById(replayVideoBtnId);
+                var playVideoBtn = document.getElementById(playVideoBtnId);
+                var deleteVideoBtn = document.getElementById(deleteVideoBtnId);
+
+                replayVideoBtn.style.opacity = "1";
+                playVideoBtn.style.opacity = "1";
+                deleteVideoBtn.style.opacity = "1";
+            });
+
+        $('#replayVideoBtn'+specificlistvideoId)
+        .mouseover(function () {
+            var id = $(this).data('id1');
+            var replayVideoBtnId = "replayVideoBtn"+id;
+            var replayVideoBtn = document.getElementById(replayVideoBtnId);
+
+            replayVideoBtn.style.backgroundColor = "#1ab7ea";
+            replayVideoBtn.style.opacity = "1";
+        })
+        .mouseout(function () {
+            var id = $(this).data('id1');
+            var replayVideoBtnId = "replayVideoBtn"+id;
+            var replayVideoBtn = document.getElementById(replayVideoBtnId);
+
+            replayVideoBtn.style.backgroundColor = "transparent";
+            replayVideoBtn.style.opacity = "0";
+        })
+        .click(function () {
+            var respectlyFormId = document.getElementById("emergentWindow");
+
+            respectlyFormId.style.width = "100%";
+            respectlyFormId.style.height = "100%";
+            respectlyFormId.style.opacity = "0.9";
+            respectlyFormId.style.zIndex = "20";
+            respectlyFormId.style.position = "absolute";
+
+            respectlyFormId.innerHTML = 
+                "<center>"+
+                "<div style='background-color: gray; position: absolute; height: 100%; width:100%; padding: 200px;'>"+
+                "<table width='250px' border='0'>"+
+                "<tr>"+
+                    "<td colspan='2' align='right'>"+
+                    "<div id='closeReplayTimesSongWindow' style='cursor:pointer; background-color:red; padding:5px; opacity: 0.5; color: white; width:40px; height:30px;'><center>X</center></div>"+
+                    "</td>"+
+                "</tr>"+
+                "<tr>"+
+                    "<td colspan='2'>"+
+                    "<br>Input the amount of times you want to replay this song.<br><br>"+
+                    "</td>"+
+                "</tr>"+
+                "<tr>"+
+                    "<td colspan='2'>"+
+                        "<input id='replayTimesSong' type='text'"+
+                        "placeholder=''"+
+                        "id='nameOfList'"+
+                        "style='width: 100%;"+
+                        "height: 30px;"+
+                        "opacity: 0.5;"+
+                        "border: 0;"+
+                        "align-content: center;'/>"+
+                        "<br><br>"+
+                    "</td>"+
+                "</tr>"+
+                "<tr>"+
+                    "<td>"+
+                    "<center><div id='acceptReplayTimesSongWindow' style='cursor:pointer; background-color:white; padding:5px; opacity: 0.5; width:60px; height:30px;'>Accept</div></center>"+
+                    "</td>"+
+                    "<td>"+
+                    "<center><div id='cancelReplayTimesSongWindow' style='cursor:pointer; background-color:white; padding:5px; opacity: 0.5; width:60px; height:30px;'>Cancel</div></center>"+
+                    "</td>"+
+                "</tr>"+
+                "</table>"+
+                "</div>"+
+                "</center>";
+
+                $('#closeReplayTimesSongWindow').click(function () {
+                var respectlyFormId = document.getElementById("emergentWindow");
+
+                    respectlyFormId.style.width = "100%";
+                    respectlyFormId.style.height = "100%";
+                    respectlyFormId.style.opacity = "0";
+                    respectlyFormId.style.zIndex = "1";
+                    respectlyFormId.style.position = "absolute";
+
+                    respectlyFormId.innerHTML = "";
+                });
+                $('#acceptReplayTimesSongWindow').click(function () {
+{#                                        
+                    var newName = document.getElementById("newListName").value;
+
+                    var respectlySpecificlistName = "specificlistName" + ejemplo;
+
+                    edit_specificList(ejemplo, newName);
+                    draw_specificListName(newName, respectlySpecificlistName);
+                    #}
+                    {#Acá es donde iría el método edit_specificListVideo();#}
+                var respectlyFormId = document.getElementById("emergentWindow");
+
+                    respectlyFormId.style.width = "100%";
+                    respectlyFormId.style.height = "100%";
+                    respectlyFormId.style.opacity = "0";
+                    respectlyFormId.style.zIndex = "1";
+                    respectlyFormId.style.position = "absolute";
+                    respectlyFormId.innerHTML = "";
+                });
+                $('#cancelReplayTimesSongWindow').click(function () {
+                var respectlyFormId = document.getElementById("emergentWindow");
+
+                    respectlyFormId.style.width = "100%";
+                    respectlyFormId.style.height = "100%";
+                    respectlyFormId.style.opacity = "0";
+                    respectlyFormId.style.zIndex = "1";
+                    respectlyFormId.style.position = "absolute";
+
+                    respectlyFormId.innerHTML = "";
+                });
+        });
+
+        $('#playVideoBtn'+specificlistvideoId)
+        .mouseover(function () {
+            var id = $(this).data('id1');
+            var playVideoBtnId = "playVideoBtn"+id;
+            var playVideoBtn = document.getElementById(playVideoBtnId);
+
+            playVideoBtn.style.backgroundColor = "#1ab7ea";
+            playVideoBtn.style.opacity = "1";
+        })
+        .mouseout(function () {
+            var id = $(this).data('id1');
+            var playVideoBtnId = "playVideoBtn"+id;
+            var playVideoBtn = document.getElementById(playVideoBtnId);
+
+            playVideoBtn.style.backgroundColor = "transparent";
+            playVideoBtn.style.opacity = "0";
+        })
+        .click(function () {
+
+            var specificlistvideoId = $(this).data('id1');
+            var specificlist = $(this).data('id2');
+            var userName = $(this).data('id3');
+            var amountVideos = $(this).data('id4');
+            var videoId = $(this).data('id5');
+            var videoName = $(this).data('id6');
+            var videoDescription = $(this).data('id7');
+            var videoImage = $(this).data('id8');
+            var videoContent = $(this).data('id9');
+            var videoUpdatedate = $(this).data('id10');
+            var videoAmountViews = $(this).data('id11');
+            var videoAmountComments = $(this).data('id12');
+            var videoLikes = $(this).data('id13');
+            var videoDislikes = $(this).data('id14');
+            var userId = $(this).data('id15');
+
+            showVideo(
+                videoId,
+                videoName,
+                videoDescription,
+                videoImage,
+                videoContent,
+                videoUpdatedate,
+                videoAmountViews,
+                videoAmountComments, 
+                videoLikes,
+                videoDislikes,
+                userId,
+                userName
+            );
+
+        });
+
+        $('#deleteVideoBtn'+specificlistvideoId)
+        .mouseover(function () {
+            var id = $(this).data('id1');
+            var deleteVideoBtnId = "deleteVideoBtn"+id;
+            var deleteVideoBtn = document.getElementById(deleteVideoBtnId);
+
+            deleteVideoBtn.style.backgroundColor = "#1ab7ea";
+            deleteVideoBtn.style.opacity = "1";
+        })
+        .mouseout(function () {
+            var id = $(this).data('id1');
+            var deleteVideoBtnId = "deleteVideoBtn"+id;
+            var deleteVideoBtn = document.getElementById(deleteVideoBtnId);
+
+            deleteVideoBtn.style.backgroundColor = "transparent";
+            deleteVideoBtn.style.opacity = "0";
+        })
+        .click(function () {
+            var id = $(this).data('id1');
+            delete_specificListVideo(id);
+
+            var respectlyId = "respectlyVideoBtn" + id;
+            var specificContentListBundle = document.getElementById(respectlyId);
+            specificContentListBundle.innerHTML = "";
+        });
+
+    }
+
+    function get_specificListVideo(specificlistId)
+    {
+        var form = $('#get-specificListVideo-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {specificlistId: specificlistId}, function (data)
+        {
+                var i = 0;
+                var amountVideos = data[0].amountVideos;
+
+                while (i < amountVideos)
+                {
+                    var specificlistvideoId = data[i].specificlistvideoId;
+                    var specificlist = data[i].specificlist;
+                    var userName = data[i].userName;
+                    var amountVideos = data[i].amountVideos;
+                    var videoId = data[i].videoId;
+                    var videoName = data[i].videoName;
+                    var videoDescription = data[i].videoDescription;
+                    var videoImage = data[i].videoImage;
+                    var videoContent = data[i].videoContent;
+                    var videoUpdatedate = data[i].videoUpdatedate;
+                    var videoAmountViews = data[i].videoAmountViews;
+                    var videoAmountComments = data[i].videoAmountComments;
+                    var videoLikes = data[i].videoLikes;
+                    var videoDislikes = data[i].videoDislikes;
+                    var userId = data[i].userId;
+
+                    draw_specificListVideo(
+                        specificlistvideoId,
+                        specificlist,
+                        userName,
+                        amountVideos,
+                        videoId,
+                        videoName,
+                        videoDescription,
+                        videoImage,
+                        videoContent,
+                        videoUpdatedate,
+                        videoAmountViews,
+                        videoAmountComments,
+                        videoLikes,
+                        videoDislikes,
+                        userId
+                    );
+
+                    i++;
+                }
+                
+        }).fail(function () {
+            alert('ERROR #get-specificListVideo-ajax');
+        });
+    }
+
+    function delete_specificListVideo(specificlistvideoId)
+    {
+        var form = $('#delete-specificListVideo-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {specificlistvideoId: specificlistvideoId}, function (data)
+        {
+{#                alert("delete specific list video FUNCIONA");#}
+        }).fail(function () {
+            alert('ERROR #delete-specificListVideo-ajax');
+        });
+    }
+
+    function play_specificListVideo()
+    {
+        
+    }
+
+    function edit_specificListVideo(specificlistvideoId)
+    {
+        var form = $('#edit-specificListVideo-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {specificlistId: specificlistId}, function (data)
+        {
+            alert("edit specific list video FUNCIONA");
+        }).fail(function () {
+            alert('ERROR #edit-specificListVideo-ajax');
+        });
+    }
+
+</script>

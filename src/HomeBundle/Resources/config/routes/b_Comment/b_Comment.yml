@@ -1,0 +1,14 @@
+get_comment_about_video_form:
+    path:     /getCommentAboutVideo
+    defaults: { _controller: CommentVideoBundle:Default:getCommentAboutVideo }
+    methods:  POST
+    
+add_comment_video_form:
+    path:     /addCommentVideo
+    defaults: { _controller: CommentVideoBundle:Default:addCommentVideo }
+    methods:  POST
+    
+increase_comments_amount_video_form:
+    path:     /increaseCommentsAmountVideo
+    defaults: { _controller: CommentVideoBundle:Default:increaseCommentsAmountVideo }
+    methods:  POST

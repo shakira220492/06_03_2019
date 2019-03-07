@@ -1,0 +1,151 @@
+{{ form_start(get_comment_about_video_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-comment-about-video-ajax'|default('form')} }) }}
+{{ form_end(get_comment_about_video_form_ajax) }}
+
+{{ form_start(add_comment_video_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'add-comment-video-ajax'|default('form')} }) }}
+{{ form_end(add_comment_video_form_ajax) }}
+
+{{ form_start(increase_comments_amount_video_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'increase-comments-amount-video-ajax'|default('form')} }) }}
+{{ form_end(increase_comments_amount_video_form_ajax) }}
+
+<div id='writeACommentSection'>
+    <textarea id="inputSection"
+        placeholder="Write here your comment... "></textarea>
+</div>
+
+<div id='sendComment' class="animatedButton">
+    <img style='width:100%; height:100%;' 
+     src='files/images/icons/video/sendComment.png' 
+     alt='Mountain View' 
+     id='sendCommentButton'>
+</div>
+
+<div id='commentVideoSection'>
+    
+    <div id="commentVideoFrame">
+        
+        <div class='commentVideo'>
+        </div>
+
+        
+    </div>
+    
+</div>
+
+
+<script>
+    var sendComment = document.getElementById('sendComment');
+    sendComment.addEventListener("click", sendCommentFunction, false);
+
+    function sendCommentFunction()
+    {
+        var form = $('#add-comment-video-ajax');
+        var url = form.attr('action');
+
+        var commentContent = document.getElementById("inputSection").value;
+        
+        $.post(url, {
+            current_video_id: current_video_id,
+            commentContent: commentContent
+        }, function (data)
+        {
+            var status = data[0].status;
+            if (status === "0")
+            {
+                var message = "You need to log in to comment at this video.";
+                showMessage_EmergentWindow(message);
+            } else if (status === "1")
+            {
+                document.getElementById("inputSection").value = "";
+                increaseCommentsAmount();
+            }
+            
+        }).fail(function () {
+            alert('ERROR #add-comment-video-ajax');
+        });
+    }
+    
+    function increaseCommentsAmount()
+    {
+        var form = $('#increase-comments-amount-video-ajax');
+        var url = form.attr('action');
+        
+        $.post(url, {current_video_id: current_video_id}, function (data)
+        {
+            var status = data[0].status;
+            if (status === "0")
+            {
+                var message = "You need to log in to comment at this video.";
+                showMessage_EmergentWindow(message);
+            }
+        }).fail(function () {
+            alert('ERROR #increase-comments-amount-video-ajax');
+        });
+    }
+    
+</script>
+
+<script>
+
+
+    var i = 0;
+
+    function animarComentarios()
+    {
+        var i = 0;
+        
+        var asignarValores = setInterval(function() {
+            
+            commentsGroup[i] = commentId;
+{#            alert(" ... "+commentsGroup[i]+" ... "+i);#}
+            amount_commentsGroup = i;
+    
+            getCommentFromDatabase(commentsGroup, amount_commentsGroup);
+            
+            comentVideoFrame_bottom+=100;
+            
+            var commentVideoFrame = document.getElementById("commentVideoFrame");
+            commentVideoFrame.style.bottom = comentVideoFrame_bottom+"px";
+            
+            
+            $("#commentVideoFrame").append(
+                "<div class='commentVideo'>"+
+                    commentContent+
+                "</div>"
+            );
+    
+            i++;
+        }, 7000);
+    }
+
+    function getCommentFromDatabase(commentsGroup, amount_commentsGroup)
+    {
+        var form = $('#get-comment-about-video-ajax');
+        var url = form.attr('action');
+
+        $.post(url,
+        {
+            current_video_id: current_video_id,
+            commentsGroup: commentsGroup,
+            amount_commentsGroup: amount_commentsGroup
+        },
+        function (data)
+        {
+            commentId = data[0].commentId;
+            commentContent = data[0].commentContent;
+            commentLikes = data[0].commentLikes;
+            commentDislikes = data[0].commentDislikes;
+            commentCreationdate = data[0].commentCreationdate;
+            commentUserId = data[0].userId;
+            commentUserName = data[0].userName;
+            commentVideoId = data[0].videoId;
+            commentVideoAmountComments = data[0].videoAmountComments;
+            
+{#            alert("#get-comment-about-video-ajax: "+amount_commentsGroup);#}
+                        
+        }).fail(function () {
+
+{#            alert("#get-comment-about-video-ajax ERROR");#}
+                        
+        });
+    }
+</script>

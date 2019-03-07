@@ -1,0 +1,63 @@
+<?php
+
+namespace HomeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Keyworduser
+ *
+ * @ORM\Table(name="keywordUser", indexes={@ORM\Index(name="keyword_id", columns={"keyword_id"}), @ORM\Index(name="user_id", columns={"user_id"}), @ORM\Index(name="userIp_id", columns={"userIp_id"})})
+ * @ORM\Entity
+ */
+class Keyworduser
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="keywordUser_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $keyworduserId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="keywordUser_score", type="integer", nullable=false)
+     */
+    private $keyworduserScore;
+
+    /**
+     * @var \Keyword
+     *
+     * @ORM\ManyToOne(targetEntity="Keyword")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="keyword_id", referencedColumnName="keyword_id")
+     * })
+     */
+    private $keyword;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
+     * })
+     */
+    private $user;
+
+    /**
+     * @var \Userip
+     *
+     * @ORM\ManyToOne(targetEntity="Userip")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="userIp_id", referencedColumnName="userIp_id")
+     * })
+     */
+    private $userip;
+
+
+}
+

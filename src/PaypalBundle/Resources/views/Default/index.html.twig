@@ -1,0 +1,91 @@
+{{ form_start(checkout_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'checkout-ajax'|default('form')} }) }}
+{{ form_end(checkout_form_ajax) }}
+
+{{ form_start(post_payment_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'post-payment-ajax'|default('form')} }) }}
+{{ form_end(post_payment_form_ajax) }}
+
+{{ form_start(get_payment_status_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-payment-status-ajax'|default('form')} }) }}
+{{ form_end(get_payment_status_form_ajax) }}
+
+    <input id="paypal_sendAmountToDonateInput"
+            type="text" 
+            name="item_number" 
+            placeholder="$">
+
+        <div id="paypal_button" > 
+
+            <img class="icon_image" style="top: 0px; left: 0px; width: 100%; height: 100%;"
+            src='files/images/icons/configuration/paypal.png' 
+            alt='Mountain View'>
+
+        </div>
+
+<script>
+    
+    $('#paypal_sendAmountToDonateInput')
+    .keypress(function (e) {
+        return solo_numeros(e);
+    });
+    
+    
+    
+    
+    
+{#    var submitPaypalId = document.getElementById("submitPaypalId");
+    submitPaypalId.addEventListener("click", checkout, false);#}
+    
+    function checkout()
+    {
+        {#alert("qwertyuiop");#}
+        var product = document.getElementById("productPaypalId").value;
+        var price = document.getElementById("pricePaypalId").value;
+        
+        var form = $('#checkout-ajax');
+        var url = form.attr('action');
+        
+        $.post(url, {product: product, price: price}, function (data)
+        {
+            alert("checkout");
+        }).fail(function () {
+            alert('ERROR checkout');
+        });
+    }
+    
+    
+    {#checkoutAction#}
+    
+{#    window.onload = postPayment();
+    window.onload = getPaymentStatus();#}
+    
+    function postPayment()
+    {
+        {#enviamos nuestro pedido a paypal#}
+        var form = $('#post-payment-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            {#alert("post-payment-ajax");#}
+        }).fail(function () {
+            alert('ERROR post-payment-ajax');
+        });
+    }
+    
+    function getPaymentStatus()
+    {
+        {#paypal redirecciona a esta ruta#}
+        var form = $('#get-payment-status-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            {#alert("get-payment-status-ajax");#}
+        }).fail(function () {
+            alert('ERROR get-payment-status-ajax');
+        });
+    }
+    
+    
+    
+    
+</script>

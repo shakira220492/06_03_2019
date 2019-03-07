@@ -1,0 +1,30 @@
+<style>
+    #videoDuration {
+        position: absolute;
+        width: 40px;
+        height: 30px;
+        top: 0px;
+        left: 240px;
+        text-align: center;
+        z-index: 1;
+    }
+</style>
+
+<div id='videoDuration' class='animatedButton'>
+    00:00
+</div>
+
+<script>
+    function showDuration()
+    {
+        var v = document.getElementById("my_video");
+        var load_videoData = setInterval(function(){
+            var videoDuration = v.duration;
+            if (videoDuration)
+            {
+                document.getElementById("videoDuration").innerHTML = configureLyricswordTimeWithFormat(videoDuration);
+                clearInterval(load_videoData);
+            }
+        }, 1000);
+    }
+</script>

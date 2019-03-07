@@ -1,0 +1,3 @@
+promote_video_homepage:
+    path:     /PromoteVideo
+    defaults: { _controller: PromoteVideoBundle:Default:index }

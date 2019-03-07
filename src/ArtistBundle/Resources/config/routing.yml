@@ -1,0 +1,3 @@
+artist_homepage:
+    path:     /ArtistBundle
+    defaults: { _controller: ArtistBundle:Default:index }

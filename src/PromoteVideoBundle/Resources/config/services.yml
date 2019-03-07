@@ -1,0 +1,4 @@
+services:
+#    promote_video.example:
+#        class: PromoteVideoBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

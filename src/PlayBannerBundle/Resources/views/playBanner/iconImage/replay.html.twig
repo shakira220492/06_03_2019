@@ -1,0 +1,75 @@
+<div id='replayIconButton' class='animatedButton'
+     style="position: absolute;
+     height: 30px;
+     width: 30px;
+     top: 0px; 
+     left: 280px;
+     z-index: 1;">
+    <img style='
+         width:30px; 
+         height:30px; 
+         opacity: 0.9;
+         z-index: 1;' 
+         src="files/images/icons/playBanner/replay.png" alt="Mountain View">
+</div>
+
+<script>
+    var replayIconButton = document.getElementById("replayIconButton");
+    
+    replayIconButton.addEventListener("click", function () {
+        replayIconFunction();
+    });
+    
+    function replayIconFunction()
+    {
+        if (replay_mode === "true")
+        {
+            replay_mode = "false";
+            replayIconButton.style.opacity = "0.3";
+            
+            dontReplayVideo();
+        } else if (replay_mode === "false")
+        {
+            replay_mode = "true";
+            replayIconButton.style.opacity = "1";
+            
+            replayVideo();
+        }
+    }
+    
+    function dontReplayVideo()
+    {
+        clearInterval(replay);
+    }
+    
+    function replayVideo()
+    {
+        replay = setInterval(function(){
+
+            var v = document.getElementById("my_video");
+
+            var videoDuration = v.duration;
+            var videoCurrentTime = v.currentTime;
+            
+            if (videoDuration === videoCurrentTime)
+            {
+                showVideo(
+                    current_video_id, 
+                    current_video_name, 
+                    current_video_description, 
+                    current_video_image, 
+                    current_video_content, 
+                    current_video_updateDate, 
+                    current_video_amount_views, 
+                    current_video_amount_comments, 
+                    current_video_likes, 
+                    current_video_dislikes, 
+                    current_video_userId, 
+                    current_video_userName
+                );
+            }
+            
+        }, 1000);
+    }
+    
+</script>

@@ -1,0 +1,433 @@
+{{ form_start(get_keywordUsers_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-keywordUsers-ajax'|default('form')} }) }}
+{{ form_end(get_keywordUsers_form_ajax) }}
+
+{{ form_start(get_videosPerKeywordUsers_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-videosPerKeywordUsers-ajax'|default('form')} }) }}
+{{ form_end(get_videosPerKeywordUsers_form_ajax) }}
+
+<div id="dataminingSongs_profile2">
+</div>
+
+<script>
+    function DataminingBundle()
+    {
+        get_KeywordUsers();
+    }
+    
+    function get_KeywordUsers()
+    {
+        var form = $('#get-keywordUsers-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            var amountKeywords = data[0].amountKeywords;
+            
+            for (i=0; i<amountKeywords; i++)
+            {
+                var keywordId = data[i].keywordId;
+                var keywordContent = data[i].keywordContent;
+                var keyworduserScore = data[i].keyworduserScore;
+                var amountKeywords = data[i].amountKeywords;
+                
+                addKeywordList(keywordId, keywordContent, keyworduserScore);
+                get_Videos_KeywordUsers(keywordId, keywordContent);
+            }
+        }).fail(function () {
+            alert('ERROR get-keywordUsers-ajax');
+        });
+    }
+    
+    function get_Videos_KeywordUsers(keywordId, keywordContent)
+    {
+        var form = $('#get-videosPerKeywordUsers-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {keywordId: keywordId, keywordContent: keywordContent}, function (data)
+        {
+            var keywordContent = data[0].keywordContent;
+            var amountVideos = data[0].amountVideos;
+            
+            for (i = 0; i < amountVideos; i++)
+            {
+                
+                    var videoId = data[i].videoId;
+                    var videoName = data[i].videoName;
+                    var videoDescription = data[i].videoDescription;
+                    var videoImage = data[i].videoImage;
+                    var videoContent = data[i].videoContent;
+                    var videoUpdatedate = data[i].videoUpdatedate;
+                    var videoAmountViews = data[i].videoAmountViews;
+                    var videoAmountComments = data[i].videoAmountComments;
+                    var videoLikes = data[i].videoLikes;
+                    var videoDislikes = data[i].videoDislikes;
+                    var userId = data[i].userId;
+                    var userName = data[i].userName;
+                    var keywordId = data[i].keywordId;
+                    var keywordContent = data[i].keywordContent;
+                    var amountVideos = data[i].amountVideos;
+                    var amountKeywordUsers = 0;
+
+                    if (videoLikes === 0 && videoDislikes === 0)
+                    {
+                       if (videoLikes === 0)
+                       {
+                           videoLikes = 1;
+                       }
+                       if (videoDislikes === 0)
+                       {
+                           videoDislikes = 1;
+                       }
+                    }
+
+                    var percentageLikes = parseInt((100 * videoLikes)) / parseInt((videoLikes + videoDislikes));
+                    var percentageDislikes = parseInt((100 * videoDislikes)) / parseInt((videoLikes + videoDislikes));
+
+                    addVideoList(
+                        videoId, 
+                        videoName, 
+                        videoDescription, 
+                        videoImage, 
+                        videoContent, 
+                        videoUpdatedate, 
+                        videoAmountViews, 
+                        videoAmountComments, 
+                        videoLikes, 
+                        videoDislikes, 
+                        userId, 
+                        userName, 
+                        amountVideos, 
+                        amountKeywordUsers,
+                        percentageLikes,
+                        percentageDislikes,
+                        keywordId,
+                        keywordContent
+                    );
+                
+                
+            }
+            
+        }).fail(function () {
+            alert('ERROR get-videosPerKeywordUsers-ajax 11111');
+        });
+    }
+    
+    function addKeywordList(keywordId, keywordContent, keyworduserScore)
+    {
+        $("#dataminingSongs_profile2").append(
+            
+        "<div id='listByDatamining" + keywordId + "' style='opacity: 1;'>"+
+                
+            "<div id='list_listByDatamining" + keywordId + "' class='list_listByDatamining' data-id22='" + keywordId + "'>" +
+                "<table border='0' width='100%'>"+
+                "<tr>"+
+                    "<td width='10%' colspan='6'>"+
+                        "<div class='emergentGuide_listByDatamining' style='text-align:right; width:100%;' id='emergentGuide_listByDatamining" + keywordId + "' data-id3='" + keywordId + "'><br>"+
+                        "</div>"+
+                    "</td>"+
+                "</tr>"+
+
+                "<tr>"+
+                    "<td width='60%'>"+
+                    "<div id='name_listByDatamining" + keywordId + "'>"+keywordContent+
+                    "</div>"+
+                    "</td>"+
+
+                    "<td width='10%'>"+
+                        "<div id='play_listByDatamining" + keywordId + "' class='play_listByDatamining' data-id3='" + keywordId + "'>>"+
+                        "</div>"+
+                    "</td>"+
+
+                    "<td width='10%'>"+
+                        "<div id='openFrame_listByDatamining" + keywordId + "' class='openFrame_listByDatamining'>+"+
+                        "</div>"+
+                        "<div id='closeFrame_listByDatamining" + keywordId + "' class='closeFrame_listByDatamining'>-"+
+                        "</div>"+
+                    "</td>"+
+
+                    "<td width='10%'>"+
+                        "<div id='delete_listByDatamining" + keywordId + "' class='delete_listByDatamining' data-id3='" + keywordId + "'>x"+
+                        "</div>"+
+                    "</td>"+
+
+                "</tr>"+
+                "</table>"+
+            "</div>" +
+        
+            "<div id='videos_listByDatamining" + keywordId + "' class='videos_listByDatamining' data-id2='" + keywordId + "'>" +
+                "<p></p>"+
+
+                "<br>"+
+            "</div>"+
+        "</div>"
+            
+        );
+        
+        $('#list_listByDatamining'+keywordId)
+        .mouseover(function () {
+            var id = $(this).data('id22');
+
+            var openFrame_listByDataminingId = "openFrame_listByDatamining"+id;
+            var closeFrame_listByDataminingId = "closeFrame_listByDatamining"+id;
+            var delete_listByDataminingId = "delete_listByDatamining"+id;
+            var play_listByDataminingId = "play_listByDatamining"+id;
+
+            var openFrame_listByDatamining = document.getElementById(openFrame_listByDataminingId);
+            var closeFrame_listByDatamining = document.getElementById(closeFrame_listByDataminingId);
+            var delete_listByDatamining = document.getElementById(delete_listByDataminingId);
+            var play_listByDatamining = document.getElementById(play_listByDataminingId);
+
+            openFrame_listByDatamining.style.opacity = 1;
+            closeFrame_listByDatamining.style.opacity = 1;
+            delete_listByDatamining.style.opacity = 1;
+            play_listByDatamining.style.opacity = 1;
+
+            var listId = "list_listByDatamining"+id;
+            var list = document.getElementById(listId);
+
+            list.style.backgroundColor = "#ccc";
+        })
+        .mouseout(function () {
+            var id = $(this).data('id22');
+
+            var emergentGuideId = "emergentGuide_listByDatamining"+id;
+            var emergentGuide = document.getElementById(emergentGuideId);
+            emergentGuide.innerHTML = "<br>";
+
+            var listId = "list_listByDatamining"+id;
+            var list = document.getElementById(listId);
+            list.style.backgroundColor = null;
+
+            var openFrame_listByDataminingId = "openFrame_listByDatamining"+id;
+            var closeFrame_listByDataminingId = "closeFrame_listByDatamining"+id;
+            var delete_listByDataminingId = "delete_listByDatamining"+id;
+            var play_listByDataminingId = "play_listByDatamining"+id;
+
+            var openFrame_listByDatamining = document.getElementById(openFrame_listByDataminingId);
+            var closeFrame_listByDatamining = document.getElementById(closeFrame_listByDataminingId);
+            var delete_listByDatamining = document.getElementById(delete_listByDataminingId);
+            var play_listByDatamining = document.getElementById(play_listByDataminingId);
+
+            openFrame_listByDatamining.style.opacity = 0;
+            closeFrame_listByDatamining.style.opacity = 0;
+            delete_listByDatamining.style.opacity = 0;
+            play_listByDatamining.style.opacity = 0;
+        });
+
+
+        $('#play_listByDatamining'+keywordId)
+        .mouseover(function () {
+            var play_listByDataminingId = "play_listByDatamining"+keywordId;
+            var play_listByDatamining = document.getElementById(play_listByDataminingId);
+
+            var emergentGuide_listByDataminingId = "emergentGuide_listByDatamining"+keywordId;
+            var emergentGuide_listByDatamining = document.getElementById(emergentGuide_listByDataminingId);
+
+            emergentGuide_listByDatamining.innerHTML = "Play this list";
+            play_listByDatamining.style.backgroundColor = "#1ab7ea";
+            play_listByDatamining.style.opacity = 1;
+        })
+        .mouseout(function () {
+            var play_listByDataminingId = "play_listByDatamining"+keywordId;
+            var play_listByDatamining = document.getElementById(play_listByDataminingId);
+
+            play_listByDatamining.style.backgroundColor = "#ccc";
+            play_listByDatamining.style.opacity = 0;
+        })
+        .click(function () {
+        });
+
+
+        $('#openFrame_listByDatamining'+keywordId)
+        .mouseover(function () {
+            var openFrame_listByDataminingId = "openFrame_listByDatamining"+keywordId;
+            var openFrame_listByDatamining = document.getElementById(openFrame_listByDataminingId);
+
+            var emergentGuide_listByDataminingId = "emergentGuide_listByDatamining"+keywordId;
+            var emergentGuide_listByDatamining = document.getElementById(emergentGuide_listByDataminingId);
+
+            emergentGuide_listByDatamining.innerHTML = "Hide this list";
+            openFrame_listByDatamining.style.backgroundColor = "#1ab7ea";
+            openFrame_listByDatamining.style.opacity = 1;
+        })
+        .mouseout(function () {
+            var openFrame_listByDataminingId = "openFrame_listByDatamining"+keywordId;
+            var openFrame_listByDatamining = document.getElementById(openFrame_listByDataminingId);
+
+            openFrame_listByDatamining.style.backgroundColor = "#ccc";
+            openFrame_listByDatamining.style.opacity = 0;
+        })
+        .click(function () {
+            var nextId = "videos_listByDatamining" + keywordId;
+            var nextElement = document.getElementById(nextId);
+
+            nextElement.style.maxHeight = nextElement.scrollHeight + "px";
+
+            buttonId = "openFrame_listByDatamining" + keywordId;
+            buttonId2 = "closeFrame_listByDatamining" + keywordId;
+            var currentButton = document.getElementById(buttonId);
+            var currentButton2 = document.getElementById(buttonId2);
+            currentButton.style.display = 'none';
+            currentButton2.style.display = 'block';
+        });
+
+
+        $('#closeFrame_listByDatamining'+keywordId)
+        .mouseover(function () {
+            var closeFrame_listByDataminingId = "closeFrame_listByDatamining"+keywordId;
+            var closeFrame_listByDatamining = document.getElementById(closeFrame_listByDataminingId);
+
+            var emergentGuide_listByDataminingId = "emergentGuide_listByDatamining"+keywordId;
+            var emergentGuide_listByDatamining = document.getElementById(emergentGuide_listByDataminingId);
+
+            emergentGuide_listByDatamining.innerHTML = "Hide this list";
+            closeFrame_listByDatamining.style.backgroundColor = "#1ab7ea";
+            closeFrame_listByDatamining.style.opacity = 1;
+        })
+        .mouseout(function () {
+            var closeFrame_listByDataminingId = "closeFrame_listByDatamining"+keywordId;
+            var closeFrame_listByDatamining = document.getElementById(closeFrame_listByDataminingId);
+
+            closeFrame_listByDatamining.style.backgroundColor = "#ccc";
+            closeFrame_listByDatamining.style.opacity = 0;
+        })
+        .click(function () {
+            var nextId = "videos_listByDatamining" + keywordId;
+            var nextElement = document.getElementById(nextId);
+
+            nextElement.style.maxHeight = null;
+            
+            buttonId = "openFrame_listByDatamining" + keywordId;
+            buttonId2 = "closeFrame_listByDatamining" + keywordId;
+            var currentButton = document.getElementById(buttonId);
+            var currentButton2 = document.getElementById(buttonId2);
+            currentButton.style.display = 'block';
+            currentButton2.style.display = 'none';
+        });
+
+
+        $('#delete_listByDatamining'+keywordId)
+        .mouseover(function () {
+            var delete_listByDataminingId = "delete_listByDatamining"+keywordId;
+            var delete_listByDatamining = document.getElementById(delete_listByDataminingId);
+
+            var emergentGuide_listByDataminingId = "emergentGuide_listByDatamining"+keywordId;
+            var emergentGuide_listByDatamining = document.getElementById(emergentGuide_listByDataminingId);
+
+            emergentGuide_listByDatamining.innerHTML = "Delete this list";
+            delete_listByDatamining.style.backgroundColor = "#1ab7ea";
+            delete_listByDatamining.style.opacity = 1;
+        })
+        .mouseout(function () {
+            var delete_listByDataminingId = "delete_listByDatamining"+keywordId;
+            var delete_listByDatamining = document.getElementById(delete_listByDataminingId);
+
+            delete_listByDatamining.style.backgroundColor = "#ccc";
+            delete_listByDatamining.style.opacity = 0;
+        })
+        .click(function () {
+        });
+        
+
+    }
+    
+    function addVideoList(
+        videoId, 
+        videoName, 
+        videoDescription, 
+        videoImage, 
+        videoContent, 
+        videoUpdatedate, 
+        videoAmountViews, 
+        videoAmountComments, 
+        videoLikes, 
+        videoDislikes, 
+        userId, 
+        userName, 
+        amountVideos, 
+        amountKeywordUsers,
+        percentageLikes,
+        percentageDislikes,
+        keywordId,
+        keywordContent)
+    {
+        $("#videos_listByDatamining"+keywordId+"").append(
+            
+            "<div id='respectlyVideo_listByDatamining"+videoId+"' class='respectlyVideo_listByDatamining' data-id1='"+videoId+"' "+
+            " data-id1='"+videoId+"'"+
+            " data-id2='"+videoName+"'"+
+            " data-id3='"+videoDescription+"'"+
+            " data-id4='"+videoImage+"'"+
+            " data-id5='"+videoContent+"'"+
+            " data-id6='"+videoUpdatedate+"'"+
+            " data-id7='"+videoAmountViews+"'"+
+            " data-id8='"+videoAmountComments+"'"+
+            " data-id9='"+videoLikes+"'"+
+            " data-id10='"+videoDislikes+"'"+
+            " data-id11='"+userId+"'"+
+            " data-id12='"+userName+"'"+
+            " data-id13='"+amountVideos+"'"+
+            " data-id14='"+percentageLikes+"'"+
+            " data-id15='"+percentageDislikes+"' >"+
+            
+                "<table border='0' width='100%' height='50px'>"+
+                "<tr>"+
+                "<td width='75px' height='50px'>"+
+                    "<div id='videoImageFrame_listByDatamining"+videoId+"' class='videoImageFrame_listByDatamining' data-id1='"+videoId+"'>"+
+                    "<img class='videoImageContent_listByDatamining' src='files/"+videoImage+"' alt='Mountain View'>"+
+                    "</div>"+
+                "</td>"+
+                "<td> "+
+                    "<div id='videoName_listByDatamining"+videoId+"' class='videoName_listByDatamining' data-id1='"+videoId+"'>"+
+                    videoName+
+                    "</div>"+
+                "</td>"+
+                "</tr>"+
+                "</table>"+
+                
+            "</div>"
+        );
+        
+        $('#respectlyVideo_listByDatamining'+videoId)
+        .mouseover(function () {
+            var videoId = $(this).data('id1');
+            document.getElementById("respectlyVideo_listByDatamining"+videoId).style.backgroundColor = "#ccc";
+        })
+        .click(function () {
+            var videoId = $(this).data('id1');
+            var videoName = $(this).data('id2');
+            var videoDescription = $(this).data('id3');
+            var videoImage = $(this).data('id4');
+            var videoContent = $(this).data('id5');
+            var videoUpdatedate = $(this).data('id6');
+            var videoAmountViews = $(this).data('id7');
+            var videoAmountComments = $(this).data('id8');
+            var videoLikes = $(this).data('id9');
+            var videoDislikes = $(this).data('id10');
+            var userId = $(this).data('id11');
+            var userName = $(this).data('id12');
+            var amountVideos = $(this).data('id13');
+            var percentageLikes = $(this).data('id14');
+            var percentageDislikes = $(this).data('id15');
+            
+            showVideo(
+                videoId,
+                videoName,
+                videoDescription,
+                videoImage,
+                videoContent,
+                videoUpdatedate,
+                videoAmountViews,
+                videoAmountComments,
+                videoLikes,
+                videoDislikes,
+                userId,
+                userName
+            );
+
+        })
+        .mouseout(function () {
+            var videoId = $(this).data('id1');
+            document.getElementById("respectlyVideo_listByDatamining"+videoId).style.backgroundColor = "transparent";
+        });
+    }
+</script>

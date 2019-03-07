@@ -1,0 +1,199 @@
+<div id="volumeTool">
+
+    <div id="volume_0" class='volume_level animatedButton'>
+    </div>
+    <div id="volume_10" class='volume_level animatedButton'>
+    </div>
+    <div id="volume_20" class='volume_level animatedButton'>
+    </div>
+    <div id="volume_30" class='volume_level animatedButton'>
+    </div>
+    <div id="volume_40" class='volume_level animatedButton'>
+    </div>
+    <div id="volume_50" class='volume_level animatedButton'>
+    </div>
+    <div id="volume_60" class='volume_level animatedButton'>
+    </div>
+    <div id="volume_70" class='volume_level animatedButton'>
+    </div>
+    <div id="volume_80" class='volume_level animatedButton'>
+    </div>
+    <div id="volume_90" class='volume_level animatedButton'>
+    </div>
+    <div id="volume_100" class='volume_level animatedButton'>
+    </div>
+    
+</div>
+
+<script>
+    document.addEventListener("mouseup", changeVolume_status, false);
+    
+    function changeVolume_status()
+    {
+        volume_status = "false";
+    }
+    
+    $('#volume_0')
+    .mouseover(function () {
+        change_volume_level(0, "mouseover");
+    })
+    .mousedown(function () {
+        volume_status = "true";
+    })
+    .click(function () {
+        change_volume_level(0, "click");
+    });
+    
+    $('#volume_10')
+    .mouseover(function () {
+        change_volume_level(10, "mouseover");
+    })
+    .mousedown(function () {
+        volume_status = "true";
+    })
+    .click(function () {
+        change_volume_level(10, "click");
+    });
+    
+    $('#volume_20')
+    .mouseover(function () {
+        change_volume_level(20, "mouseover");
+    })
+    .mousedown(function () {
+        volume_status = "true";
+    })
+    .click(function () {
+        change_volume_level(20, "click");
+    });
+    
+    $('#volume_30')
+    .mouseover(function () {
+        change_volume_level(30, "mouseover");
+    })
+    .mousedown(function () {
+        volume_status = "true";
+    })
+    .click(function () {
+        change_volume_level(30, "click");
+    });
+    
+    $('#volume_40')
+    .mouseover(function () {
+        change_volume_level(40, "mouseover");
+    })
+    .mousedown(function () {
+        volume_status = "true";
+    })
+    .click(function () {
+        change_volume_level(40, "click");
+    });
+    
+    $('#volume_50')
+    .mouseover(function () {
+        change_volume_level(50, "mouseover");
+    })
+    .mousedown(function () {
+        volume_status = "true";
+    })
+    .click(function () {
+        change_volume_level(50, "click");
+    });
+    
+    $('#volume_60')
+    .mouseover(function () {
+        change_volume_level(60, "mouseover");
+    })
+    .mousedown(function () {
+        volume_status = "true";
+    })
+    .click(function () {
+        change_volume_level(60, "click");
+    });
+    
+    $('#volume_70')
+    .mouseover(function () {
+        change_volume_level(70, "mouseover");
+    })
+    .mousedown(function () {
+        volume_status = "true";
+    })
+    .click(function () {
+        change_volume_level(70, "click");
+    });
+    
+    $('#volume_80')
+    .mouseover(function () {
+        change_volume_level(80, "mouseover");
+    })
+    .mousedown(function () {
+        volume_status = "true";
+    })
+    .click(function () {
+        change_volume_level(80, "click");
+    });
+    
+    $('#volume_90')
+    .mouseover(function () {
+        change_volume_level(90, "mouseover");
+    })
+    .mousedown(function () {
+        volume_status = "true";
+    })
+    .click(function () {
+        change_volume_level(90, "click");
+    });
+    
+    $('#volume_100')
+    .mouseover(function () {
+        change_volume_level(100, "mouseover");
+    })
+    .mousedown(function () {
+        volume_status = "true";
+    })
+    .click(function () {
+        change_volume_level(100, "click");
+    });
+    
+    function change_volume_level(level, event)
+    {
+        if (event === "mouseover")
+        {
+            if (volume_status === "true")
+            {            
+                var my_video = document.getElementById("my_video");
+                my_video.volume = level / 100;
+                draw_volumeBar(level);
+            }
+        } else if (event === "click")
+        {
+            var my_video = document.getElementById("my_video");
+            my_video.volume = level / 100;
+            draw_volumeBar(level);
+        }
+    }
+    
+    function draw_volumeBar(level)
+    {   
+        for (i=0; i<=level; i+=10)
+        {
+            var volume_level_id = "volume_"+i;
+            document.getElementById(volume_level_id).style.backgroundColor = "#1ab7ea";
+        }
+        for (j=level; j<=100; j+=10)
+        {
+            var volume_level_id = "volume_"+j;
+            document.getElementById(volume_level_id).style.backgroundColor = "white";
+        }
+    }
+    
+    function volumeIconFunction()
+    {
+        var my_video = document.getElementById("my_video");
+        
+        if (my_video.muted) {
+            my_video.muted = false;
+        } else {
+            my_video.muted = true;
+        }
+    }
+</script>

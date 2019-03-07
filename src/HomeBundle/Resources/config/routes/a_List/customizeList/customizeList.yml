@@ -1,0 +1,5 @@
+#routes:
+
+index_customizeList:
+    path:     /customizeList
+    defaults: { _controller: HomeBundle:a_List:customizeList }

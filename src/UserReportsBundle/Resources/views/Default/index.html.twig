@@ -1,0 +1,29 @@
+{{ form_start(get_views_profile_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-views-profile-ajax'|default('form')} }) }}
+{{ form_end(get_views_profile_form_ajax) }}
+
+Hello World!
+
+<script>
+    
+    function UserReportsBundle()
+    {
+        getViewsProfile();
+    }
+    
+    // pasar a su respectivo bundle; este bundle se activa (refresca) solamente cuando el usuario inicia la sesion... o en un intervalo de 1 hora
+    function getViewsProfile()
+    {
+{#        alert("getViewsProfile");#}
+        
+        var form = $('#get-views-profile-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            {#alert("GET VIEWS PROFILE works great");#}
+        }).fail(function () {
+            alert('GET VIEWS PROFILE ERROR');
+        });
+    }
+    
+</script>

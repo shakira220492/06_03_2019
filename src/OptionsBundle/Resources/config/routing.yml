@@ -1,0 +1,3 @@
+options_homepage:
+    path:     /options
+    defaults: { _controller: OptionsBundle:Default:index }

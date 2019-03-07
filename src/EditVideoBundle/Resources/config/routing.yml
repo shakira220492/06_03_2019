@@ -1,0 +1,3 @@
+edit_video_homepage:
+    path:     /editVideo
+    defaults: { _controller: EditVideoBundle:Default:index }

@@ -1,0 +1,3 @@
+comment_video_homepage:
+    path:     /commentVideo
+    defaults: { _controller: CommentVideoBundle:Default:index }

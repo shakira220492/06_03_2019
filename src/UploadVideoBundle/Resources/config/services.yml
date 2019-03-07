@@ -1,0 +1,4 @@
+services:
+#    upload_video.example:
+#        class: UploadVideoBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

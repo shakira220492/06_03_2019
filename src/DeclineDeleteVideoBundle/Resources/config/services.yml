@@ -1,0 +1,4 @@
+services:
+#    decline_delete_video.example:
+#        class: DeclineDeleteVideoBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

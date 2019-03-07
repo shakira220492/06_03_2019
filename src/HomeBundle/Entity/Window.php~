@@ -1,0 +1,120 @@
+<?php
+
+namespace HomeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Window
+ *
+ * @ORM\Table(name="window", indexes={@ORM\Index(name="user_id", columns={"user_id"})})
+ * @ORM\Entity
+ */
+class Window
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="window_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $windowId;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="window_videoSpeed", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $windowVideospeed;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="window_geolocalization", type="string", length=20, nullable=true)
+     */
+    private $windowGeolocalization;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="window_volume", type="integer", nullable=false)
+     */
+    private $windowVolume;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="window_videoSize", type="integer", nullable=false)
+     */
+    private $windowVideosize;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="window_configurationAreaSize", type="integer", nullable=false)
+     */
+    private $windowConfigurationareasize;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="window_currentVideo", type="integer", nullable=false)
+     */
+    private $windowCurrentvideo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="window_currentList", type="integer", nullable=false)
+     */
+    private $windowCurrentlist;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="window_replay", type="integer", nullable=false)
+     */
+    private $windowReplay;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="window_themeConfigurationArea", type="integer", nullable=false)
+     */
+    private $windowThemeconfigurationarea;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="window_themeSessionArea", type="integer", nullable=false)
+     */
+    private $windowThemesessionarea;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="window_themePresentationArea", type="integer", nullable=false)
+     */
+    private $windowThemepresentationarea;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="window_themeColor", type="integer", nullable=false)
+     */
+    private $windowThemecolor;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
+     * })
+     */
+    private $user;
+
+
+}
+

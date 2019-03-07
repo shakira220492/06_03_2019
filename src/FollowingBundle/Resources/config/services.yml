@@ -1,0 +1,4 @@
+services:
+#    following.example:
+#        class: FollowingBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

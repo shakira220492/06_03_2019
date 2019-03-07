@@ -1,0 +1,3 @@
+show_lyrics_homepage:
+    path:     /ShowLyrics
+    defaults: { _controller: ShowLyricsBundle:Default:index }

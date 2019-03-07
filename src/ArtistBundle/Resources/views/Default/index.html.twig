@@ -1,0 +1,196 @@
+{{ form_start(get_artist_information_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-artist-information-ajax'|default('form')} }) }}
+{{ form_end(get_artist_information_form_ajax) }}
+
+{{ form_start(get_artist_list_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-artist-list-ajax'|default('form')} }) }}
+{{ form_end(get_artist_list_form_ajax) }}
+
+<div id="artistInformation_extraInfo">
+    
+</div>
+
+<div id="artistList">
+    
+</div>
+
+<script>
+    function updateArtistInfo()
+    {
+        getArtistList();
+        getArtistInformation();
+    }
+    
+    function getArtistList()
+    {
+        var form = $('#get-artist-list-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {current_video_userId: current_video_userId}, function (data)
+        {
+            var artistList = document.getElementById("artistList");
+            artistList.innerHTML = "";
+            
+            var amountVideos = data[0].amountVideos;
+            
+            for (i = 0; i < amountVideos; i++)
+            {
+                var videoId = data[i].videoId;
+                var videoName = data[i].videoName;
+                var videoDescription = data[i].videoDescription;
+                var videoImage = data[i].videoImage;
+                var videoContent = data[i].videoContent;
+                var videoUpdatedate = data[i].videoUpdatedate;
+                var videoAmountViews = data[i].videoAmountViews;
+                var videoAmountComments = data[i].videoAmountComments;
+                var videoLikes = data[i].videoLikes;
+                var videoDislikes = data[i].videoDislikes;
+                var userId = data[i].userId;
+                var userName = data[i].userName;
+                var amountVideos = data[i].amountVideos;
+                
+                var percentageLikes = (100 * videoLikes) / (videoLikes + videoDislikes);
+                var percentageDislikes = (100 * videoDislikes) / (videoLikes + videoDislikes);
+                
+                $("#artistList").append(
+                    "<div id='videoFrame_Artist"+videoId+"' style='position: relative; width:100%; cursor: pointer;' "
+                        +" data-id1='"+videoId+"'"
+                        +" data-id2='"+videoName+"'"
+                        +" data-id3='"+videoDescription+"'"
+                        +" data-id4='"+videoImage+"'"
+                        +" data-id5='"+videoContent+"'"
+                        +" data-id6='"+videoUpdatedate+"'"
+                        +" data-id7='"+videoAmountViews+"'"
+                        +" data-id8='"+videoAmountComments+"'"
+                        +" data-id9='"+videoLikes+"'"
+                        +" data-id10='"+videoDislikes+"'"
+                        +" data-id11='"+userId+"'"
+                        +" data-id12='"+userName+"'"
+                        +" data-id13='"+amountVideos+"'"
+                        +" data-id14='"+percentageLikes+"'"
+                        +" data-id15='"+percentageDislikes+"'"
+                        +">"
+
+                        +"<table border='0' width='100%'>"
+                        +"<tr height='20px'>"
+                            +"<td width='170px' height='20px'>"
+                                +"<div id='videoContaint_Artist"+videoId+"' class='videoContaint_Artist'>"
+                                    +" - "+videoName+"<br>"
+                                +"</div>"
+                            +"</td>"
+                        +"</tr>"
+                        +"</table>"
+                
+                    +"</div>"
+                );
+              
+                $('#videoFrame_Artist'+videoId)
+                .click(function () {
+                    var videoId = $(this).data('id1');
+                    var videoName = $(this).data('id2');
+                    var videoDescription = $(this).data('id3');
+                    var videoImage = $(this).data('id4');
+                    var videoContent = $(this).data('id5');
+                    var videoUpdatedate = $(this).data('id6');
+                    var videoAmountViews = $(this).data('id7');
+                    var videoAmountComments = $(this).data('id8');
+                    var videoLikes = $(this).data('id9');
+                    var videoDislikes = $(this).data('id10');
+                    var userId = $(this).data('id11');
+                    var userName = $(this).data('id12');
+                    var amountVideos = $(this).data('id13');
+                    var percentageLikes = $(this).data('id14');
+                    var percentageDislikes = $(this).data('id15');
+    
+                    showVideo(
+                        videoId,
+                        videoName,
+                        videoDescription,
+                        videoImage,
+                        videoContent,
+                        videoUpdatedate,
+                        videoAmountViews,
+                        videoAmountComments,
+                        videoLikes,
+                        videoDislikes,
+                        userId,
+                        userName
+                    );
+                })
+                .mouseover(function () {
+                    var videoId = $(this).data('id1');
+                    var videoContaint_ArtistId = "videoContaint_Artist"+videoId;
+                    var videoContaint_Artist = document.getElementById(videoContaint_ArtistId);
+                    videoContaint_Artist.style.backgroundColor = "#ccc";
+                })
+                .mouseout(function () {
+                    var videoId = $(this).data('id1');
+                    var videoContaint_ArtistId = "videoContaint_Artist"+videoId;
+                    var videoContaint_Artist = document.getElementById(videoContaint_ArtistId);
+                    videoContaint_Artist.style.backgroundColor = "transparent";
+                });
+        
+            }
+        }).fail(function () {
+            alert('ERROR get-artist-information-ajax');
+        });
+    }
+    
+    function getArtistInformation()
+    {
+        var form = $('#get-artist-information-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {current_video_userId: current_video_userId}, function (data)
+        {
+            var userId = data[0].userId;
+            var userName = data[0].userName;
+            var userFirstgivenname = data[0].userFirstgivenname;
+            var userSecondgivenname = data[0].userSecondgivenname;
+            var userFirstfamilyname = data[0].userFirstfamilyname;
+            var userSecondfamilyname = data[0].userSecondfamilyname;
+            var userEmail = data[0].userEmail;
+            var userBiography = data[0].userBiography;
+            var amountFollowers = data[0].amountFollowers;
+            var amountInfluencers = data[0].amountInfluencers;
+            var amountVideos = data[0].amountVideos;
+            var amountLists = data[0].amountLists;
+            
+            var artistInformation_extraInfo = document.getElementById("artistInformation_extraInfo");
+
+            artistInformation_extraInfo.innerHTML = "Followers: "+amountFollowers+"<br>"+
+            "Following: "+amountInfluencers+"<br>"+
+            "Email: "+userEmail+"<br>"+
+            "Biography: "+userBiography+" ";
+            
+        }).fail(function () {
+            alert('ERROR... get-artist-list-ajax');
+        });
+    }
+    
+    $('#artistInformation_extraInfo')
+    .mouseover(function () {
+        var artistInformation_extraInfo = document.getElementById("artistInformation_extraInfo");
+        var artistList = document.getElementById("artistList");
+        artistInformation_extraInfo.style.height = "190px";
+        artistList.style.top = "200px";
+    })
+    .mouseout(function () {
+        var artistInformation_extraInfo = document.getElementById("artistInformation_extraInfo");
+        var artistList = document.getElementById("artistList");
+        artistInformation_extraInfo.style.height = "80px";
+        artistList.style.top = "90px";
+    });
+
+    $('#artistList')
+    .mouseover(function () {
+        var videoContaint_ArtistId = "videoContaint_Artist"+videoId;
+        var videoContaint_Artist = document.getElementById(videoContaint_ArtistId);
+        videoContaint_Artist.style.backgroundColor = "#ccc";
+    })
+    .mouseout(function () {
+        var videoId = $(this).data('id1');
+        var videoContaint_ArtistId = "videoContaint_Artist"+videoId;
+        var videoContaint_Artist = document.getElementById(videoContaint_ArtistId);
+        videoContaint_Artist.style.backgroundColor = "transparent";
+    });
+
+</script>

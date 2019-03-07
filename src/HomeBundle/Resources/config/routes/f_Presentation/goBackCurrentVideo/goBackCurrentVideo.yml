@@ -1,0 +1,3 @@
+index_goBackCurrentVideo:
+    path:     /goBackCurrentVideo
+    defaults: { _controller: HomeBundle:f_Presentation:goBackCurrentVideo }

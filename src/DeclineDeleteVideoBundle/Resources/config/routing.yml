@@ -1,0 +1,3 @@
+decline_delete_video_homepage:
+    path:     /DeclineDeleteVideo
+    defaults: { _controller: DeclineDeleteVideoBundle:Default:index }

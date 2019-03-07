@@ -1,0 +1,119 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+
+    <style>
+        {#esto es para los scrollbar#}
+        
+        /* width */
+        ::-webkit-scrollbar {
+            {#width: 10px;#}
+            width: 0px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            {#background: #888;#}
+            background: transparent; 
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            {#background: #555;#}
+            background: transparent; 
+        }
+    </style>
+
+    <script>
+        
+        var myEvent = window.attachEvent || window.addEventListener;
+        var chkevent = window.attachEvent ? 'onbeforeunload' : 'beforeunload'; /// make IE7, IE8 compitable
+
+        myEvent(chkevent, function(e) { // For >=IE7, Chrome, Firefox
+            var confirmationMessage = 'Are you sure to leave the page?';  // a space
+            (e || window.event).returnValue = confirmationMessage;
+            return confirmationMessage;
+        });
+
+    </script>
+    
+    <body style="overflow: hidden;
+          background-color: white;">
+        
+        
+        {{ form_start(get_stored_field_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-stored-field-ajax'|default('form')} }) }}
+        {{ form_end(get_stored_field_form_ajax) }}
+
+        {{ form_start(get_stored_layout_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-stored-layout-ajax'|default('form')} }) }}
+        {{ form_end(get_stored_layout_form_ajax) }}
+
+        {{ form_start(set_this_field_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'set-this-field-ajax'|default('form')} }) }}
+        {{ form_end(set_this_field_form_ajax) }}
+
+        {{ form_start(set_this_layout_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'set-this-layout-ajax'|default('form')} }) }}
+        {{ form_end(set_this_layout_form_ajax) }}
+
+        {{ form_start(delete_stored_field_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'delete-stored-field-ajax'|default('form')} }) }}
+        {{ form_end(delete_stored_field_form_ajax) }}
+
+        {{ form_start(delete_stored_layout_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'delete-stored-layout-ajax'|default('form')} }) }}
+        {{ form_end(delete_stored_layout_form_ajax) }}
+
+        {{ form_start(update_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'update-ajax'|default('form')} }) }}
+        {{ form_end(update_form_ajax) }}
+
+        {{ form_start(set_usualMode_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'set-usualMode-ajax'|default('form')} }) }}
+        {{ form_end(set_usualMode_form_ajax) }}
+
+        {{ form_start(set_currentMode_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'set-currentMode-ajax'|default('form')} }) }}
+        {{ form_end(set_currentMode_form_ajax) }}
+        {#//#}
+        {{ form_start(get_window_properties_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-window-properties-ajax'|default('form')} }) }}
+        {{ form_end(get_window_properties_form_ajax) }}
+        
+        {{ form_start(set_window_theme_color_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'set-window-theme-color-ajax'|default('form')} }) }}
+        {{ form_end(set_window_theme_color_form_ajax) }}
+        
+        <div id="window_background">
+        </div>
+        
+        <div id='emergentWindow'>
+        </div>
+
+        <div id="presentationArea">
+            {{ include('@Presentation/Default/index.html.twig') }}
+        </div>
+
+        <div id="searchArea">
+            {{ include('@Searchengine/Default/index.html.twig') }}
+        </div>
+        
+        <div id="sessionArea">
+            {{ include('@Session/Default/index.html.twig') }}
+        </div>
+        
+        <div id="configurationArea">
+            {{ include('@Configuration/Default/index.html.twig') }}
+        </div>
+        
+        <div id="configurationBar">
+            {{ include('@Home/home/sub/configurationBar.html.twig') }}
+        </div>
+
+        <div id="playBanner">
+            {{ include('@PlayBanner/Default/index.html.twig') }}
+        </div>
+        
+        <div id="lyricsArea">
+            {{ include('@ShowLyrics/Default/index.html.twig') }}
+        </div>
+        
+    </body>
+    
+{% endblock %}

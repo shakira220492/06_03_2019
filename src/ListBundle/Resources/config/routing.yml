@@ -1,0 +1,3 @@
+list_homepage:
+    path:     /listBundle
+    defaults: { _controller: ListBundle:Default:index }

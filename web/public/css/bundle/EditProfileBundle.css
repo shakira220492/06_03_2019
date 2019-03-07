@@ -1,0 +1,142 @@
+#ContactInfoProfile {
+    position: absolute; 
+    top: 0px;
+    left: 0px;
+    height: 80px;
+    width: 180px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    font-size: smaller;
+    border-bottom-color: gray;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+}
+
+#VideoListProfile {
+    position: absolute; 
+    top: 80px;
+    width: 180px;
+    bottom: 0px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+#VideoEnvironment {
+    position: absolute;
+    left: 180px;
+    right: 0px;
+    bottom: 0px;
+    top: 0px;
+    overflow: hidden;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+#VideoEnvironment_background {
+    position: absolute; 
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background-color: white;
+    opacity: 0.5;
+    z-index: 1;
+}
+
+#VideoEnvironment_content {
+    position: absolute; 
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    overflow: scroll;
+    z-index: 2;
+    text-shadow: 0px 0px 0px white;
+    color: black;
+}
+
+#deleteVideo_environment {
+    display: none;
+}
+
+#editLyrics_environment {
+    display: none;
+}
+
+#editVideo_environment {
+    display: none;
+}
+
+#promoteVideo_environment {
+    display: none;
+}
+
+#advertisingVideo_environment {
+    display: none;
+}
+
+#editProfile_environment {
+    display: none;
+}
+
+
+
+
+
+.keywordEnvironmentToEdit {
+    display:inline-block;
+}
+
+.inputKeywordToEdit {
+    display: inline-block;
+    color: black;
+}
+
+.deleteKeywordToEdit {
+    display: inline-block;
+    color: black;
+    background-color: white;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}
+
+
+
+
+.video_Profile {
+    cursor: pointer; 
+    position: relative;
+    overflow:hidden;
+    border-bottom-color: gray;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+}
+
+
+.videoPortrait_Profile {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow:hidden;
+    height:120px;
+    width:120px;
+    text-align:center;
+    background-color: transparent;
+    color: white;
+    opacity: 1;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+.videoContaint_Profile {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    opacity: 0;
+    transition-property: all;
+    transition-duration: 0.5s;
+    color: white;
+    height: 5px;
+    width: 100%;
+}

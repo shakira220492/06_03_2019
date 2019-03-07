@@ -1,0 +1,131 @@
+decline_delete_video:
+    resource: "@DeclineDeleteVideoBundle/Resources/config/routing.yml"
+    prefix:   /
+
+advertising_video:
+    resource: "@AdvertisingVideoBundle/Resources/config/routing.yml"
+    prefix:   /
+
+promote_video:
+    resource: "@PromoteVideoBundle/Resources/config/routing.yml"
+    prefix:   /
+
+edit_information_video:
+    resource: "@EditInformationVideoBundle/Resources/config/routing.yml"
+    prefix:   /
+
+delete_video:
+    resource: "@DeleteVideoBundle/Resources/config/routing.yml"
+    prefix:   /
+
+pay_u:
+    resource: "@PayUBundle/Resources/config/routing.yml"
+    prefix:   /
+
+show_lyrics:
+    resource: "@ShowLyricsBundle/Resources/config/routing.yml"
+    prefix:   /
+
+edit_lyrics:
+    resource: "@EditLyricsBundle/Resources/config/routing.yml"
+    prefix:   /
+
+paypal:
+    resource: "@PaypalBundle/Resources/config/routing.yml"
+    prefix:   /
+
+user_reports:
+    resource: "@UserReportsBundle/Resources/config/routing.yml"
+    prefix:   /
+
+edit_video:
+    resource: "@EditVideoBundle/Resources/config/routing.yml"
+    prefix:   /
+
+following:
+    resource: "@FollowingBundle/Resources/config/routing.yml"
+    prefix:   /
+
+follower:
+    resource: "@FollowerBundle/Resources/config/routing.yml"
+    prefix:   /
+
+edit_profile:
+    resource: "@EditProfileBundle/Resources/config/routing.yml"
+    prefix:   /
+
+comment_video:
+    resource: "@CommentVideoBundle/Resources/config/routing.yml"
+    prefix:   /
+
+song:
+    resource: "@SongBundle/Resources/config/routing.yml"
+    prefix:   /
+
+upload_video:
+    resource: "@UploadVideoBundle/Resources/config/routing.yml"
+    prefix:   /
+
+cache:
+    resource: "@CacheBundle/Resources/config/routing.yml"
+    prefix:   /
+
+history:
+    resource: "@HistoryBundle/Resources/config/routing.yml"
+    prefix:   /
+
+options:
+    resource: "@OptionsBundle/Resources/config/routing.yml"
+    prefix:   /
+
+session:
+    resource: "@SessionBundle/Resources/config/routing.yml"
+    prefix:   /
+
+presentation:
+    resource: "@PresentationBundle/Resources/config/routing.yml"
+    prefix:   /
+
+play_banner:
+    resource: "@PlayBannerBundle/Resources/config/routing.yml"
+    prefix:   /
+
+premium:
+    resource: "@PremiumBundle/Resources/config/routing.yml"
+    prefix:   /
+
+searchengine:
+    resource: "@SearchengineBundle/Resources/config/routing.yml"
+    prefix:   /
+
+#create:
+#    resource: "@CreateBundle/Resources/config/routing.yml"
+#    prefix:   /
+
+datamining:
+    resource: "@DataminingBundle/Resources/config/routing.yml"
+    prefix:   /
+
+list:
+    resource: "@ListBundle/Resources/config/routing.yml"
+    prefix:   /
+
+artist:
+    resource: "@ArtistBundle/Resources/config/routing.yml"
+    prefix:   /
+
+media:
+    resource: "@MediaBundle/Resources/config/routing.yml"
+    prefix:   /
+
+configuration:
+    resource: "@ConfigurationBundle/Resources/config/routing.yml"
+    prefix:   /
+
+video:
+    resource: "@VideoBundle/Resources/config/routing.yml"
+    prefix:   /
+
+home:
+    resource: "@HomeBundle/Resources/config/routing.yml"
+    prefix:   /

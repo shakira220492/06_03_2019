@@ -1,0 +1,43 @@
+<?php
+
+namespace HomeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Specificlist
+ *
+ * @ORM\Table(name="specificList", indexes={@ORM\Index(name="user_id", columns={"user_id"})})
+ * @ORM\Entity
+ */
+class Specificlist
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="specificList_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $specificlistId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="specificList_name", type="string", length=100, nullable=false)
+     */
+    private $specificlistName;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
+     * })
+     */
+    private $user;
+
+
+}
+

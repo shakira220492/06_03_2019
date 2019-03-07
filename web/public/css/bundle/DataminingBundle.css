@@ -1,0 +1,110 @@
+#dataminingSongs_profile2 {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    overflow-y: scroll;
+    transition-property: all;
+    transition-duration: 0.5s;
+    white-space: nowrap;
+    opacity: 1;
+}
+
+
+
+
+    .list_listByDatamining{
+/*        background-color: #eee;*/
+/*        color: white;*/
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        border: none;
+        outline: none;
+/*        transition: 0.4s;*/
+    }
+    
+/*    .list_listByDatamining:after{
+        font-size: 13px;
+        color: #777;
+        float: right;
+        margin-left: 5px;
+    }*/
+
+    .play_listByDatamining{
+/*        color: white;*/
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        padding: 13px;
+        text-align: center;
+/*        transition: 0.4s;*/
+        opacity: 0;
+        background-color: #ccc;
+    }
+    
+    .openFrame_listByDatamining{
+/*        color: white;*/
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        padding: 13px;
+        text-align: center;
+/*        transition: 0.4s;*/
+        opacity: 0;
+        background-color: #ccc;
+    }
+
+    .closeFrame_listByDatamining{
+/*        color: white;*/
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        padding: 13px;
+        text-align: center;
+/*        transition: 0.4s;*/
+        display: none;
+        opacity: 0;
+        background-color: #ccc;
+    }
+    
+    .delete_listByDatamining{
+/*        color: white;*/
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        padding: 13px;
+        text-align: center;
+/*        transition: 0.4s;*/
+        opacity: 0;
+        background-color: #ccc;
+    }
+    
+    .videos_listByDatamining{
+        padding: 0 18px;
+/*        background-color: royalblue;*/
+/*        color: white;*/
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+    }
+    
+    .videoImageContent_listByDatamining {
+        top: 0px; 
+        left: 0px; 
+        position: relative; 
+        width:70px; 
+        height:45px; 
+        opacity: 0.9; 
+        z-index: 1;
+        cursor: pointer;
+    }
+    
+.respectlyVideo_listByDatamining
+{
+    cursor: pointer;
+}

@@ -1,0 +1,3 @@
+index_informationCurrentVideo:
+    path:     /informationCurrentVideo
+    defaults: { _controller: HomeBundle:f_Presentation:informationCurrentVideo }

@@ -1,0 +1,5 @@
+#routes:
+
+index_listByDate:
+    path:     /listByDate
+    defaults: { _controller: HomeBundle:a_List:listByDate }

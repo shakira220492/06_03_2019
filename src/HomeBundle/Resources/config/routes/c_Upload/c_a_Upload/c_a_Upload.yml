@@ -1,0 +1,7 @@
+index_list:
+    path:     /list
+    defaults: { _controller: HomeBundle:1_List:index }
+    
+#sub_newsFeed:
+#    resource: "sub_newsFeed.yml"
+#    prefix:   /sub_newsFeed

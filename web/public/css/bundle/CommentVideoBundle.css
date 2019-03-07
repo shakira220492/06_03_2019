@@ -1,0 +1,76 @@
+#sendComment{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 55px;
+    right: 15px;
+    z-index: 1;
+    cursor: pointer;
+    text-align: center;
+    z-index: 2;
+}
+
+#inputSection{
+    position: absolute; 
+    top: 0px; 
+    left: 0px;
+    color: #1ab7ea;
+    width: 100%;
+    height: 100%;
+    resize: none;
+    background-color: transparent;
+    transition-property: all;
+    transition-duration: 1s;
+}
+
+#writeACommentSection{
+    position: absolute;
+    background-color: white;
+    color: black;
+    opacity: 0.5;
+    cursor: text;
+    width: 100%;
+    height: 100px;
+    top: 0px;
+    overflow-y: scroll; 
+    color: white; 
+    transition-property: all; 
+    transition-duration: 0.4s;
+    z-index: 1;        
+}
+#commentVideoSection{
+    position: absolute; 
+    width: 100%; 
+    bottom: 0px; 
+    top: 100px; 
+    overflow-y: hidden; 
+/*    color: gray; */
+/*    background-color: #1ab7ea;*/
+    transition-property: all; 
+    transition-duration: 0.5s;
+    z-index: 3;
+    /*display: inline-block;*/
+}
+
+#commentVideoFrame {
+    position: absolute;
+    background-color: transparent;
+    width: 100%;
+    bottom: 0px;
+    height: 100px;
+    transition-property: all; 
+    transition-duration: 0.4s;
+}
+
+.commentVideo {
+    position: relative;
+    width: 100%;
+    height: 100px;
+    overflow: hidden;
+    background-color: transparent;
+    transition-property: all; 
+    transition-duration: 0.4s;
+    border-bottom-color: gray;
+    border-bottom-style: solid;
+    border-bottom-width: calc;
+}

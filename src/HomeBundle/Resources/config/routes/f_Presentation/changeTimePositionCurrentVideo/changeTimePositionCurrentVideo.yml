@@ -1,0 +1,3 @@
+index_changeTimePositionCurrentVideo:
+    path:     /changeTimePositionCurrentVideo
+    defaults: { _controller: HomeBundle:f_Presentation:changeTimePositionCurrentVideo }

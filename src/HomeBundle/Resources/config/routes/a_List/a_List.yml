@@ -1,0 +1,129 @@
+#routes:
+
+index_list:
+    path:     /list
+    defaults: { _controller: HomeBundle:a_List:index }
+
+
+#subroutes:
+
+listByCurrentArtist:
+    resource: "listByCurrentArtist/listByCurrentArtist.yml"
+    prefix:   /listByCurrentArtist
+#title: "repertory of this artist: "
+#description: in this section you can see all songs that the respectly artist own,
+#in the same way, you can see all her/his/their colaborations
+#consulta
+    
+listByCurrentGenre:
+    resource: "listByCurrentGenre/listByCurrentGenre.yml"
+    prefix:   /listByCurrentGenre
+#title: "name of the genre (or genres); for example it should appear something like this: Electronica - progressive house"
+#description: In this part, you can see all the songs (and by datamining as a filter) 
+#that are the most similar about the current song
+#consulta
+
+listByDataMining:
+    resource: "listByDataMining/listByDataMining.yml"
+    prefix:   /listByDataMining
+#title: "your favorite music"
+#description: here user can see all music that are recently played aleatory
+#consulta
+    
+listByTendency:
+    resource: "listByTendency/listByTendency.yml"
+    prefix:   /listByTendency
+#title: "tendences"
+#description: tendences by location (according to: amount of reproductions, amount of comments, and amount of likes)
+#you can choose the tendence according to the country; so you can see tendences from other countries too
+#another thing is that you can choose songs according to a genre, in this way there will be tendences according to the genre
+#so, for example: reggaeton tendences, electronica tendences, etc.
+#you could see tendences that have been according an specific date
+#consulta
+
+listAboutUnknownMusic:
+    resource: "listAboutUnknownMusic/listAboutUnknownMusic.yml"
+    prefix:   /listAboutUnknownMusic
+#title: "hear this music"
+#description: 
+#consulta    
+    
+listByDate:
+    resource: "listByDate/listByDate.yml"
+    prefix:   /listByDate
+#title: "music throught the time"
+#description: in this option you have the chance to filter the music according to a date,
+#so, you have so many options, for example: by year, by month, even by day
+#consulta
+
+customizeList:
+    resource: "customizeList/customizeList.yml"
+    prefix:   /customizeList
+#title: "create a customize list"
+#description: the user can create a list throught three options:
+#    - by certain kind of hastags, so the user will can see music about the respectly hastags
+#    - by influencer who the user follow
+#    - directly the user can choose the music he want to see
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+set_specificList_form:
+    path:     /setSpecificList
+    defaults: { _controller: ListBundle:Default:setSpecificList }
+    methods:  POST
+    
+get_specificList_form:
+    path:     /getSpecificList
+    defaults: { _controller: ListBundle:Default:getSpecificList }
+    methods:  POST
+    
+set_specificListVideo_form:
+    path:     /setSpecificListVideo
+    defaults: { _controller: ListBundle:Default:setSpecificListVideo }
+    methods:  POST
+    
+get_specificListVideo_form:
+    path:     /getSpecificListVideo
+    defaults: { _controller: ListBundle:Default:getSpecificListVideo }
+    methods:  POST
+    
+delete_specificList_form:
+    path:     /deleteSpecificList
+    defaults: { _controller: ListBundle:Default:deleteSpecificList }
+    methods:  POST
+    
+delete_specificListVideo_form:
+    path:     /deleteSpecificListVideo
+    defaults: { _controller: ListBundle:Default:deleteSpecificListVideo }
+    methods:  POST
+        
+edit_specificListVideo_form:
+    path:     /editSpecificListVideo
+    defaults: { _controller: ListBundle:Default:editSpecificListVideo }
+    methods:  POST
+    
+edit_specificList_form:
+    path:     /editSpecificList
+    defaults: { _controller: ListBundle:Default:editSpecificList }
+    methods:  POST
+    
+play_specific_list_form:
+    path:     /playSpecificList
+    defaults: { _controller: ListBundle:Default:playSpecificList }
+    methods:  POST

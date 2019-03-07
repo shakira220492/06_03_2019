@@ -1,0 +1,4 @@
+get_video_lyric_form:
+    path:     /getVideoLyric
+    defaults: { _controller: ShowLyricsBundle:Default:getVideoLyric }
+    methods:  POST

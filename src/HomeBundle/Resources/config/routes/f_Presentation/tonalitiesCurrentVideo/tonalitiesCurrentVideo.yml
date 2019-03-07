@@ -1,0 +1,3 @@
+index_tonalitiesCurrentVideo:
+    path:     /tonalitiesCurrentVideo
+    defaults: { _controller: HomeBundle:f_Presentation:tonalitiesCurrentVideo }

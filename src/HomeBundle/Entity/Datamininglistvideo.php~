@@ -1,0 +1,46 @@
+<?php
+
+namespace HomeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Datamininglistvideo
+ *
+ * @ORM\Table(name="dataminingListVideo", indexes={@ORM\Index(name="video_id", columns={"video_id"}), @ORM\Index(name="dataminingList_id", columns={"dataminingList_id"})})
+ * @ORM\Entity
+ */
+class Datamininglistvideo
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="dataminingListVideo_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $datamininglistvideoId;
+
+    /**
+     * @var \Datamininglist
+     *
+     * @ORM\ManyToOne(targetEntity="Datamininglist")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="dataminingList_id", referencedColumnName="dataminingList_id")
+     * })
+     */
+    private $datamininglist;
+
+    /**
+     * @var \Video
+     *
+     * @ORM\ManyToOne(targetEntity="Video")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="video_id", referencedColumnName="video_id")
+     * })
+     */
+    private $video;
+
+
+}
+

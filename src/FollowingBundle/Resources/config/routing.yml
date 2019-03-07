@@ -1,0 +1,3 @@
+following_homepage:
+    path:     /following
+    defaults: { _controller: FollowingBundle:Default:index }

@@ -1,0 +1,9 @@
+get_keywordUsers_form:
+    path:     /getKeywordUsers
+    defaults: { _controller: DataminingBundle:Default:getKeywordUsers }
+    methods:  POST
+    
+get_videosPerKeywordUsers_form:
+    path:     /getVideosPerKeywordUsers
+    defaults: { _controller: DataminingBundle:Default:getVideosPerKeywordUsers }
+    methods:  POST

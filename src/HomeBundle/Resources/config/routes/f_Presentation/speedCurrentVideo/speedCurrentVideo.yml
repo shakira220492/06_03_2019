@@ -1,0 +1,3 @@
+index_speedCurrentVideo:
+    path:     /speedCurrentVideo
+    defaults: { _controller: HomeBundle:f_Presentation:speedCurrentVideo }

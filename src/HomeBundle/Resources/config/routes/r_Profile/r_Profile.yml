@@ -1,0 +1,76 @@
+edit_video_properties_form:
+    path:     /editVideoProperties
+    defaults: { _controller: EditVideoBundle:Default:editVideoProperties }
+    methods:  POST
+    
+get_video_keywords_form:
+    path:     /getVideoKeywords
+    defaults: { _controller: EditVideoBundle:Default:getVideoKeywords }
+    methods:  POST
+    
+delete_video_keywords_form:
+    path:     /deleteVideoKeywords
+    defaults: { _controller: EditVideoBundle:Default:deleteVideoKeywords }
+    methods:  POST
+
+save_video_keywords_form:
+    path:     /saveVideoKeywords
+    defaults: { _controller: EditVideoBundle:Default:saveVideoKeywords }
+    methods:  POST
+    
+#//////////
+
+delete_video_form:
+    path:     /deleteVideo
+    defaults: { _controller: DeleteVideoBundle:Default:deleteVideo }
+    methods:  POST
+    
+#//////////
+        
+get_videos_to_delete_form:
+    path:     /getVideosToDelete
+    defaults: { _controller: DeclineDeleteVideoBundle:Default:getVideosToDelete }
+    methods:  POST
+    
+decline_delete_video_form:
+    path:     /declineDeleteVideo
+    defaults: { _controller: DeclineDeleteVideoBundle:Default:declineDeleteVideo }
+    methods:  POST
+    
+#//////////
+        
+get_video_list_profile_form:
+    path:     /getVideoListProfile
+    defaults: { _controller: EditProfileBundle:Default:getVideoListProfile }
+    methods:  POST    
+
+update_info_profile_form:
+    path:     /updateInfoProfile
+    defaults: { _controller: EditProfileBundle:Default:updateInfoProfile }
+    methods:  POST
+
+    
+    
+    
+    
+    
+    
+get_followers_profile_form:
+    path:     /getFollowersProfile
+    defaults: { _controller: FollowerBundle:Default:getFollowersProfile }
+    methods:  POST
+    
+get_follower_information_form:
+    path:     /getFollowerInformation
+    defaults: { _controller: FollowerBundle:Default:getFollowerInformation }
+    methods:  POST
+    
+get_following_profile_form:
+    path:     /getFollowingProfile
+    defaults: { _controller: FollowingBundle:Default:getFollowingProfile }
+    methods:  POST
+        
+get_views_profile_form:
+    path:     /getViewsProfile
+    defaults: { _controller: UserReportsBundle:Default:getViewsProfile }
+    methods:  POST

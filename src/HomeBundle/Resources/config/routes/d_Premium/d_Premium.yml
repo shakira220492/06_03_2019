@@ -1,0 +1,7 @@
+index_premium:
+    path:     /premium
+    defaults: { _controller: HomeBundle:d_Premium:index }
+    
+#sub_newsFeed:
+#    resource: "sub_newsFeed.yml"
+#    prefix:   /sub_newsFeed

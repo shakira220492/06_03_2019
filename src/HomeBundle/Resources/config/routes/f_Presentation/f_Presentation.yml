@@ -1,0 +1,168 @@
+index_presentation:
+    path:     /presentation
+    defaults: { _controller: HomeBundle:f_Presentation:index }
+    
+#subroutes:
+
+playPauseCurrentVideo:
+    resource: "playPauseCurrentVideo/playPauseCurrentVideo.yml"
+    prefix:   /playPauseCurrentVideo
+#title: "play pause current video: "
+#description: 
+    
+wirelessCurrentVideo:
+    resource: "wirelessCurrentVideo/wirelessCurrentVideo.yml"
+    prefix:   /wirelessCurrentVideo
+#title: 
+#description: accross this option the user can transfer the respèctly video to another devices as for example:
+#tv, smarthphones, etc.
+
+lyricsCurrentVideo:
+    resource: "lyricsCurrentVideo/lyricsCurrentVideo.yml"
+    prefix:   /lyricsCurrentVideo
+#title: "lyrics"
+#description: lyrics about the current video, this option the owner of the song is who can put
+
+changeTimePositionCurrentVideo:
+    resource: "changeTimePositionCurrentVideo/changeTimePositionCurrentVideo.yml"
+    prefix:   /changeTimePositionCurrentVideo
+#title: "change time"
+#description: in this option the user has the oportunity to change the current time of the respectly video
+
+preVisualizationCurrentVideo:
+    resource: "preVisualizationCurrentVideo/preVisualizationCurrentVideo.yml"
+    prefix:   /preVisualizationCurrentVideo
+#title: "preVisualization"
+#description: in this option the user has the chance to see the video in an specific time
+
+qualityCurrentVideo:
+    resource: "qualityCurrentVideo/qualityCurrentVideo.yml"
+    prefix:   /qualityCurrentVideo
+#title: "qualityCurrentVideo"
+#description: in this option the user has the chance to change the queality of the respectly video
+#the quality is measure by pixeles
+
+speedCurrentVideo:
+    resource: "speedCurrentVideo/speedCurrentVideo.yml"
+    prefix:   /speedCurrentVideo
+#title: "speed"
+#description: is the speed which the video are playing
+
+goBackCurrentVideo:
+    resource: "goBackCurrentVideo/goBackCurrentVideo.yml"
+    prefix:   /goBackCurrentVideo
+#title: "go back"
+#description: in this option the user has the oportunity to go back of the video, as for example
+#10, 20, 30 seconds or more
+
+editKeywordsCurrentVideo:
+    resource: "editKeywordsCurrentVideo/editKeywordsCurrentVideo.yml"
+    prefix:   /editKeywordsCurrentVideo
+#title: "edit keywords"
+#description: in this option the user can add, edit and delete new keywords to the video
+#(this option is only available to the owner of the video)
+
+addSugerencesCurrentVideo:
+    resource: "addSugerencesCurrentVideo/addSugerencesCurrentVideo.yml"
+    prefix:   /addSugerencesCurrentVideo
+#title: "add new videos as suferences"
+#description: the user can add another videos as, sugreneces, which can be positionated along the time as datamining videos
+#(this option is only available to the owner of the video)
+
+editDescriptionCurrentVideo:
+    resource: "editDescriptionCurrentVideo/editDescriptionCurrentVideo.yml"
+    prefix:   /editDescriptionCurrentVideo
+#title: "edit description"
+#description: user can edit description of the current video through this icon (or option)
+#(this option is only available to the owner of the video)
+
+editNameCurrentVideo:
+    resource: "editNameCurrentVideo/editNameCurrentVideo.yml"
+    prefix:   /editNameCurrentVideo
+#title: "edit name"
+#description: user can change the name of the current video through this icon (or option)
+#(this option is only available to the owner of the video)
+
+editLyricsCurrentVideo:
+    resource: "editLyricsCurrentVideo/editLyricsCurrentVideo.yml"
+    prefix:   /editLyricsCurrentVideo
+#title: "edit lyrics"
+#description: user can change and edit the lyrics of the current video through this option
+#(this option is only available to the owner of the video)
+
+deleteCurrentVideo:
+    resource: "deleteCurrentVideo/deleteCurrentVideo.yml"
+    prefix:   /deleteCurrentVideo
+#title: "delete this video"
+#description: the user could delete the respectly video through this option
+#(this option is only available to the owner of the video)
+
+changeScreenShotCurrentVideo:
+    resource: "changeScreenShotCurrentVideo/changeScreenShotCurrentVideo.yml"
+    prefix:   /changeScreenShotCurrentVideo
+#title: "change screenshot"
+#description: the owner of the video has the option to change the screenshot of her/his current video
+#(this option is only available to the owner of the video)
+
+selectListToCurrentVideo:
+    resource: "selectListToCurrentVideo/selectListToCurrentVideo.yml"
+    prefix:   /selectListToCurrentVideo
+#title: "add this video to a list"
+#description: this option allow the user to put the current video in certain list
+
+shareCurrentVideo:
+    resource: "shareCurrentVideo/shareCurrentVideo.yml"
+    prefix:   /shareCurrentVideo
+#title: "share this video"
+#description: through this option the user has the chance to share the current video to another social networks
+
+tonalitiesCurrentVideo:
+    resource: "tonalitiesCurrentVideo/tonalitiesCurrentVideo.yml"
+    prefix:   /tonalitiesCurrentVideo
+#title: "tonalities"
+#description: tonalities, brightness, contrast, and another options to put in the current video are available in this option
+
+informationCurrentVideo:
+    resource: "informationCurrentVideo/informationCurrentVideo.yml"
+    prefix:   /informationCurrentVideo
+#title: "information"
+#description: in this option the user has the oportunity to see so much information about the video
+#along all this information, user could see:
+#name of the song
+#likes, dislikes
+#amount of views
+#tendencies along the time per country, and per specific date
+#countries where the video is most wathed
+
+shoppingCurrentVideo:
+    resource: "shoppingCurrentVideo/shoppingCurrentVideo.yml"
+    prefix:   /shoppingCurrentVideo
+#title: "shopping list"
+#description: here in this option the user has the oportunity to buying things related about the current video
+#in the same way the user can do donations to the main artist or wathever artist he wants
+
+help:
+    resource: "help/help.yml"
+    prefix:   /help
+#title: "help"
+#description: allow user the help to manage this website, in the same way has a option to download a manual PDF
+
+showHideOptions:
+    resource: "showHideOptions/showHideOptions.yml"
+    prefix:   /showHideOptions
+#title: "show hide options"
+#description: there are option which are not soo important, usually these options are hidden
+#so, you can see this options only if you put click in this icon
+#or you can hide this options if you put click in this icon again
+
+premiumSubcription:
+    resource: "premiumSubcription/premiumSubcription.yml"
+    prefix:   /premiumSubcription
+#title: "premium"
+#description: the user has the option to adquire an premium subcription throught this option
+
+announces:
+    resource: "announces/announces.yml"
+    prefix:   /announces
+#title: "announces"
+#description: user can request, and doing simultasnely her/his own announces through this option

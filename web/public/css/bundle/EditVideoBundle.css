@@ -1,0 +1,100 @@
+#videoName_editVideoProperties {
+    position: absolute;
+    top: 30px;
+    width: 100%;
+    height: 30px;
+    background-color: white;
+    border: 0;
+    text-transform: uppercase;
+    align-content: center;
+}
+
+#videoId_editVideoProperties {
+    display: none; 
+}
+
+#videoDescription_editVideoProperties {
+    position: absolute;
+    top: 110px;
+    height: 60px;
+    width: 100%;
+/*    color: gray;*/
+    resize: none;
+    overflow-y: scroll;
+}
+
+#newPortrait_editVideoProperties {
+    position: absolute;
+    top: 220px;
+    overflow:hidden; 
+    width: 100%;
+    height: 120px;
+    text-align:center; 
+    background-color: white;
+}
+
+#newPortrait_editVideoProperties_content {
+    height: 100%;
+    z-index: 1;
+}
+
+#portrait_editVideoProperties {
+    position: absolute; 
+    top: 340px; 
+    left: 0px; 
+    height: 50px;
+}
+
+/*#inputKeyword {
+    color: gray;
+}*/
+
+#keywords_editVideoProperties {
+    position: absolute;
+    top: 480px;
+    overflow:scroll; 
+    height:150px; 
+    width:100%; 
+    text-align:center;
+}
+
+#save_editVideoProperties {
+    position: absolute;
+    top: 640px;
+    cursor:pointer; 
+    background-color: #1ab7ea; 
+    padding:5px; 
+    width:60px; 
+    height:30px;
+}
+
+
+
+#addNewKeyword_Button_EditVideoBundle {
+    position: absolute;
+    display: block;
+    top: 410px;
+    left: 300px;
+    width: 30px;
+    height: 30px;
+}
+
+
+#newKeywordToTheVideo {
+    position: absolute;
+    top: 410px;
+    left: 200px;
+    height: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+

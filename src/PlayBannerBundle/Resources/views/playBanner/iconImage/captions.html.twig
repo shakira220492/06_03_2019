@@ -1,0 +1,32 @@
+<div id='captionsIconButton' class='animatedButton'
+     style="position: absolute;
+     height: 30px;
+     width: 30px;
+     top: 0px;
+     left: 170px;
+     z-index: 1;">
+    <img class="shortIcon" 
+         src="files/images/icons/playBanner/captions.png" alt="Mountain View">
+</div>
+
+<script>
+    var captionsIconButton = document.getElementById("captionsIconButton");
+    captionsIconButton.addEventListener("click", function () {
+        captionsIconFunction();
+    });
+    
+    function captionsIconFunction()
+    {
+        var lyricsArea = document.getElementById("lyricsArea");
+        if (lyricsArea.style.display === "none")
+        {
+            lyricsArea.style.display = "block";
+            document.getElementById("captionsIconButton").style.opacity = "1";
+        }
+        else
+        {
+            lyricsArea.style.display = "none";
+            document.getElementById("captionsIconButton").style.opacity = "0.4";
+        }
+    }
+</script>

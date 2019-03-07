@@ -1,0 +1,300 @@
+    .openFrame{
+/*        color: white;*/
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        padding: 13px;
+        text-align: center;
+/*        transition: 0.4s;*/
+        display: none;
+        opacity: 0;
+        background-color: #ccc;
+    }
+/*    .openFrame:hover{
+        background-color: #1ab7ea;
+    }*/
+
+    
+    .closeFrame{
+/*        color: white;*/
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        padding: 13px;
+        text-align: center;
+/*        transition: 0.4s;*/
+        opacity: 0;
+        background-color: #ccc;
+    }
+/*    .closeFrame:hover{
+        background-color: #1ab7ea;
+    }*/
+    
+    
+    .deleteListVideo{
+/*        color: white;*/
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        padding: 13px;
+        text-align: center;
+/*        transition: 0.4s;*/
+        opacity: 0;
+        background-color: #ccc;
+    }
+/*    .deleteListVideo:hover{
+        background-color: #1ab7ea;
+    }*/
+    
+    
+    .editListVideo{
+/*        color: white;*/
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        padding: 13px;
+        text-align: center;
+/*        transition: 0.4s;*/
+        opacity: 0;
+        background-color: #ccc;
+    }
+/*    .editListVideo:hover{
+        background-color: #1ab7ea;
+    }*/
+
+    
+    .playListVideo{
+/*        color: white;*/
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        padding: 13px;
+        text-align: center;
+/*        transition: 0.4s;*/
+        opacity: 0;
+        background-color: #ccc;
+    }
+/*    .playListVideo:hover{
+        background-color: #1ab7ea;
+    }*/
+    
+    .addToListVideo{
+/*        color: gray;*/
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        padding: 13px;
+        text-align: center;
+/*        transition: 0.4s;*/
+        opacity: 0;
+        background-color: #ccc;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    .replayVideo{
+/*        color: white;*/
+/*        background-color: #1ab7ea;*/
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        padding: 13px;
+        transition: 0.4s;
+        opacity: 0;
+    }
+/*    .replayVideo:hover{
+        background-color: #1ab7ea;
+    }*/
+    
+    .playVideo{
+/*        color: white;*/
+/*        background-color: #1ab7ea;*/
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        padding: 13px;
+        transition: 0.4s;
+        opacity: 0;
+    }
+/*    .playVideo:hover{
+        background-color: #1ab7ea;
+    }*/
+    
+    
+    .deleteVideo{
+/*        color: white;*/
+/*        background-color: #1ab7ea;*/
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        padding: 13px;
+        transition: 0.4s;
+        opacity: 0;
+    }
+/*    .deleteVideo:hover{
+        background-color: #1ab7ea;
+    }*/
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    .accordion22{
+/*        background-color: #eee;*/
+/*        color: white;*/
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        border: none;
+        outline: none;
+/*        transition: 0.4s;*/
+    }
+    
+    
+    .leyendListVideo{
+        color: white;
+        cursor: text;
+        width: 100%;
+        height: 100%;
+        padding: 13px;
+        transition: 0.4s;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    .infoVideo{
+/*        color: white;*/
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        transition: 0.4s;
+        opacity: 0.7;
+    }
+    
+    .contentVideo{
+/*        color: white;*/
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        transition: 0.4s;
+    }
+    
+    .active{
+        background-color: #ccc;
+    }
+
+    .accordion22:after{
+        font-size: 13px;
+        color: #777;
+        float: right;
+        margin-left: 5px;
+    }
+
+
+    .panel22{
+        padding: 0 18px;
+/*        background-color: royalblue;*/
+/*        color: white;*/
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+    }
+
+    
+    
+    
+    
+    
+    
+    #newSpecificListIcon {
+        position: absolute;
+        height: 30px;
+        width: 30px;
+        top: 0px;
+        left: 0px;
+        z-index: 1;
+        transition-property: all;
+        transition-duration: 1s;
+    }
+    
+    #newSpecificListNameIcon {
+        position: absolute;
+        top: 0px;
+        left: 200px;
+        width:30px; 
+        height:30px; 
+        opacity: 0.5;
+        z-index: 1;
+        cursor: pointer;
+    }
+    
+    #newSpecificListName {
+        position: absolute;
+        top: 0px;
+        width: 200px;
+        height: 30px;
+        opacity: 0.5;
+        background-color: white;
+        color: gray;
+        border: 0;
+        align-content: center;
+    }
+    
+    #specificContent-listBundle {
+        overflow-y: scroll;
+        position: absolute;
+        top: 35px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        opacity: 0.8;
+    }
+    
+    .imageVideoContent {
+        top: 0px; 
+        left: 0px; 
+        position: relative; 
+        width:75px; 
+        height:50px; 
+        opacity: 0.9; 
+        z-index: 1;
+        cursor: pointer;
+    }

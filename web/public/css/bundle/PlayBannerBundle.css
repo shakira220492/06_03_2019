@@ -1,0 +1,130 @@
+#volumeTool
+{
+    position: absolute;
+    width: 110px;
+    height: 30px;
+    top: 10px;
+    left: 60px;
+}
+
+#volumeIconButton
+{
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    transition-property: all;
+    transition-duration: 1s;
+}
+
+#playBannerProgress
+{
+    background-color: #1ab7ea;
+    position: absolute;
+    height: 5px;
+    width: 100%; 
+    bottom: 40px;
+    left: 0px;
+    z-index: 5;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+#playBannerProgress_background
+{
+    background-color: white;
+    position: absolute;
+    height: 5px;
+    width: 100%; 
+    bottom: 40px;
+    left: 0px;
+    z-index: 4;
+}
+
+.volume_level
+{
+    position: absolute;
+    background-color: #1ab7ea;
+    width: 10px;
+    height: 10px;
+    cursor: pointer;
+}
+
+#volume_0
+{
+    top: 0px;
+    left: 0px;
+    background-color: #1ab7ea;
+}
+
+#volume_10
+{
+    top: 0px;
+    left: 10px;
+    background-color: #1ab7ea;
+}
+
+#volume_20
+{
+    top: 0px;
+    left: 20px;
+    background-color: #1ab7ea;
+}
+
+#volume_30
+{
+    top: 0px;
+    left: 30px;
+    background-color: #1ab7ea;
+}
+
+#volume_40
+{
+    top: 0px;
+    left: 40px;
+    background-color: #1ab7ea;
+}
+
+#volume_50
+{
+    top: 0px;
+    left: 50px;
+    background-color: #1ab7ea;
+}
+
+#volume_60
+{
+    top: 0px;
+    left: 60px;
+    background-color: #1ab7ea;
+}
+
+#volume_70
+{
+    top: 0px;
+    left: 70px;
+    background-color: #1ab7ea;
+}
+
+#volume_80
+{
+    top: 0px;
+    left: 80px;
+    background-color: #1ab7ea;
+}
+
+#volume_90
+{
+    top: 0px;
+    left: 90px;
+    background-color: #1ab7ea;
+}
+
+#volume_100
+{
+    top: 0px;
+    left: 100px;
+    background-color: #1ab7ea;
+}

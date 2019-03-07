@@ -1,0 +1,99 @@
+<?php
+
+namespace HomeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Video
+ *
+ * @ORM\Table(name="video", indexes={@ORM\Index(name="id_user", columns={"user_id"})})
+ * @ORM\Entity
+ */
+class Video
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="video_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $videoId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="video_name", type="string", length=100, nullable=false)
+     */
+    private $videoName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="video_description", type="string", length=500, nullable=false)
+     */
+    private $videoDescription;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="video_image", type="string", length=255, nullable=false)
+     */
+    private $videoImage;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="video_content", type="string", length=255, nullable=false)
+     */
+    private $videoContent;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="video_updateDate", type="date", nullable=false)
+     */
+    private $videoUpdatedate;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="video_amount_views", type="integer", nullable=false)
+     */
+    private $videoAmountViews;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="video_amount_comments", type="integer", nullable=false)
+     */
+    private $videoAmountComments;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="video_likes", type="integer", nullable=false)
+     */
+    private $videoLikes;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="video_dislikes", type="integer", nullable=false)
+     */
+    private $videoDislikes;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
+     * })
+     */
+    private $user;
+
+
+}
+

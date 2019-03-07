@@ -1,0 +1,44 @@
+<div id="logIn">
+    <div id="logInForm">
+        
+        <input id="user_name" type="text" name="keyword" size="15" placeholder="Username" onpaste='return false'/>
+        
+        <input id="user_password" type="password" name="keyword" size="15" placeholder="Password"/>
+        
+        <div id="btnLogIn" class="animatedButton">
+             <center>LOG IN</center>
+        </div>
+        
+        <div id="btnLogIn2" class="animatedButton">
+             <center>LOG IN</center>
+        </div>
+        
+        <div id="btnSignUp" class="animatedButton">
+             <center>SIGN UP</center>
+        </div>
+        
+    </div>
+    
+    <div id="content_logInUser"
+         style="
+         {#background-color: #DE3152;#}
+         position: absolute;
+         top: 50px;
+         bottom: 0px;
+         left: 0px;
+         right: 0px;         
+         transition-property: all;
+         transition-duration: 0.2s;">
+{#        {{ include('@Profile2/Default/index.html.twig') }}#}
+    </div>
+</div>
+    
+<script>
+    $('#user_name')
+    .keyup(function (e) {
+        return solo_letras(e);
+    })
+    .keypress(function (e) {
+        return solo_letras(e);
+    });
+</script>

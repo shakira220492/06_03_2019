@@ -1,0 +1,3 @@
+advertising_video_homepage:
+    path:     /AdvertisingVideo
+    defaults: { _controller: AdvertisingVideoBundle:Default:index }

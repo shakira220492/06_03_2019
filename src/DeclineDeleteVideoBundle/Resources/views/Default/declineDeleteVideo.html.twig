@@ -1,0 +1,89 @@
+<div>
+    
+    <div id="videoImage_DeclineDeleteVideoBundle">
+        <img id='image_DeclineDeleteVideoBundle'  
+            src='files/Captura de pantalla 2018-12-01 a la(s) 2.12.14 p.m..png' 
+            alt='Mountain View'>
+    </div>
+    
+    <div id="videoInformation_DeclineDeleteVideoBundle">
+        
+    </div>
+    
+    
+    <label id="paragraphWarning1DeclineDeleteVideo">
+        To cancel the request about deleting this video, you need to complete this form: 
+    </label>
+    
+    <label id="labelUserNameDeclineDeleteVideo">Write your username: </label>
+    <input id="inputUserNameDeclineDeleteVideo" type="text" name="username" size="15" placeholder="Username" onpaste='return false'/>
+    
+    <label id="labelPasswordDeclineDeleteVideo">Write your password: </label>
+    <input id="inputPasswordDeclineDeleteVideo" type="password" name="password" size="15" placeholder="Password"/>
+    
+    <p id="paragraphWarning2DeclineDeleteVideo">
+        This video will delete next 30 days, since today<br>
+        Are you sure, you want to cancel the request of deleting this video?
+    </p>
+    
+    <div id="divYesDeclineDeleteVideo">
+        <input id="inputYesDeclineDeleteVideo" type="radio" name="drone" value="yes" >
+        <label id="labelYesDeclineDeleteVideo" for="inputYesDeclineDeleteVideo">Yes</label>
+    </div>
+
+    <div id="divDontDeclineDeleteVideo">
+        <input id="inputDontDeclineDeleteVideo" type="radio" name="drone" value="dont" checked>
+        <label id="labelDontDeclineDeleteVideo" for="inputDontDeclineDeleteVideo">Don't</label>
+    </div>
+    
+    <div id="divSendRequestDeclineDeleteVideo">
+        SEND REQUEST
+    </div>
+    
+</div>
+
+<script>
+    
+    $('#divSendRequestDeclineDeleteVideo')
+    .click(function () {
+        var inputUserNameDeclineDeleteVideo = document.getElementById("inputUserNameDeclineDeleteVideo").value;
+        var inputPasswordDeclineDeleteVideo = document.getElementById("inputPasswordDeclineDeleteVideo").value;
+        var inputYesDeclineDeleteVideo = document.getElementById("inputYesDeclineDeleteVideo");
+        
+        if (inputUserNameDeclineDeleteVideo && inputPasswordDeclineDeleteVideo && inputYesDeclineDeleteVideo.checked === true)
+        {
+            declineDeleteVideo(edit_video_id, inputUserNameDeclineDeleteVideo, inputPasswordDeclineDeleteVideo, session_userId);
+        } else if (inputYesDeclineDeleteVideo.checked === false)
+        {
+            alert("are u agree?, check 'yes'"); // emergent window (short)
+        } else
+        {
+            alert("complete the form");
+        }
+    });
+
+    function declineDeleteVideo(videoId, username, password, userId)
+    {
+        var form = $('#decline-delete-video-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {videoId: videoId, username: username, password: password, userId: userId}, function (data)
+        {
+            var declineDeleteVideo = data[0].declineDeleteVideo;
+            
+            if (declineDeleteVideo === "true")
+            {
+                alert("correct");
+                logOutUser();
+            } else if (declineDeleteVideo === "false")
+            {
+                alert("incorrect");
+            }
+            
+            
+        }).fail(function () {
+            alert('ERROR decline-delete-video-ajax');
+        });
+    }
+    
+</script>

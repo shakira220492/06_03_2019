@@ -1,0 +1,3 @@
+history_homepage:
+    path:     /historyBundle
+    defaults: { _controller: HistoryBundle:Default:index }

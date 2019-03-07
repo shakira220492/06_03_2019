@@ -1,0 +1,46 @@
+<?php
+
+namespace VideoBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * PrivilegeField
+ *
+ * @ORM\Table(name="privilege_field", indexes={@ORM\Index(name="privilege_id", columns={"privilege_id"}), @ORM\Index(name="field_id", columns={"field_id"})})
+ * @ORM\Entity
+ */
+class PrivilegeField
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="privilege_field", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $privilegeField;
+
+    /**
+     * @var \Field
+     *
+     * @ORM\ManyToOne(targetEntity="Field")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="field_id", referencedColumnName="field_id")
+     * })
+     */
+    private $field;
+
+    /**
+     * @var \Privilege
+     *
+     * @ORM\ManyToOne(targetEntity="Privilege")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="privilege_id", referencedColumnName="privilege_id")
+     * })
+     */
+    private $privilege;
+
+
+}
+

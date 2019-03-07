@@ -1,0 +1,3 @@
+user_reports_homepage:
+    path:     /userReports
+    defaults: { _controller: UserReportsBundle:Default:index }

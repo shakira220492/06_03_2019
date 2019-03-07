@@ -1,0 +1,4 @@
+services:
+#    show_lyrics.example:
+#        class: ShowLyricsBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

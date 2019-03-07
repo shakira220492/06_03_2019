@@ -1,0 +1,87 @@
+a_List:
+    resource: "routes/a_List/a_List.yml"
+    prefix:   /a_List
+
+b_Comment:
+    resource: "routes/b_Comment/b_Comment.yml"
+    prefix:   /b_Comment
+    
+d_Premium:
+    resource: "routes/d_Premium/d_Premium.yml"
+    prefix:   /d_Premium
+    
+e_Advertising:
+    resource: "routes/e_Advertising/e_Advertising.yml"
+    prefix:   /e_Advertising
+    
+f_Presentation:
+    resource: "routes/f_Presentation/f_Presentation.yml"
+    prefix:   /f_Presentation
+    
+g_SearchEngine:
+    resource: "routes/g_SearchEngine/g_SearchEngine.yml"
+    prefix:   /g_SearchEngine
+    
+h_Task:
+    resource: "routes/h_Task/h_Task.yml"
+    prefix:   /h_Task
+
+i_Session:
+    resource: "routes/i_Session/i_Session.yml"
+    prefix:   /i_Session
+    
+j_PlayBanner:
+    resource: "routes/j_PlayBanner/j_PlayBanner.yml"
+    prefix:   /j_PlayBanner
+    
+k_Video:
+    resource: "routes/k_Video/k_Video.yml"
+    prefix:   /k_Video
+        
+l_Cache:
+    resource: "routes/l_Cache/l_Cache.yml"
+    prefix:   /l_Cache
+        
+m_Datamining:
+    resource: "routes/m_Datamining/m_Datamining.yml"
+    prefix:   /m_Datamining
+            
+n_UploadVideo:
+    resource: "routes/n_UploadVideo/n_UploadVideo.yml"
+    prefix:   /n_UploadVideo
+    
+p_Artist:
+    resource: "routes/p_Artist/p_Artist.yml"
+    prefix:   /p_Artist
+    
+q_Song:
+    resource: "routes/q_Song/q_Song.yml"
+    prefix:   /q_Song
+    
+r_Profile:
+    resource: "routes/r_Profile/r_Profile.yml"
+    prefix:   /r_Profile
+
+s_History:
+    resource: "routes/s_History/s_History.yml"
+    prefix:   /s_History
+    
+t_Paypal:
+    resource: "routes/t_Paypal/t_Paypal.yml"
+    prefix:   /t_Paypal
+    
+u_EditLyrics:
+    resource: "routes/u_EditLyrics/u_EditLyrics.yml"
+    prefix:   /u_EditLyrics
+    
+v_ShowLyrics:
+    resource: "routes/v_ShowLyrics/v_ShowLyrics.yml"
+    prefix:   /v_ShowLyrics
+
+GUIProperties:
+    resource: "routes/GUIProperties/GUIProperties.yml"
+    prefix:   /GUIProperties
+
+home:
+    path:     /
+    defaults: { _controller: HomeBundle:Home:home }

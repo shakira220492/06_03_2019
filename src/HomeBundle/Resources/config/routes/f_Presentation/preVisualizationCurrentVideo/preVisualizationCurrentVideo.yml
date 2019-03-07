@@ -1,0 +1,3 @@
+index_preVisualizationCurrentVideo:
+    path:     /preVisualizationCurrentVideo
+    defaults: { _controller: HomeBundle:f_Presentation:preVisualizationCurrentVideo }

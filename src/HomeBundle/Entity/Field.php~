@@ -1,0 +1,88 @@
+<?php
+
+namespace HomeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Field
+ *
+ * @ORM\Table(name="field", indexes={@ORM\Index(name="user_id", columns={"user_id"}), @ORM\Index(name="layout_id", columns={"layout_id"})})
+ * @ORM\Entity
+ */
+class Field
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="field_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $fieldId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="field_name", type="string", length=100, nullable=false)
+     */
+    private $fieldName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="field_usualMode", type="string", length=25, nullable=false)
+     */
+    private $fieldUsualmode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="field_currentMode", type="string", length=25, nullable=false)
+     */
+    private $fieldCurrentmode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="field_icon", type="string", length=255, nullable=false)
+     */
+    private $fieldIcon;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="field_emergentWindow", type="string", length=255, nullable=false)
+     */
+    private $fieldEmergentwindow;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="field_contentWindow", type="string", length=255, nullable=false)
+     */
+    private $fieldContentwindow;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
+     * })
+     */
+    private $user;
+
+    /**
+     * @var \Layout
+     *
+     * @ORM\ManyToOne(targetEntity="Layout")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="layout_id", referencedColumnName="layout_id")
+     * })
+     */
+    private $layout;
+
+
+}
+

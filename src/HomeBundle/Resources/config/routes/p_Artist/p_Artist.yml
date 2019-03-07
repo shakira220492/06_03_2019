@@ -1,0 +1,9 @@
+get_artist_information_form:
+    path:     /getArtistInformation
+    defaults: { _controller: ArtistBundle:Default:getArtistInformation }
+    methods:  POST
+    
+get_artist_list_form:
+    path:     /getArtistList
+    defaults: { _controller: ArtistBundle:Default:getArtistList }
+    methods:  POST

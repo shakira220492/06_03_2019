@@ -1,0 +1,89 @@
+{{ form_start(get_history_songs_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-history-songs-ajax'|default('form')} }) }}
+{{ form_end(get_history_songs_form_ajax) }}
+
+<script>
+    function HistoryBundle()
+    {
+        getHistorySongs();
+    }
+
+{#    var historyButton = document.getElementById('historyButton');
+    historyButton.addEventListener("click", getHistorySongs, false);#}
+
+    // pasar a su respectivo bundle; este bundle se activa (refresca) solamente cuando el usuario inicia la sesion... o en un intervalo de 1 hora
+    function getHistorySongs()
+    {
+        var form = $('#get-history-songs-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+{#            var historySongs = document.getElementById("historySongs");
+            historySongs.style.display = "block";
+            historySongs.style.overflow = "scroll";
+            historySongs.style.color = "white";
+            historySongs.innerHTML = "";
+            historySongs.zIndex = "10";#}
+            
+            var amountVideos = data[0].amountVideos;
+            
+            for (i = 0; i < amountVideos; i++)
+            {
+                var videoId = data[i].videoId;
+                var videoName = data[i].videoName;
+                var videoDescription = data[i].videoDescription;
+                var videoImage = data[i].videoImage;
+                var videoContent = data[i].videoContent;
+                var videoUpdatedate = data[i].videoUpdatedate;
+                var videoAmountViews = data[i].videoAmountViews;
+                var videoAmountComments = data[i].videoAmountComments;
+                var videoLikes = data[i].videoLikes;
+                var videoDislikes = data[i].videoDislikes;
+                var userId = data[i].userId;
+                var userName = data[i].userName;
+                var amountVideos = data[i].amountVideos;
+                
+                var percentageLikes = (100 * videoLikes) / (videoLikes + videoDislikes);
+                var percentageDislikes = (100 * videoDislikes) / (videoLikes + videoDislikes);
+                
+                $("#historySongs").append(
+                    "<div id='videoPortrait_History"+videoId+"' style='opacity:0.4; cursor: pointer;' "+
+                    "onclick='showVideo("+videoId+", \""+videoName+"\", \""+videoDescription+"\", \""+videoImage+"\", \""+videoContent+"\", \""+videoUpdatedate+"\", "+videoAmountViews+", "+videoAmountComments+", "+videoLikes+", "+videoDislikes+", "+userId+", \""+userName+"\);' "+
+                    "onmouseover='highlightPortrait(\"videoPortrait_History"+videoId+"\");' "+
+                    "onmouseout='hidePortrait(\"videoPortrait_History"+videoId+"\");'>"
+
+                        +"<table border='0' width='100%'>"
+                        +"<tr height='100px'>"
+                            +"<td width='170px' height='100px'>"
+                                +"<div style='overflow:hidden; height:100px; width:170px; text-align:center; background-color: white;'>"
+                                    +"<img style='"
+                                    +"height:100%; cursor: pointer;"
+                                    +"opacity: 0.9; "
+                                    +"z-index: 1;' "
+                                    +"src='files/"+videoImage+"' "
+                                    +"alt='Mountain View'>"
+                                +"</div>"
+                            +"</td>"
+                            +"<td>"
+                                +"<div>"
+                                    +" <b>"+videoName+"</b><br>"
+                                    +" "+videoUpdatedate+"<br>"
+                                    +" "+videoAmountViews+" views<br>"
+                                    +" "+videoAmountComments+" comments<br>"
+                                    +" <div style='height: 5px; width: 100%;'>"
+                                        +"<div style='display: inline-block; height: 5px; width: "+percentageLikes+"%; background-color: blue; '></div>"
+                                        +"<div style='display: inline-block; height: 5px; width: "+percentageDislikes+"%; background-color: red; '></div>"
+                                    +" </div>"
+                                +"</div>"
+                            +"</td>"
+                        +"</tr>"
+                        +"</table>"
+                    +"</div>"
+                );
+            }
+        }).fail(function () {
+            alert('ERROR #get-history-songs-ajax');
+        });
+    }
+    
+</script>

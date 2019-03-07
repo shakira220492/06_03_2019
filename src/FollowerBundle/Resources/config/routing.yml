@@ -1,0 +1,3 @@
+follower_homepage:
+    path:     /follower
+    defaults: { _controller: FollowerBundle:Default:index }

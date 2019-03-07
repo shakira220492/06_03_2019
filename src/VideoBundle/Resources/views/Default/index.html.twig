@@ -1,0 +1,604 @@
+{{ form_start(read_lyrics_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'read-lyrics-ajax'|default('form')} }) }}
+{{ form_end(read_lyrics_form_ajax) }}
+
+{{ form_start(get_closedCaption_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-closedCaption-ajax'|default('form')} }) }}
+{{ form_end(get_closedCaption_form_ajax) }}
+
+{{ form_start(set_closedCaption_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'set-closedCaption-ajax'|default('form')} }) }}
+{{ form_end(set_closedCaption_form_ajax) }}
+
+{{ form_start(delete_specific_closedCaption_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'delete-specific-closedCaption-ajax'|default('form')} }) }}
+{{ form_end(delete_specific_closedCaption_form_ajax) }}
+
+<style>
+
+    #startTimeMenu {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 50px;
+        height: 30px;
+        color: black;
+    }
+    
+    #endTimeMenu {
+        position: absolute;
+        top: 10px;
+        left: 70px;
+        width: 50px;
+        height: 30px;
+        color: black;
+    }
+    
+    #closedCaptionDiv {
+        position: absolute;
+        top: 10px;
+        left: 130px;
+        right: 50px;
+        height: 30px;
+        color: black;
+    }
+    
+    #startCaptionInput {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+    
+    #endCaptionInput {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+    
+    #closedCaptionInput {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+    
+    #doneClosedCaptionButton {
+        position: absolute;
+        top: 10px; 
+        right: 10px; 
+        cursor: pointer;
+    }
+    
+    
+    #createClosedCaptionDiv {
+        position: absolute;
+        background-color: white;
+        opacity: 0.5;
+        width: 100%;
+        height: 50px;
+        top: 0px;
+        left: 0px;
+        z-index: 5;
+        transition-duration: 1s;
+        transition: all;
+    }
+    
+    #previsualizaClosedCaptionDiv {
+        position: absolute;
+{#        background-color: slategrey;#}
+        width: 100%;
+        height: 300px;
+        top: 100px;
+        left: 0px;
+        overflow-y: scroll;
+        z-index: 5;
+        transition-duration: 1s;
+        transition: all;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    .unityClosedCaption:hover {
+        background-color: white;
+        opacity: 0.6;
+        color: black;
+        transition: 0.4s;
+        transition-property: all;
+    }
+    
+    .deleteClosedCaption:hover {
+        background-color: orange;
+        transition: 0.4s;
+        transition-property: all;
+    }
+    
+    .unityClosedCaption {
+        position: relative;
+        width: 100%;
+        height: 30px;
+        left: 0px;
+        display: inline-block;
+    }
+    
+    .lyricswordStarttime {
+        position: absolute;
+        cursor: pointer; 
+{#        display: inline-block; #}
+        opacity:0.5;
+        width: 40px;
+        top: 0px;
+        left: 0px;
+    }
+    
+    .lyricswordEndtime {
+        position: absolute;
+        cursor: pointer; 
+{#        display: inline-block; #}
+        opacity:0.5;
+        width: 40px;
+        top: 0px;
+        left: 50px;
+    }
+    
+    .lyricswordContent {
+        position: absolute;
+        cursor: pointer; 
+{#        display: inline-block; #}
+        opacity:0.5;
+        width: 170px;
+        top: 0px;
+        overflow: hidden;
+        left: 100px;
+    }
+    
+    .deleteClosedCaption {
+        position: absolute; 
+        cursor: pointer; 
+        opacity:0; 
+        width:30px; 
+        height:30px; 
+        right:10px; 
+        top: 0px;
+    }
+</style>
+
+
+<div id="createClosedCaptionDiv">
+                
+    <select id="startTimeMenu">
+    </select>
+                
+    <select id="endTimeMenu">
+    </select>
+        
+    <div id="closedCaptionDiv">
+        <input type="text" id="closedCaptionInput" placeholder="closed caption content"/>
+    </div>
+        
+    <div id="doneClosedCaptionButton">
+        <img style="width:30px; height:30px;" 
+        src="files/images/icons/video/ok.png" 
+        alt="Mountain View">
+    </div>
+
+</div>
+
+<div id="previsualizaClosedCaptionDiv">
+</div>
+
+<script>
+    
+    {# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #}
+    {# dibujar los subtitulos sobre el respectivo div "previsualizaClosedCaptionDiv" #}
+    
+    var idVideo = 1;
+    window.onload = drawThoseCloseCaption(idVideo);
+    var v = document.getElementById("my_video");
+    
+    var doneClosedCaptionButton = document.getElementById("doneClosedCaptionButton");
+    doneClosedCaptionButton.addEventListener("click", insertThisCloseCaption, false);
+    
+    function configureLyricswordTime(time) {
+        var minutes = parseInt(time / 60, 10);
+        var seconds = time % 60;
+        var minutesString = "";
+        var secondsString = "";
+        
+        if (minutes<=9)
+        {
+            minutesString = "0"+minutes;
+        }
+        else
+        {
+            minutesString = ""+minutes;
+        }
+
+        if (seconds<=9)
+        {
+            secondsString = "0"+seconds;
+        }
+        else
+        {
+            secondsString = ""+seconds;
+        }
+        
+        var newValue = minutesString + ":" + secondsString;
+        return newValue;
+    }
+    
+    function deleteClosedCaptionFunction(lyricswordId) {
+        var respectlyFormId = document.getElementById("emergentWindow");
+
+        respectlyFormId.style.width = "100%";
+        respectlyFormId.style.height = "100%";
+        respectlyFormId.style.opacity = "0.9";
+        respectlyFormId.style.zIndex = "20";
+        respectlyFormId.style.position = "absolute";
+
+        respectlyFormId.innerHTML = 
+                "<center>"+
+                "<div style='background-color: gray; position: absolute; height: 100%; width:100%; padding: 200px;'>"+
+                "<table width='250px' border='0'>"+
+                "<tr>"+
+                    "<td colspan='2' align='right'>"+
+                    "<div id='closeVideoListWindow' style='cursor:pointer; background-color:red; padding:5px; opacity: 0.5; color: white; width:40px; height:30px;'><center>X</center></div>"+
+                    "</td>"+
+                "</tr>"+
+                "<tr>"+
+                    "<td colspan='2'>"+
+                    "<br>Are you sure you want to delete this list?<br><br>"+
+                    "</td>"+
+                "</tr>"+
+                "<tr>"+
+                    "<td>"+
+                    "<center><div id='yesVideoListWindow' style='cursor:pointer; background-color:white; padding:5px; opacity: 0.5; width:40px; height:30px;'>YES</div></center>"+
+                    "</td>"+
+                    "<td>"+
+                    "<center><div id='notVideoListWindow' style='cursor:pointer; background-color:white; padding:5px; opacity: 0.5; width:40px; height:30px;'>NOT</div></center>"+
+                    "</td>"+
+                "</tr>"+
+                "</table>"+
+                "</div>"+
+                "</center>";
+
+                $('#closeVideoListWindow').click(function () {
+                var respectlyFormId = document.getElementById("emergentWindow");
+
+                    respectlyFormId.style.width = "100%";
+                    respectlyFormId.style.height = "100%";
+                    respectlyFormId.style.opacity = "0";
+                    respectlyFormId.style.zIndex = "1";
+                    respectlyFormId.style.position = "absolute";
+
+                    respectlyFormId.innerHTML = "";
+                });
+                $('#yesVideoListWindow').click(function () {
+
+                    delete_specificClosedCaption(lyricswordId);
+
+                    respectlyFormId.style.width = "100%";
+                    respectlyFormId.style.height = "100%";
+                    respectlyFormId.style.opacity = "0";
+                    respectlyFormId.style.zIndex = "1";
+                    respectlyFormId.style.position = "absolute";
+                    respectlyFormId.innerHTML = "";
+                });
+                $('#notVideoListWindow').click(function () {
+                var respectlyFormId = document.getElementById("emergentWindow");
+
+                    respectlyFormId.style.width = "100%";
+                    respectlyFormId.style.height = "100%";
+                    respectlyFormId.style.opacity = "0";
+                    respectlyFormId.style.zIndex = "1";
+                    respectlyFormId.style.position = "absolute";
+
+                    respectlyFormId.innerHTML = "";
+                });
+    }
+    
+    function delete_specificClosedCaption(lyricswordId)
+    {
+        var form = $('#delete-specific-closedCaption-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {lyricswordId: lyricswordId}, function (data)
+        {
+            eraseThisCloseCaption(lyricswordId);
+        }).fail(function () {
+{#            alert('ERROR... DELETE SPECIFIC CLOSED CAPTION');#}
+        });
+    }
+    
+    function eraseThisCloseCaption(lyricswordId)
+    {
+        var id = "unityClosedCaption" + lyricswordId;
+        
+        var element = document.getElementById(id);
+        
+        element.style.display = "none";
+    }
+    
+    function insertThisCloseCaption()
+    {
+        var form = $('#set-closedCaption-ajax');
+        var url = form.attr('action');
+        
+        var startTimeMenu = document.getElementById("startTimeMenu");
+        var selectedStartTimeMenu = startTimeMenu.options[startTimeMenu.selectedIndex].text;
+        var startTime = selectedStartTimeMenu;
+        
+        var endTimeMenu = document.getElementById("endTimeMenu");
+        var selectedEndTimeMenu = endTimeMenu.options[endTimeMenu.selectedIndex].text;
+        var endTime = selectedEndTimeMenu;
+        
+        var closeCaptionContent = document.getElementById("closedCaptionInput").value;
+        
+        
+        
+        
+            
+        var startTime_value = changeToInt(startTime);
+        var endTime_value = changeToInt(endTime);
+        
+        if(!startTime || !endTime || !closeCaptionContent)
+        {
+            alert("you need to introduce all information");
+        } else
+        {
+            
+            $.post(url, {
+                        startTime: startTime_value,
+                        endTime: endTime_value,
+                        closeCaptionContent: closeCaptionContent}, function (data)
+            {
+                var lyricswordId = data[0].lyricswordId;
+                var lyricsline = data[0].lyricsline;
+                var lyricswordContent = data[0].lyricswordContent;
+                var lyricswordEndtime = data[0].lyricswordEndtime;
+                var lyricswordStarttime = data[0].lyricswordStarttime;
+                
+                var endtime = configureLyricswordTime(lyricswordEndtime);
+                var starttime = configureLyricswordTime(lyricswordStarttime);
+                
+                drawThisCloseCaption(lyricswordId, starttime, endtime, lyricswordContent);
+            }).fail(function () {
+                alert('ERROR');
+            });            
+        }
+    }
+    
+    function changeToInt(time)
+    {
+        var minutes = time.substring(0, 2);
+        var seconds = time.substring(3, 5);
+        
+        var minutesInt = parseInt(minutes);
+        var secondsInt = parseInt(seconds);
+        
+        var newValue = minutesInt * 60 + secondsInt; 
+        
+        return newValue;
+    }
+    
+    // when we added only one caption
+    function drawThisCloseCaption(lyricswordId, lyricswordStarttime, lyricswordEndtime, lyricswordContent)
+    {
+        $("#previsualizaClosedCaptionDiv").append(
+            "<div class='unityClosedCaption' id='unityClosedCaption" + lyricswordId + "' data-id4='" + lyricswordId + "' onmouseover='showDeleteClosedCaption("+lyricswordId+");' onmouseout='hideDeleteClosedCaption("+lyricswordId+");'>"+
+                "<div class='lyricswordStarttime' id='lyricswordStarttime" + lyricswordId + "'> " + lyricswordStarttime + " </div>"+
+                "<div class='lyricswordEndtime' id='lyricswordEndtime" + lyricswordId + "'> " + lyricswordEndtime + " </div>"+
+                "<div class='lyricswordContent' id='lyricswordContent" + lyricswordId + "'> " + lyricswordContent + " </div>"+
+                "<div class='deleteClosedCaption' id='deleteClosedCaption" + lyricswordId + "' onclick='deleteClosedCaptionFunction("+lyricswordId+");'><center>X</center></div>"+
+            "</div>"
+        );
+    }
+    
+    // at the moment of loading our website
+    function drawThoseCloseCaption(idVideo)
+    {
+        var previsualizaClosedCaptionDiv = document.getElementById("previsualizaClosedCaptionDiv");
+        previsualizaClosedCaptionDiv.innerHTML = "";
+        
+        var form = $('#get-closedCaption-ajax');
+        var url = form.attr('action');
+        
+                
+            $.post(url, {idVideo: idVideo}, function (data)
+            {
+
+                var amountLines = data[0].amountLines;
+
+                var i = 0;
+                while(i < amountLines)
+                {
+                    
+                    var lyricslineId = data[i].lyricslineId;
+                    var lyricswordId = data[i].lyricswordId;
+                    {#var lyricswordContent = data[i].lyricswordContent;#}
+                    var lyricswordContent = " ... ";
+                    var lyricswordStarttime = data[i].lyricswordStarttime;
+                    var lyricswordEndtime = data[i].lyricswordEndtime;
+                    var videoId = data[i].videoId;
+                    
+                    var newlyricswordStarttime = configureLyricswordTime(lyricswordStarttime);
+                    var newlyricswordEndtime = configureLyricswordTime(lyricswordEndtime);
+                    
+                    $("#previsualizaClosedCaptionDiv").append(
+                        "<div class='unityClosedCaption' id='unityClosedCaption" + lyricswordId + "' data-id4='" + lyricswordId + "' onmouseover='showDeleteClosedCaption("+lyricswordId+");' onmouseout='hideDeleteClosedCaption("+lyricswordId+");'>"+
+                            "<div class='lyricswordStarttime' id='lyricswordStarttime" + lyricswordId + "'> " + newlyricswordStarttime + " </div>"+
+                            "<div class='lyricswordEndtime' id='lyricswordEndtime" + lyricswordId + "'> " + newlyricswordEndtime + " </div>"+
+                            "<div class='lyricswordContent' id='lyricswordContent" + lyricswordId + "'> " + lyricswordContent + " </div>"+
+                            "<div class='deleteClosedCaption' id='deleteClosedCaption" + lyricswordId + "' onclick='deleteClosedCaptionFunction("+lyricswordId+");'><center>X</center></div>"+
+                        "</div>"
+                    );
+                    
+                    i++;
+                }
+                
+            }).fail(function () {
+{#                alert('ERROR');#}
+            });
+        
+    }
+
+
+    {# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #}
+    {# mostrar los subtitulos en el video principal #}
+    
+    var v_2 = document.getElementById("my_video");
+    v_2.onload = playCaptions();
+    
+    var i = 0;
+    function playCaptions()
+    {
+        var form = $('#read-lyrics-ajax');
+        var url = form.attr('action');
+
+        var idVideo = 1;
+
+        $.post(url, {idVideo: idVideo}, function (data)
+        {
+            var i = 0;
+            var line = 0;
+            var position = 0;
+            var amountRegisters = data[0].amountLines;
+
+            var v = document.getElementById("my_video");
+            var videoDuration_2 = v.duration;
+                    
+                var closedCaptionArea_248 = document.getElementById("closedCaptionArea");
+                    
+                var animatedLyrics_2 = setInterval(function(){
+                    
+                    position+=10;
+                    currentTime = v.currentTime;
+
+                    console.log("video's current time "+currentTime);
+
+                    console.log("i: " + i);
+                    console.log("amountRegisters: " + amountRegisters);
+                    
+                    if (i === amountRegisters)
+                    {
+                        clearTimeout(animatedLyrics_2);
+                        closedCaptionArea_248.innerHTML = "--";
+                    }
+                    else
+                    {
+                        var lyricslineId = data[i].lyricslineId;
+                        var lyricswordId = data[i].lyricswordId;
+                        {#var lyricswordContent = data[i].lyricswordContent;#}
+                        var lyricswordContent = " ... ";
+                        var lyricswordStarttime = data[i].lyricswordStarttime;
+                        var lyricswordEndtime = data[i].lyricswordEndtime;
+                        var videoId = data[i].videoId;
+                        var amountLines = data[i].amountLines;
+                        
+                        closedCaptionArea_248.innerHTML = lyricswordContent + "<br>";
+                        
+                        if (lyricswordStarttime <= currentTime && currentTime <= lyricswordEndtime)
+                        {
+                            var v_2 = document.getElementById("my_video");
+                            v_2.addEventListener("pause", stopVideoKaraoke, false);
+
+                            function stopVideoKaraoke()
+                            {
+                                clearTimeout(animatedLyrics_2);
+                            }
+                        } else
+                        {
+                            i++;
+                        }
+                    }
+                    if (currentTime >= videoDuration_2)
+                    {
+                        alert("la funcion expiró!");
+                        clearTimeout(animatedLyrics_2);
+                    }
+                }, 1000);
+                
+        }).fail(function () {
+            alert('ERROR');
+        });
+    }
+
+    {# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #}
+    {# hacer visible e invisible el boton "x" #}
+    
+    function showDeleteClosedCaption(id)
+    {
+        var deleteClosedCaption = "deleteClosedCaption" + id;
+        var deleteClosedCaptionBtn = document.getElementById(deleteClosedCaption);
+        deleteClosedCaptionBtn.style.opacity = "1";
+    }
+    
+    function hideDeleteClosedCaption(id)
+    {
+        var deleteClosedCaption = "deleteClosedCaption" + id;
+        var deleteClosedCaptionBtn = document.getElementById(deleteClosedCaption);
+        deleteClosedCaptionBtn.style.opacity = "0";
+    }
+    
+    {# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #}
+    {# dibujar el menu desplegable para el starttime y el endtime #}
+        
+    var startTimeMenu = document.getElementById("startTimeMenu");
+    startTimeMenu.addEventListener("click", drawStartTimeMenu, false);
+    startTimeMenu.addEventListener("click", drawEndTimeMenu, false);
+        
+    function drawStartTimeMenu()
+    {
+        var v = document.getElementById("my_video");
+        var videoDuration = v.duration;
+        var videoDurationInteger = parseInt(videoDuration);
+        
+        var startTimeMenu = document.getElementById("startTimeMenu");
+        startTimeMenu.innerHTML = "";
+        
+        console.log("drawStartTimeMenu FUNCTION"+videoDuration);
+        
+        var i = 0;
+        while(i <= videoDurationInteger)
+        {
+            
+            var configuratedTime = configureLyricswordTime(i);
+
+            $("#startTimeMenu").append(
+                "<option id='startTimeMenu" + i + "' value=" + configuratedTime + ">" + configuratedTime + "</option>"
+            );
+
+            i++;
+        }
+    }
+    
+    function drawEndTimeMenu()
+    {
+        var v = document.getElementById("my_video");
+        var videoDuration = v.duration;
+        var videoDurationInteger = parseInt(videoDuration);
+        
+        var endTimeMenu = document.getElementById("endTimeMenu");
+        endTimeMenu.innerHTML = "";
+        
+        console.log("drawEndTimeMenu FUNCTION"+videoDuration);
+        
+        var i = 0;
+        while(i <= videoDurationInteger)
+        {
+            
+            var configuratedTime = configureLyricswordTime(i);
+
+            $("#endTimeMenu").append(
+                "<option id='endTimeMenu" + i + "' value=" + configuratedTime + ">" + configuratedTime + "</option>"
+            );
+
+            i++;
+        }
+    }
+    
+</script>

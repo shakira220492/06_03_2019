@@ -1,0 +1,5 @@
+##routes:
+
+index_listByTendency:
+    path:     /listByTendency
+    defaults: { _controller: HomeBundle:a_List:listByTendency }

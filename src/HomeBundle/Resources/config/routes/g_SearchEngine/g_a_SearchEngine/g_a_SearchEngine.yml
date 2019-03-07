@@ -1,0 +1,3 @@
+index_searchEngine:
+    path:     /searchEngine
+    defaults: { _controller: HomeBundle:g_SearchEngine:index }

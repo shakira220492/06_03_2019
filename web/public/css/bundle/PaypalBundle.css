@@ -1,0 +1,19 @@
+#paypal_sendAmountToDonateInput {
+    position: absolute;
+    width: 100px;
+    height: 30px;
+    top: 0px;
+    left: 0px;
+    color: black;
+}
+
+#paypal_button {
+    position: absolute;
+/*    background-color: white;*/
+    top: 0px;
+    left: 110px;
+    width: 180px;
+    height: 30px;
+/*    color: black;*/
+/*    border-radius: 5px;*/
+}

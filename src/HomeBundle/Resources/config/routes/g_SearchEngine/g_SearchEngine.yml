@@ -1,0 +1,13 @@
+index_searchEngine:
+    path:     /searchEngine
+    defaults: { _controller: HomeBundle:g_SearchEngine:index }
+    
+search_keyword_form:
+    path:     /searchKeyword
+    defaults: { _controller: SearchengineBundle:Default:searchKeyword }
+    methods:  POST
+    
+store_current_keywords_form:
+    path:     /storeCurrentKeywords
+    defaults: { _controller: SearchengineBundle:Default:storeCurrentKeywords }
+    methods:  POST    

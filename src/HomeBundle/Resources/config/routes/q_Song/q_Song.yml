@@ -1,0 +1,24 @@
+get_similar_songs_form:
+    path:     /getSimilarSongs
+    defaults: { _controller: SongBundle:Default:getSimilarSongs }
+    methods:  POST
+    
+get_specific_information_video_form:
+    path:     /getSpecificInformationVideo
+    defaults: { _controller: SongBundle:Default:getSpecificInformationVideo }
+    methods:  POST
+    
+get_similar_playlist_form:
+    path:     /getSimilarPlaylist
+    defaults: { _controller: SongBundle:Default:getSimilarPlaylist }
+    methods:  POST
+    
+show_similar_playlist_form:
+    path:     /showSimilarPlaylist
+    defaults: { _controller: SongBundle:Default:showSimilarPlaylist }
+    methods:  POST
+    
+increase_amount_views_form:
+    path:     /increaseAmountViews
+    defaults: { _controller: SongBundle:Default:increaseAmountViews }
+    methods:  POST

@@ -1,0 +1,3 @@
+index_shareCurrentVideo:
+    path:     /shareCurrentVideo
+    defaults: { _controller: HomeBundle:f_Presentation:shareCurrentVideo }

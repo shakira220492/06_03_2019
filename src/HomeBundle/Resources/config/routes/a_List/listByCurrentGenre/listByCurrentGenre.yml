@@ -1,0 +1,5 @@
+#routes:
+
+index_listByCurrentGenre:
+    path:     /listByCurrentGenre
+    defaults: { _controller: HomeBundle:a_List:listByCurrentGenre }

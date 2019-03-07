@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Asignación de tareas{% endblock %}</title>
+        {% block stylesheets %}
+{#            <link rel="stylesheet" href="{{ asset('public/css/bootstrap.min.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('public/css/style.css') }}"/>#}
+            
+            {{ form_start(get_video_lyric_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-video-lyric-ajax'|default('form')} }) }}
+            {{ form_end(get_video_lyric_form_ajax) }}
+            
+            <!-- Bootstrap Core CSS -->
+            <link href="{{ asset('public/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+            <!-- MetisMenu CSS -->
+            <link href="{{ asset('public/vendor/metisMenu/metisMenu.min.css') }}" rel="stylesheet">
+
+            <!-- Custom CSS -->
+            <link href="{{ asset('public/dist/css/sb-admin-2.css') }}" rel="stylesheet">
+
+            <!-- Custom Fonts -->
+            <link href="{{ asset('public/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+            
+            <!-- Librerias adicionales de la plantilla que inicialmente se implementó-->
+            <link href="{{ asset('//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css') }}" rel="stylesheet">            
+
+            <!-- Custom Prsentation -->
+            <link href="{{ asset('public/css/content/presentation.css') }}" rel="stylesheet" type="text/css">
+            
+            
+            
+            
+            
+            
+{#            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">#}
+
+            
+            
+            
+            
+            
+            
+            <!-- GUI CSS -->
+            <link href="{{ asset('public/css/bundle/AdvertisingVideoBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/ArtistBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/CacheBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/CommentVideoBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/ConfigurationBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/DataminingBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/DeleteVideoBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/DeclineDeleteVideoBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/EditLyricsBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/EditProfileBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/EditVideoBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/FollowerBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/FollowingBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/HistoryBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/HomeBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/ListBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/MediaBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/OptionsBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/PaypalBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/PayUBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/PlayBannerBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/PremiumBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/PresentationBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/PromoteVideoBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/SearchengineBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/SessionBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/SongBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/UploadVideoBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/UserReportsBundle.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('public/css/bundle/VideoBundle.css') }}" rel="stylesheet" type="text/css">
+            
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% block javascripts %}
+{#            <script src="{{ asset('public/js/jquery-3.2.0.min.js') }}"></script>
+            <script src="{{ asset('public/js/bootstrap.min.js') }}"></script>#}
+
+            <!-- jQuery -->
+            <script src="{{ asset('public/vendor/jquery/jquery.min.js') }}"></script>
+
+            <!-- Bootstrap Core JavaScript -->
+            <script src="{{ asset('public/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+
+            <!-- Metis Menu Plugin JavaScript -->
+            <script src="{{ asset('public/vendor/metisMenu/metisMenu.min.js') }}"></script>
+
+            <!-- Custom Theme JavaScript -->
+            <script src="{{ asset('public/dist/js/sb-admin-2.js') }}"></script>
+
+            <!-- Librerías adicionales de la plantilla que incialmente se implementó -->
+            {#<script src="{{ asset('https://code.jquery.com/ui/1.12.1/jquery-ui.js') }}"></script>            #}
+
+            <script src="{{ asset('public/js/general_functions.js') }}"></script>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <!-- GUI FUNCTIONS -->
+            <script src="{{ asset('public/js/bundle/AdvertisingVideoBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/ArtistBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/CacheBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/CommentVideoBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/ConfigurationBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/DataminingBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/DeleteVideoBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/DeclineDeleteVideoBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/EditLyricsBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/EditProfileBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/EditVideoBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/FollowerBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/FollowingBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/HistoryBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/HomeBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/ListBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/MediaBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/OptionsBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/PaypalBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/PayUBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/PlayBannerBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/PremiumBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/PresentationBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/PromoteVideoBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/SearchengineBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/SessionBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/SongBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/UploadVideoBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/UserReportsBundle.js') }}"></script>
+            <script src="{{ asset('public/js/bundle/VideoBundle.js') }}"></script>
+        {% endblock %}
+        {% block body %}
+{#            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {{ include('menu.html.twig') }}
+            {% endif %}#}
+        {% endblock %}
+    </body>
+</html>

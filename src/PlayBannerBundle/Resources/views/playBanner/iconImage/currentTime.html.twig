@@ -1,0 +1,41 @@
+<style>
+    #videoCurrentTime {
+        position: absolute;
+        width: 40px;
+        height: 30px;
+        top: 0px;
+        left: 200px;
+        text-align: center;
+        z-index: 1;
+    }
+</style>
+
+<div id='videoCurrentTime' class='animatedButton'>
+    00:00
+</div>
+
+<script>
+    
+    function showCurrentTime_withFormat()
+    {
+        var v = document.getElementById("my_video");
+        
+        speed_millisecond = video_speedButton * 1000;
+        var videoDuration_2 = v.duration;
+        
+        var videoCurrentTime = document.getElementById("videoCurrentTime");
+        
+        currentVideo_playingWithFormat = setInterval(function() {
+            
+            var time = v.currentTime;
+            var newValue = configureLyricswordTimeWithFormat(time);
+            
+            videoCurrentTime.innerHTML = newValue;
+            
+            v.onended = function() {
+                clearInterval(currentVideo_playingWithFormat);
+            };
+            
+        }, 250);
+    }
+</script>

@@ -1,0 +1,109 @@
+<?php
+
+namespace VideoBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Environment
+ *
+ * @ORM\Table(name="environment", indexes={@ORM\Index(name="environment_parentId", columns={"environment_parentId"}), @ORM\Index(name="user_id", columns={"user_id"})})
+ * @ORM\Entity
+ */
+class Environment
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="environment_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $environmentId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="environment_iconImage", type="string", length=300, nullable=false)
+     */
+    private $environmentIconimage;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="environment_areaWidth", type="string", length=255, nullable=false)
+     */
+    private $environmentAreawidth;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="environment_areaHeight", type="string", length=255, nullable=false)
+     */
+    private $environmentAreaheight;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="environment_areaBgColor", type="string", length=255, nullable=false)
+     */
+    private $environmentAreabgcolor;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="environment_menuWidth", type="string", length=255, nullable=false)
+     */
+    private $environmentMenuwidth;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="environment_menuHeight", type="string", length=255, nullable=false)
+     */
+    private $environmentMenuheight;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="environment_menuBgColor", type="string", length=255, nullable=false)
+     */
+    private $environmentMenubgcolor;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="environment_name", type="string", length=255, nullable=true)
+     */
+    private $environmentName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="environment_description", type="string", length=255, nullable=true)
+     */
+    private $environmentDescription;
+
+    /**
+     * @var \Environment
+     *
+     * @ORM\ManyToOne(targetEntity="Environment")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="environment_parentId", referencedColumnName="environment_id")
+     * })
+     */
+    private $environmentParentid;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
+     * })
+     */
+    private $user;
+
+
+}
+

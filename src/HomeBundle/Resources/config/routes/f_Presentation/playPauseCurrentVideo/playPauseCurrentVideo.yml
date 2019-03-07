@@ -1,0 +1,3 @@
+index_playPauseCurrentVideo:
+    path:     /playPauseCurrentVideo
+    defaults: { _controller: HomeBundle:f_Presentation:playPauseCurrentVideo }

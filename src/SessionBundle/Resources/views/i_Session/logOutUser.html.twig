@@ -1,0 +1,220 @@
+<div id="logOut">
+    
+    <div id="logOutForm">
+        
+        <div id="btnLogOut" class="animatedButton">
+            LOG OUT
+        </div>
+
+        <div id="name_profileButton" class="animatedButton">
+        </div>
+
+        <div id="playlist_profileButton" class="animatedButton">
+        </div>
+
+        <div id="dataminingButton" class="icon_environment"> 
+            <div id='dataminingButton_border' class="light_icon_border"></div>
+            <div id='dataminingButton_background' class="light_icon_background"></div>
+
+            <img class="icon_image"
+            src='files/images/icons/configuration/datamining.png' 
+            alt='Mountain View'>
+
+        </div>
+        
+
+        <div id="historyButton" class="icon_environment"> 
+            <div id='historyButton_border' class="light_icon_border"></div>
+            <div id='historyButton_background' class="light_icon_background"></div>
+
+            <img class="icon_image"
+            src='files/images/icons/configuration/history.png' 
+            alt='Mountain View'>
+
+        </div>
+        
+        <div id='uploadVideoIconButton' class="icon_environment"> 
+            <div id='uploadVideoIconButton_border' class="light_icon_border"></div>
+            <div id='uploadVideoIconButton_background' class="light_icon_background"></div>
+
+            <img class="icon_image"
+            src='files/images/icons/configuration/uploadVideo.png' 
+            alt='Mountain View'>
+
+        </div>
+
+    </div>
+    
+    <div id="content_logOutUser">
+        
+        <div id='videosToDeleteButton'>
+            {{ include('@DeclineDeleteVideo/Default/index.html.twig') }}
+        </div>
+
+        <div id="content_logOutUser_2">
+
+            <div id="name_profile_content">
+                {{ include('@EditProfile/Default/index.html.twig') }}
+            </div>
+
+            <div id="dataminingSongs">
+                {{ include('@Datamining/Default/index.html.twig') }}
+            </div>
+
+            <div id="historySongs">
+                {{ include('@History/Default/index.html.twig') }}
+            </div>
+
+            <div id="specificListSongs">
+                {{ include('@List/Default/index.html.twig') }}
+            </div>
+
+            <div id='uploadVideoIconContent'>
+                {{ include('@UploadVideo/Default/index.html.twig') }}
+            </div>
+
+            <div id='declineDeleteVideo'>
+                {{ include('@DeclineDeleteVideo/Default/declineDeleteVideo.html.twig') }}
+            </div>
+
+        </div>
+            
+    </div>
+    
+</div>
+    
+<script>
+    function ProfileBundle()
+    {
+        var name_profileButton = document.getElementById("name_profileButton");
+        var playlist_profileButton = document.getElementById("playlist_profileButton");
+
+        name_profileButton.innerHTML = session_userFirstgivenname + " " + session_userSecondgivenname + " " + session_userFirstfamilyname + " " + session_userSecondfamilyname; 
+        playlist_profileButton.innerHTML = "LISTS: " + session_amountSpecificLists; 
+        
+        DeclineDeleteVideoBundle(); // DeclineDeleteVideoBundle->videosToDelete.html.twig
+        EditProfileBundle(); // es un crud, y draw los resultados en el respectivo div
+        DataminingBundle(); // is about datamining (replace bundles' name to DataminingBundle, and delete previous DataminingBundle)
+        HistoryBundle(); // es un crud, y draw los resultados en el respectivo div
+        ListBundle(); // es un crud, y draw los resultados en el respectivo div *
+        
+        // UploadVideoBundle: (creo que ya esta correcta esta opción... probar)
+        // EditLyricsBundle: Validar en caso de que el video en curso sea del usuario que se encuentra fogueado
+        
+        
+        {#eliminar automaticamente videos que cumplan los 30 dias#}
+    }
+    
+</script>
+            
+<script>
+    var name_profileButton = document.getElementById("name_profileButton");
+    name_profileButton.addEventListener("click", drawInfoProfile, false);
+    
+    var playlist_profileButton = document.getElementById("playlist_profileButton");
+    playlist_profileButton.addEventListener("click", drawSpecificlistProfile, false);
+    
+    var dataminingButton = document.getElementById("dataminingButton");
+    dataminingButton.addEventListener("click", drawDataminingSongs, false);
+    
+    var historyButton = document.getElementById("historyButton");
+    historyButton.addEventListener("click", drawHistorySongs, false);
+    
+    var uploadVideoIconButton = document.getElementById('uploadVideoIconButton');
+    uploadVideoIconButton.addEventListener("click", drawUploadIconContent, false);
+    
+    var videosToDeleteButton = document.getElementById('videosToDeleteButton');
+    videosToDeleteButton.addEventListener("click", drawVideoToDelete, false);
+    
+    function clearOptionsFromProfile()
+    {
+        var name_profile_content = document.getElementById("name_profile_content");
+        var dataminingSongs = document.getElementById("dataminingSongs");
+        var historySongs = document.getElementById("historySongs");
+        var specificListSongs = document.getElementById("specificListSongs");
+        var uploadVideoIconContent = document.getElementById("uploadVideoIconContent");
+        var declineDeleteVideo = document.getElementById("declineDeleteVideo");
+        
+        name_profile_content.style.top = "-1000px";
+        dataminingSongs.style.top = "-1000px";
+        historySongs.style.top = "-1000px";
+        specificListSongs.style.top = "-1000px";
+        uploadVideoIconContent.style.top = "-1000px";
+        declineDeleteVideo.style.top = "-1000px";
+        
+        name_profile_content.style.bottom = "1000px";
+        dataminingSongs.style.bottom = "1000px";
+        historySongs.style.bottom = "1000px";
+        specificListSongs.style.bottom = "1000px";
+        uploadVideoIconContent.style.bottom = "1000px";
+        declineDeleteVideo.style.bottom = "1000px";
+    }
+
+    function drawInfoProfile()
+    {
+        clearOptionsFromProfile();
+        var name_profile_content = document.getElementById("name_profile_content");
+        name_profile_content.style.top = "0px";
+        name_profile_content.style.bottom = "0px";
+        
+        var emphasis = "equal";
+        resize_configuration_session(emphasis);
+    }
+
+    function drawSpecificlistProfile()
+    {
+        clearOptionsFromProfile();
+        var specificListSongs = document.getElementById("specificListSongs");
+        specificListSongs.style.top = "0px";
+        specificListSongs.style.bottom = "0px";
+        
+        var emphasis = "equal";
+        resize_configuration_session(emphasis);
+    }
+
+    function drawDataminingSongs()
+    {
+        clearOptionsFromProfile();
+        var dataminingSongs = document.getElementById("dataminingSongs");
+        dataminingSongs.style.top = "0px";
+        dataminingSongs.style.bottom = "0px";
+        
+        var emphasis = "equal";
+        resize_configuration_session(emphasis);
+    }
+    
+    function drawHistorySongs()
+    {
+        clearOptionsFromProfile();
+        var historySongs = document.getElementById("historySongs");
+        historySongs.style.top = "0px";
+        historySongs.style.bottom = "0px";
+        
+        var emphasis = "equal";
+        resize_configuration_session(emphasis);
+    }
+    
+    function drawUploadIconContent()
+    {
+        clearOptionsFromProfile();
+        var uploadVideoIconContent = document.getElementById("uploadVideoIconContent");
+        uploadVideoIconContent.style.top = "0px";
+        uploadVideoIconContent.style.bottom = "0px";
+        
+        var emphasis = "equal";
+        resize_configuration_session(emphasis);
+    }
+    
+    function drawVideoToDelete()
+    {
+        clearOptionsFromProfile();
+        var declineDeleteVideo = document.getElementById("declineDeleteVideo");
+        declineDeleteVideo.style.top = "0px";
+        declineDeleteVideo.style.bottom = "0px";
+        
+        var emphasis = "equal";
+        resize_configuration_session(emphasis);
+    }
+    
+</script>
+

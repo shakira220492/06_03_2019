@@ -1,0 +1,103 @@
+<?php
+
+namespace HomeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Videoreproductionlist
+ *
+ * @ORM\Table(name="videoReproductionList", indexes={@ORM\Index(name="video_id", columns={"video_id"}), @ORM\Index(name="list_id", columns={"reproductionList_id"}), @ORM\Index(name="reproductionList_id", columns={"reproductionList_id"})})
+ * @ORM\Entity
+ */
+class Videoreproductionlist
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="videoReproductionList_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $videoreproductionlistId;
+
+    /**
+     * @var \Video
+     *
+     * @ORM\ManyToOne(targetEntity="Video")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="video_id", referencedColumnName="video_id")
+     * })
+     */
+    private $video;
+
+    /**
+     * @var \Reproductionlist
+     *
+     * @ORM\ManyToOne(targetEntity="Reproductionlist")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="reproductionList_id", referencedColumnName="reproductionList_id")
+     * })
+     */
+    private $reproductionlist;
+
+
+
+    /**
+     * Get videoreproductionlistId
+     *
+     * @return integer
+     */
+    public function getVideoreproductionlistId()
+    {
+        return $this->videoreproductionlistId;
+    }
+
+    /**
+     * Set video
+     *
+     * @param \HomeBundle\Entity\Video $video
+     *
+     * @return Videoreproductionlist
+     */
+    public function setVideo(\HomeBundle\Entity\Video $video = null)
+    {
+        $this->video = $video;
+
+        return $this;
+    }
+
+    /**
+     * Get video
+     *
+     * @return \HomeBundle\Entity\Video
+     */
+    public function getVideo()
+    {
+        return $this->video;
+    }
+
+    /**
+     * Set reproductionlist
+     *
+     * @param \HomeBundle\Entity\Reproductionlist $reproductionlist
+     *
+     * @return Videoreproductionlist
+     */
+    public function setReproductionlist(\HomeBundle\Entity\Reproductionlist $reproductionlist = null)
+    {
+        $this->reproductionlist = $reproductionlist;
+
+        return $this;
+    }
+
+    /**
+     * Get reproductionlist
+     *
+     * @return \HomeBundle\Entity\Reproductionlist
+     */
+    public function getReproductionlist()
+    {
+        return $this->reproductionlist;
+    }
+}

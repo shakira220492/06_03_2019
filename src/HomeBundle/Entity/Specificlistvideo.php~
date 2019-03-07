@@ -1,0 +1,46 @@
+<?php
+
+namespace HomeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Specificlistvideo
+ *
+ * @ORM\Table(name="specificListVideo", indexes={@ORM\Index(name="video_id", columns={"video_id"}), @ORM\Index(name="specificList_id", columns={"specificList_id"})})
+ * @ORM\Entity
+ */
+class Specificlistvideo
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="specificListVideo_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $specificlistvideoId;
+
+    /**
+     * @var \Specificlist
+     *
+     * @ORM\ManyToOne(targetEntity="Specificlist")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="specificList_id", referencedColumnName="specificList_id")
+     * })
+     */
+    private $specificlist;
+
+    /**
+     * @var \Video
+     *
+     * @ORM\ManyToOne(targetEntity="Video")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="video_id", referencedColumnName="video_id")
+     * })
+     */
+    private $video;
+
+
+}
+

@@ -1,0 +1,277 @@
+{#EditVideoBundle#}
+{{ form_start(edit_video_properties_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'edit-video-properties-ajax'|default('form')} }) }}
+{{ form_end(edit_video_properties_form_ajax) }}
+
+{{ form_start(get_video_keywords_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-video-keywords-ajax'|default('form')} }) }}
+{{ form_end(get_video_keywords_form_ajax) }}
+
+{{ form_start(delete_video_keywords_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'delete-video-keywords-ajax'|default('form')} }) }}
+{{ form_end(delete_video_keywords_form_ajax) }}
+
+{{ form_start(save_video_keywords_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'save-video-keywords-ajax'|default('form')} }) }}
+{{ form_end(save_video_keywords_form_ajax) }}
+
+<div id="editVideo" >
+    
+    <form id='editVideoProperties_form'>
+        
+        <label style="position: absolute; top: 0px; left: 0px; height: 30px;">Video's Name: </label>
+        <input type="text" id="videoName_editVideoProperties" name="videoName_editVideoProperties" {#aria-describedby="emailHelp"#} placeholder="Enter video's name" value=''> {#// ME ENVIA POR AJAX EL NOMBRE DEL VIDEO#}
+        <input type='text' id='videoId_editVideoProperties' name='videoId_editVideoProperties' value=''/> {#// ME ENVIA POR AJAX EL ID DEL VIDEO#}
+
+        <label style="position: absolute; top: 80px; left: 0px; height: 30px;">Video's Description: </label>
+        <textarea id='videoDescription_editVideoProperties' name='videoDescription_editVideoProperties' ></textarea>
+                
+        <label style="position: absolute; top: 190px; left: 0px; height: 30px;">New Video's portrait: </label>
+        <div id='newPortrait_editVideoProperties'>
+            <img id='newPortrait_editVideoProperties_content' src='' alt='Mountain View'>
+        </div>
+        <input type="file" id="portrait_editVideoProperties" name='portrait_editVideoProperties' accept='image/jpeg,image/jpg,image/png'>
+                
+        <label style="position: absolute; top: 410px; left: 0px; height: 30px;">Write the new keyword: &nbsp</label>
+        <input id='newKeywordToTheVideo' class='inputKeyword' type='text' name='newKeyword' size='10' onpaste='return false'/>
+        <button type="button" id='addNewKeyword_Button_EditVideoBundle' class="btn">+</button>
+                
+        <label style="position: absolute; top: 450px; left: 0px; height: 30px;">Keywords: </label>
+        <div id='keywords_editVideoProperties'>keywords... </div>
+        
+        <div id='save_editVideoProperties'>SAVE</div>
+    </form>
+
+
+</div>
+
+<script>
+
+    $('#newKeywordToTheVideo')
+    .keypress(function (e) {
+        return solo_letras_numeros(e);
+    });
+
+    $('#setKeywordVideo_EditVideoBundle')
+    .mousemove(function () {
+        draw_NewKeyword_Button();
+    });
+    
+    function draw_NewKeyword_Button()
+    {
+        var addNewKeyword_Button_EditVideoBundle = document.getElementById("addNewKeyword_Button_EditVideoBundle");
+        var newKeywordToTheVideo = document.getElementById("newKeywordToTheVideo").value;
+        
+        if (newKeywordToTheVideo)
+        {
+            addNewKeyword_Button_EditVideoBundle.style.display = "block";
+        } else
+        {
+            addNewKeyword_Button_EditVideoBundle.style.display = "none";
+        }
+    }
+    
+    $('#addNewKeyword_Button_EditVideoBundle')
+    .click(function () {
+        saveVideoKeywords();
+    });
+
+    function EditVideoBundle()
+    {
+        var videoName_editVideoProperties = document.getElementById("videoName_editVideoProperties");
+        var videoId_editVideoProperties = document.getElementById("videoId_editVideoProperties");
+        var videoDescription_editVideoProperties = document.getElementById("videoDescription_editVideoProperties");
+        var newPortrait_editVideoProperties_content = document.getElementById("newPortrait_editVideoProperties_content");
+        
+        videoName_editVideoProperties.value = edit_video_name;
+        videoId_editVideoProperties.value = edit_video_id;
+        videoDescription_editVideoProperties.value = edit_video_description;
+        videoDescription_editVideoProperties.content = edit_video_description;
+        newPortrait_editVideoProperties_content.src = "files/"+edit_video_image;
+        
+        getVideoKeywords(edit_video_id);
+    }
+    
+    $("#portrait_editVideoProperties").change(function () {
+        var reader = new FileReader();
+        reader.readAsDataURL(this.files[0]);
+        reader.onload = function (e) {
+        document.getElementById("newPortrait_editVideoProperties").innerHTML = ['<img class="thumb" id="newPortrait_editVideoProperties_content" src="', e.target.result, '"/>'].join('');
+        };
+    });
+
+    $('#save_editVideoProperties').click(function () {
+        sendNewDataInfo(edit_video_id);
+        getVideoListProfile(); // EditProfileBundle
+    });
+    
+    
+    
+    
+    function getVideoKeywords(video_Id)
+    {
+        var form = $('#get-video-keywords-ajax');
+        var url = form.attr('action');
+        
+        $.post(url, {video_Id: video_Id}, function (data)
+        {
+            var keywords_editVideoProperties = document.getElementById("keywords_editVideoProperties");
+            keywords_editVideoProperties.innerHTML = "";
+            
+            var amountKeywords = data[0].amountKeywords;
+            
+            for (i = 0; i < amountKeywords; i++)
+            {
+                var keywordId = data[i].keywordId;
+                var keywordContent = data[i].keywordContent;
+                $("#keywords_editVideoProperties").append(
+                    "<div class='keywordEnvironmentToEdit' id='keywordEnvironmentToEdit" + keywordId + "'>"+
+                        "<input class='inputKeywordToEdit' "+
+                               "type='text'"+
+                               "value='"+keywordContent+"'"+
+                               "size='10' readonly='readonly'/> "+
+                        "<div class='deleteKeywordToEdit' onclick='deleteVideoKeywords(\"keywordEnvironmentToEdit"+keywordId+"\", "+keywordId+", "+video_Id+");'> "+
+                            "<center>X</center> "+
+                        "</div> "+
+                    "</div> "
+                );
+            }
+            
+        }).fail(function () {
+            alert('ERROR getVideoKeywords');
+        });
+    }
+    
+    
+    function deleteVideoKeywords(environmentId, keywordId, videoId)
+    {
+        var form = $('#delete-video-keywords-ajax');
+        var url = form.attr('action');
+        
+        amountCurrentKeywords--;
+        
+        var respectly = environmentId;
+        var respectlyId = document.getElementById(respectly);
+        respectlyId.style.display = "none";
+        
+        $.post(url, {keywordId: keywordId, videoId: videoId}, function (data)
+        {
+            {#alert("deleteVideoKeywords");#}
+        }).fail(function () {
+            alert('ERROR deleteVideoKeywords');
+        });
+    }
+    
+    function saveVideoKeywords()
+    {
+        var form = $('#save-video-keywords-ajax');
+        var url = form.attr('action');
+ 
+        var newKeywordToTheVideo = document.getElementById("newKeywordToTheVideo").value;
+ 
+        $.post(url, {newKeywordToTheVideo: newKeywordToTheVideo, videoId: edit_video_id}, function (data)
+        {
+            var video_Id = edit_video_id;
+            var keywordId = data[0].keywordId;
+            var keywordContent = data[0].keywordContent;
+ 
+            alert("newKeywordToTheVideo: " + newKeywordToTheVideo+
+              "edit_video_id: " + edit_video_id);
+            
+            if (keywordContent === "null")
+            {
+                alert("You need to input a keyword");
+            } else
+            {
+                $("#keywords_editVideoProperties").append(
+                    "<div class='keywordEnvironmentToEdit' id='keywordEnvironmentToEdit" + keywordId + "'>"+
+                        "<input class='inputKeywordToEdit' "+
+                               "type='text'"+
+                               "value='"+keywordContent+"'"+
+                               "size='10' readonly='readonly'/> "+
+                        "<div class='deleteKeywordToEdit' onclick='deleteVideoKeywords(\"keywordEnvironmentToEdit"+keywordId+"\", "+keywordId+", "+video_Id+");'> "+
+                            "<center>X</center> "+
+                        "</div> "+
+                    "</div> "
+                );
+            }
+            
+        }).fail(function () {
+            alert('ERROR saveVideoKeywords');
+        });
+    }
+    
+    function sendNewDataInfo(videoId)
+    {
+        var form = $('#edit-video-properties-ajax');
+        var url = form.attr('action');
+        
+        videoName_editVideoProperties = document.getElementById("videoName_editVideoProperties").value;
+        videoDescription_editVideoProperties = document.getElementById("videoDescription_editVideoProperties").value;
+        portrait_editVideoProperties = document.getElementById("portrait_editVideoProperties").value; // corresponde al valor del input file 
+        newPortrait_editVideoProperties_content = document.getElementById("newPortrait_editVideoProperties_content").src; // corresponde a la imagen almacenada y que se muestra
+        
+        if (!videoName_editVideoProperties || !videoDescription_editVideoProperties) {
+            alert("You need to introduce all information");
+        } else {
+
+            var formData = new FormData($("#editVideoProperties_form")[0]);
+            var a = 2;
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                cache: false,
+                processData: false,
+                contentType: false
+            }).done(function (resp) {
+    
+                var videoId = resp[0].videoId;
+                var videoName = resp[0].videoName;
+                var videoDescription = resp[0].videoDescription;
+                var videoImage = resp[0].videoImage;
+                var videoContent = resp[0].videoContent;
+                var videoUpdatedate = resp[0].videoUpdatedate;
+                var videoAmountViews = resp[0].videoAmountViews;
+                var videoAmountComments = resp[0].videoAmountComments;
+                var videoLikes = resp[0].videoLikes;
+                var videoDislikes = resp[0].videoDislikes;
+                var user = resp[0].user;
+                
+                var percentageLikes = (100 * videoLikes) / (videoLikes + videoDislikes);
+                var percentageDislikes = (100 * videoDislikes) / (videoLikes + videoDislikes);
+                
+                var videoPortraitId = "videoPortrait_Profile"+videoId;
+                
+                var respectly_videoPortrait = document.getElementById(videoPortraitId);
+                
+                respectly_videoPortrait.innerHTML = "";
+                
+                respectly_videoPortrait.innerHTML = 
+                    "<table border='0' width='100%'>"
+                        +"<tr height='100px'>"
+                            +"<td width='170px' height='100px'>"
+                                +"<div style='overflow:hidden; height:100px; width:170px; text-align:center; background-color: white;'>"
+                                    +"<img style='"
+                                    +"height:100%; cursor: pointer;"
+                                    +"z-index: 1;' "
+                                    +"src='files/"+videoImage+"' "
+                                    +"alt='Mountain View'>"
+                                +"</div>"
+                            +"</td>"
+                            +"<td>"
+                                +"<div>"
+                                    +" <b>"+videoName+"</b><br>"
+                                    +" "+videoUpdatedate+"<br>"
+                                    +" "+videoAmountViews+" views<br>"
+                                    +" "+videoAmountComments+" comments<br>"
+                                    +" <div style='height: 5px; width: 100%;'>"
+                                        +"<div style='display: inline-block; height: 5px; width: "+percentageLikes+"%; background-color: blue; '></div>"
+                                        +"<div style='display: inline-block; height: 5px; width: "+percentageDislikes+"%; background-color: red; '></div>"
+                                    +" </div>"
+                                +"</div>"
+                            +"</td>"
+                        +"</tr>"
+                        +"</table>";
+            });
+        }
+    }
+    
+</script>

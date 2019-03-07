@@ -1,0 +1,7 @@
+index_advertising:
+    path:     /advertising
+    defaults: { _controller: HomeBundle:e_Advertising:index }
+    
+#sub_newsFeed:
+#    resource: "sub_newsFeed.yml"
+#    prefix:   /sub_newsFeed

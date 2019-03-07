@@ -1,0 +1,63 @@
+<style>
+    #displaceToRight {
+        position: absolute;
+        height: 15px;
+        width: 15px;
+        top: 176px;
+        left: 16px;
+        z-index: 3;
+        display: block;
+        background-color: steelblue;
+        border-bottom-right-radius: 15px;
+        -webkit-animation: donateButton 10s;
+        animation: donateButton 2s linear 2s infinite alternate;
+    }
+    
+    
+    @-webkit-keyframes donateButton {
+        0%{opacity: 1; background-color: peru;}
+        20%{opacity: 0.6; background-color: peru;}
+        40%{opacity: 1; background-color: peru;}
+        60%{opacity: 0.6; background-color: #ccc;}
+        80%{opacity: 1; background-color: #ccc;}
+        100%{opacity: 0.6; background-color: #ccc;}
+    }
+    
+</style>
+
+<div id='displaceToRight' class='animatedButton'>
+</div>
+
+<script>
+
+    var displaceToRight = document.getElementById("displaceToRight");
+    displaceToRight.addEventListener("click", displayDonateArea, false);
+    var statusDonateArea = 0;
+
+    function displayDonateArea()
+    {
+        var donateArea = document.getElementById("donateArea");
+        var songIconContent = document.getElementById("songIconContent");
+        var artistIconContent = document.getElementById("artistIconContent");
+
+        if (statusDonateArea === 0)
+        { {#alert("0");#}
+            donateArea.style.height = "50px";
+            donateArea.style.borderBottomWidth = "3px";
+            songIconContent.style.top = "100px";
+            artistIconContent.style.top = "100px";
+            statusDonateArea = 1;
+        } else
+        { {#alert("1");#}
+            donateArea.style.height = "0px";
+            donateArea.style.borderBottomWidth = "0px";
+            songIconContent.style.top = "50px";
+            artistIconContent.style.top = "50px";
+            statusDonateArea = 0;
+        }
+
+    }
+
+
+
+</script>

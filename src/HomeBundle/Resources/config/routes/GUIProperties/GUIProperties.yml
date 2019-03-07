@@ -1,0 +1,54 @@
+get_stored_field_form:
+    path: getStoredField
+    defaults: { _controller: HomeBundle:GUIProperties:getStoredField }
+    methods:  POST
+    
+get_stored_layout_form:
+    path: getStoredLayout
+    defaults: { _controller: HomeBundle:GUIProperties:getStoredLayout }
+    methods:  POST
+    
+set_this_field_form:
+    path: setThisField
+    defaults: { _controller: HomeBundle:GUIProperties:setThisField }
+    methods:  POST
+    
+set_this_layout_form:
+    path: setThisLayout
+    defaults: { _controller: HomeBundle:GUIProperties:setThisLayout }
+    methods:  POST
+    
+delete_stored_field_form:
+    path: deleteStoredField
+    defaults: { _controller: HomeBundle:GUIProperties:deleteStoredField }
+    methods:  POST
+    
+delete_stored_layout_form:
+    path: deleteStoredLayout
+    defaults: { _controller: HomeBundle:GUIProperties:deleteStoredLayout }
+    methods:  POST
+    
+update_form:
+    path: update
+    defaults: { _controller: HomeBundle:GUIProperties:update }
+    methods: POST
+    
+set_usualMode_form:
+    path: setUsualMode
+    defaults: { _controller: HomeBundle:GUIProperties:setUsualMode }
+    methods: POST
+        
+set_currentMode_form:
+    path: setCurrentMode
+    defaults: { _controller: HomeBundle:GUIProperties:setCurrentMode }
+    methods: POST
+        
+get_window_properties_form:
+    path: getWindowProperties
+    defaults: { _controller: HomeBundle:GUIProperties:getWindowProperties }
+    methods: POST
+        
+set_window_theme_color_form:
+    path: setWindowThemeColor
+    defaults: { _controller: HomeBundle:GUIProperties:setWindowThemeColor }
+    methods: POST

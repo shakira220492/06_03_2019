@@ -1,0 +1,3 @@
+index_editNameCurrentVideo:
+    path:     /editNameCurrentVideo
+    defaults: { _controller: HomeBundle:f_Presentation:editNameCurrentVideo }

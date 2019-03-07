@@ -1,0 +1,4 @@
+get_history_songs_form:
+    path:     /getHistorySongs
+    defaults: { _controller: HistoryBundle:Default:getHistorySongs }
+    methods:  POST

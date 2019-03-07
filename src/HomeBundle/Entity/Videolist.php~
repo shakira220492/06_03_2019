@@ -1,0 +1,103 @@
+<?php
+
+namespace HomeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Videolist
+ *
+ * @ORM\Table(name="videoList", indexes={@ORM\Index(name="video_id", columns={"video_id"}), @ORM\Index(name="list_id", columns={"list_id"})})
+ * @ORM\Entity
+ */
+class Videolist
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="videoList_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $videolistId;
+
+    /**
+     * @var \Video
+     *
+     * @ORM\ManyToOne(targetEntity="Video")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="video_id", referencedColumnName="video_id")
+     * })
+     */
+    private $video;
+
+    /**
+     * @var \Reproductionlist
+     *
+     * @ORM\ManyToOne(targetEntity="Reproductionlist")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="list_id", referencedColumnName="reproductionList_id")
+     * })
+     */
+    private $list;
+
+
+
+    /**
+     * Get videolistId
+     *
+     * @return integer
+     */
+    public function getVideolistId()
+    {
+        return $this->videolistId;
+    }
+
+    /**
+     * Set video
+     *
+     * @param \HomeBundle\Entity\Video $video
+     *
+     * @return Videolist
+     */
+    public function setVideo(\HomeBundle\Entity\Video $video = null)
+    {
+        $this->video = $video;
+
+        return $this;
+    }
+
+    /**
+     * Get video
+     *
+     * @return \HomeBundle\Entity\Video
+     */
+    public function getVideo()
+    {
+        return $this->video;
+    }
+
+    /**
+     * Set list
+     *
+     * @param \HomeBundle\Entity\Reproductionlist $list
+     *
+     * @return Videolist
+     */
+    public function setList(\HomeBundle\Entity\Reproductionlist $list = null)
+    {
+        $this->list = $list;
+
+        return $this;
+    }
+
+    /**
+     * Get list
+     *
+     * @return \HomeBundle\Entity\Reproductionlist
+     */
+    public function getList()
+    {
+        return $this->list;
+    }
+}

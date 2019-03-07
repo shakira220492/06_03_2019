@@ -1,0 +1,99 @@
+<?php
+
+namespace HomeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * User
+ *
+ * @ORM\Table(name="user", indexes={@ORM\Index(name="city_id", columns={"city_id"})})
+ * @ORM\Entity
+ */
+class User
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $userId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_profilePhoto", type="string", length=255, nullable=false)
+     */
+    private $userProfilephoto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_name", type="string", length=255, nullable=false)
+     */
+    private $userName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_firstGivenName", type="string", length=100, nullable=false)
+     */
+    private $userFirstgivenname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_secondGivenName", type="string", length=100, nullable=true)
+     */
+    private $userSecondgivenname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_firstFamilyName", type="string", length=100, nullable=false)
+     */
+    private $userFirstfamilyname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_secondFamilyName", type="string", length=100, nullable=true)
+     */
+    private $userSecondfamilyname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_email", type="string", length=255, nullable=false)
+     */
+    private $userEmail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_password", type="text", length=65535, nullable=false)
+     */
+    private $userPassword;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_biography", type="text", length=65535, nullable=true)
+     */
+    private $userBiography;
+
+    /**
+     * @var \City
+     *
+     * @ORM\ManyToOne(targetEntity="City")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="city_id", referencedColumnName="city_id")
+     * })
+     */
+    private $city;
+
+
+}
+

@@ -1,0 +1,3 @@
+pay_u_homepage:
+    path:     /payUBundle
+    defaults: { _controller: PayUBundle:Default:index }

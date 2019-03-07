@@ -1,0 +1,29 @@
+<div id='playPauseIconButton' class='animatedButton'
+     style="position: absolute;
+     height: 30px;
+     width: 30px;
+     top: 0px;
+     left: 30px;
+     z-index: 1;">
+    <img class="shortIcon" 
+         src="files/images/icons/playBanner/playPause.png" alt="Mountain View">
+</div>
+
+<script>
+    var playPauseIconButton = document.getElementById("playPauseIconButton");
+    
+    playPauseIconButton.addEventListener("click", function () {
+        playPauseIconFunction();
+    });
+    
+    function playPauseIconFunction()
+    {
+        var my_video = document.getElementById("my_video");
+
+        if (my_video.paused) {
+            my_video.play();
+        } else {
+            my_video.pause();
+        }
+    }
+</script>

@@ -1,0 +1,3 @@
+index_showHideOptions:
+    path:     /showHideOptions
+    defaults: { _controller: HomeBundle:f_Presentation:showHideOptions }

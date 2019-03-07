@@ -1,0 +1,47 @@
+<?php
+
+namespace VideoBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * User
+ *
+ * @ORM\Table(name="user")
+ * @ORM\Entity
+ */
+class User
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $userId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_name", type="string", length=255, nullable=false)
+     */
+    private $userName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_email", type="string", length=255, nullable=false)
+     */
+    private $userEmail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_password", type="text", length=65535, nullable=false)
+     */
+    private $userPassword;
+
+
+}
+

@@ -1,0 +1,222 @@
+{{ form_start(search_keyword_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'search-keyword-ajax'|default('form')} }) }}
+{{ form_end(search_keyword_form_ajax) }}
+
+{{ form_start(store_current_keywords_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'store-current-keywords-ajax'|default('form')} }) }}
+{{ form_end(store_current_keywords_form_ajax) }}
+
+<div id="searchEngineMachine_environment">
+    <input type="text" id="searchEngineMachine" placeholder="JBSB92" name="keyword"/>
+</div>
+
+<div id='searchIconButton' class="animatedButton">
+    <img id='searchIconButton_image' src="files/images/icons/presentation/search.png" alt="Mountain View">
+</div>
+
+<div id="searchResults">
+</div>
+
+<script>
+    var searchEngineMachine = document.getElementById("searchEngineMachine");
+    searchEngineMachine.addEventListener("keyup", searchByEnter, false);
+    
+    function searchByEnter(e)
+    {
+        if (e.keyCode === 13)
+        {
+            storeCurrentKeywords();
+            manageKeyword();
+        }
+    }
+    
+    var searchIconButton = document.getElementById('searchIconButton');
+    searchIconButton.addEventListener("click", storeCurrentKeywords, false);
+    searchIconButton.addEventListener("click", manageKeyword, false);
+    
+    function storeCurrentKeywords()
+    {
+        var form = $('#store-current-keywords-ajax');
+        var url = form.attr('action');
+
+        var keyword = document.getElementById('searchEngineMachine').value;
+        
+        $.post(url, {keyword: keyword
+        }, function (data)
+        {
+            {#alert('store-current-keywords-ajax');#}
+        }).fail(function () {
+            alert('ERROR store-current-keywords-ajax');
+        });
+    }
+
+    function manageKeyword()
+    {
+        var form = $('#search-keyword-ajax');
+
+        var url = form.attr('action');
+
+        var keyword = document.getElementById('searchEngineMachine').value;
+
+        document.getElementById("searchResults").innerHTML = "";
+
+
+        $.post(url, {keyword: keyword
+        }, function (result) {
+
+            var amountVideos = result[0].amountVideos;
+  
+            for (i = 0; i < amountVideos; i++)
+            {
+                var videoId = result[i].videoId;
+                var videoName = result[i].videoName;
+                var videoDescription = result[i].videoDescription;
+                var videoImage = result[i].videoImage;
+                var videoContent = result[i].videoContent;
+                var videoUpdatedate = result[i].videoUpdatedate;
+                var videoAmountViews = result[i].videoAmountViews;
+                var videoAmountComments = result[i].videoAmountComments;
+                var videoLikes = result[i].videoLikes;
+                var videoDislikes = result[i].videoDislikes;
+                var userId = result[i].userId;
+                var userName = result[i].userName;
+                var amountVideos = result[i].amountVideos;
+                
+                if (videoLikes === 0 && videoDislikes === 0)
+                {
+                   if (videoLikes === 0)
+                   {
+                       videoLikes = 1;
+                   }
+                   if (videoDislikes === 0)
+                   {
+                       videoDislikes = 1;
+                   }
+                }
+                
+                var percentageLikes = parseInt((100 * videoLikes)) / parseInt((videoLikes + videoDislikes));
+                var percentageDislikes = parseInt((100 * videoDislikes)) / parseInt((videoLikes + videoDislikes));
+                
+                $("#searchResults").append(
+                    "<div id='videoPortrait_Searchengine"+videoId+"' style='position: relative; width:100%; cursor: pointer;' "
+                        +" data-id1='"+videoId+"'"
+                        +" data-id2='"+videoName+"'"
+                        +" data-id3='"+videoDescription+"'"
+                        +" data-id4='"+videoImage+"'"
+                        +" data-id5='"+videoContent+"'"
+                        +" data-id6='"+videoUpdatedate+"'"
+                        +" data-id7='"+videoAmountViews+"'"
+                        +" data-id8='"+videoAmountComments+"'"
+                        +" data-id9='"+videoLikes+"'"
+                        +" data-id10='"+videoDislikes+"'"
+                        +" data-id11='"+userId+"'"
+                        +" data-id12='"+userName+"'"
+                        +" data-id13='"+amountVideos+"'"
+                        +" data-id14='"+percentageLikes+"'"
+                        +" data-id15='"+percentageDislikes+"'"
+                        +" >"
+                
+                        +"<table border='0' width='100%'>"
+                        +"<tr height='120px'>"
+                            +"<td width='170px' height='100px'>"
+                                +"<div id='videoPortrait_"+videoId+"' class='videoPortrait_'>"
+                                    +"<img style='"
+                                    +"height:100%; cursor: pointer;"
+                                    +"opacity: 0.9; "
+                                    +"z-index: 1;' "
+                                    +"src='files/"+videoImage+"' "
+                                    +"alt='Mountain View'>"
+                                +"</div>"
+                                +"<div id='videoContaint_"+videoId+"' class='videoContaint_'>"
+                                    +" <b>"+videoName+"</b><br>"
+                                    +" "+userName+"<br>"
+                                    +" "+videoUpdatedate+"<br>"
+                                    +" "+videoAmountViews+" views<br>"
+                                    +" "+videoAmountComments+" comments<br>"
+                                    +" <div style='height: 5px; width: 100%;'>"
+                                        +"<div style='display: inline-block; height: 5px; width: "+percentageLikes+"%; background-color: blue; '></div>"
+                                        +"<div style='display: inline-block; height: 5px; width: "+percentageDislikes+"%; background-color: red; '></div>"
+                                    +" </div>"
+                                +"</div>"
+                            +"</td>"
+                        +"</tr>"
+                        +"</table>"
+                
+                    +"</div>"
+                );
+                
+                
+                $('#videoPortrait_Searchengine'+videoId)
+                .mouseover(function () {
+                    var videoId = $(this).data('id1');
+
+                    document.getElementById("videoPortrait_"+videoId).style.opacity = 0.5;
+                    document.getElementById("videoContaint_"+videoId).style.opacity = 1;
+                    document.getElementById("searchResults").style.opacity = 1;
+                    document.getElementById("searchBar").style.opacity = 1;
+                })
+                .click(function () {
+                    var videoId = $(this).data('id1');
+                    var videoName = $(this).data('id2');
+                    var videoDescription = $(this).data('id3');
+                    var videoImage = $(this).data('id4');
+                    var videoContent = $(this).data('id5');
+                    var videoUpdatedate = $(this).data('id6');
+                    var videoAmountViews = $(this).data('id7');
+                    var videoAmountComments = $(this).data('id8');
+                    var videoLikes = $(this).data('id9');
+                    var videoDislikes = $(this).data('id10');
+                    var userId = $(this).data('id11');
+                    var userName = $(this).data('id12');
+                    var amountVideos = $(this).data('id13');
+                    var percentageLikes = $(this).data('id14');
+                    var percentageDislikes = $(this).data('id15');
+    
+                    showVideo(
+                        videoId,
+                        videoName,
+                        videoDescription,
+                        videoImage,
+                        videoContent,
+                        videoUpdatedate,
+                        videoAmountViews,
+                        videoAmountComments,
+                        videoLikes,
+                        videoDislikes,
+                        userId,
+                        userName
+                    );
+                    
+                })
+                .mouseout(function () {
+                    var videoId = $(this).data('id1');
+            
+                    document.getElementById("videoPortrait_"+videoId).style.opacity = 1;
+                    document.getElementById("videoContaint_"+videoId).style.opacity = 0;
+                    document.getElementById("searchResults").style.opacity = 0.5;
+                    document.getElementById("searchBar").style.opacity = 0.5;
+                });
+            }
+            
+            if (amountVideos === 0)
+            {
+                document.getElementById("searchResults").innerHTML = "";
+                
+                $("#searchResults").append(
+                    "<div>"
+                        +"<table border='0' width='100%'>"
+                        +"<tr height='150px'>"
+                            +"<td width='250px' height='150px'>"
+                                +"<div>"
+                                    +" <b>There isn't results for this search.</b><br>"
+                                +"</div>"
+                            +"</td>"
+                        +"</tr>"
+                        +"</table>"
+                    +"</div>"
+                );
+            }
+            
+        }).fail(function () {
+            alert('ERROR');
+        });
+    }
+</script>

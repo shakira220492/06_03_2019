@@ -1,0 +1,88 @@
+{{ form_start(get_video_speed_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-video-speed-ajax'|default('form')} }) }}
+{{ form_end(get_video_speed_form_ajax) }}
+
+{{ form_start(set_video_speed_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'set-video-speed-ajax'|default('form')} }) }}
+{{ form_end(set_video_speed_form_ajax) }}
+
+<style>
+    #video_speedButton {
+        position: absolute;
+        color: black;
+        width: 100px;
+        height: 30px;
+        top: 0px;
+        left: 340px;
+    }
+</style>
+    
+<select id="video_speedButton" class="animatedButton">
+    <option value="0.1">speed: slower</option>
+    <option value="0.3">speed: 0.3</option>
+    <option value="0.6">speed: 0.6</option>
+    <option value="1">speed: normal</option>
+    <option value="1.5">speed: 1.5</option>
+    <option value="2.5">speed: 2</option>
+    <option value="3">speed: faster</option>
+</select>
+
+
+<script>
+    $('#video_speedButton')
+    .change(function () {
+        var video_speedButton = document.getElementById("video_speedButton").value;
+        video_speed = video_speedButton;
+        
+        
+        setVideoSpeed();
+        
+        changeVideoSpeed();
+    });
+    
+    function changeVideoSpeed()
+    {        
+        var v = document.getElementById("my_video");
+        v.playbackRate = video_speed;
+    }
+
+
+    
+    
+    window.onload = getVideoSpeed();
+    
+    function getVideoSpeed()
+    {
+        var form = $('#get-video-speed-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            var windowId = data[0].windowId;
+            var windowVideospeed = data[0].windowVideospeed;
+            var windowGeolocalization = data[0].windowGeolocalization;
+            
+            if (windowVideospeed === "_")
+            {
+                video_speed = 1;
+            } else
+            {
+                video_speed = windowVideospeed;
+            }    
+        }).fail(function () {
+            alert('ERROR... get-video-speed-ajax');
+        });
+    }
+    
+    // cada vez que se genere el evento en el select box 
+    function setVideoSpeed()
+    {
+        var form = $('#set-video-speed-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {video_speed: video_speed}, function (data)
+        {
+{#            alert("set-video-speed-ajax");#}
+        }).fail(function () {
+            alert('ERROR... set-video-speed-ajax');
+        });
+    }
+</script>

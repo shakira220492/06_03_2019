@@ -1,0 +1,1341 @@
+{{ form_start(get_lyric_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-lyric-ajax'|default('form')} }) }}
+{{ form_end(get_lyric_form_ajax) }}
+
+{{ form_start(save_lyricsWord_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'save-lyricsWord-ajax'|default('form')} }) }}
+{{ form_end(save_lyricsWord_form_ajax) }}
+
+{{ form_start(delete_lyricsWord_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'delete-lyricsWord-ajax'|default('form')} }) }}
+{{ form_end(delete_lyricsWord_form_ajax) }}
+
+{{ form_start(edit_lyricsWord_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'edit-lyricsWord-ajax'|default('form')} }) }}
+{{ form_end(edit_lyricsWord_form_ajax) }}
+
+{{ form_start(get_lyrics_frame_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-lyrics-frame-ajax'|default('form')} }) }}
+{{ form_end(get_lyrics_frame_form_ajax) }}
+
+<div id="newEnvironment">
+    
+    <div id="currentVideoCronometroBackground">
+    </div>
+    
+    <div id='videoFramesHeader'> 
+        <div id="currentVideoCronometro" class="animatedButton">
+            0.0
+        </div>
+        
+        <input id='write_lyricsLine' type='number' placeholder='' name='word' min="1"/>
+        
+        <input id='write_lyricsWord' type='text' placeholder='' name='word'/>
+            
+        <div id='zoom_lyricsSong'>
+            <img class="shortIcon" 
+                 src="files/images/icons/configuration/open.png" 
+                 alt="Mountain View">
+        </div>
+        
+        <div id='reduce_lyricsSong'>
+            <img class="shortIcon" 
+                 src="files/images/icons/configuration/close.png" 
+                 alt="Mountain View">
+        </div>
+        
+        <input id="leyend_videoFramesHeader" type='text' placeholder='' readonly="true"/>
+    </div>
+    
+    <div id='videoFrames' class="editLyrics_scrollBar">
+        {#tiempo 1/4 de segundo cada div#}
+        video frames
+    </div>
+
+    <div id='currentVideoLyrics' class="editLyrics_scrollBar">
+        {#previsualizacion de lyrics#}
+        <div id='currentVideoLyricsContent'>
+        </div>
+        
+        <div id='currentVideoLyricsBackGround'>
+        </div>
+    </div>
+        
+</div>
+
+<script>
+    
+    function EditLyricsBundle()
+    {
+        drawEditLyricsIconContent();
+    }
+    
+    
+    function drawEditLyricsIconContent()
+    {
+        prepare_edit_video_lyrics(); // EditLyricsBundle
+        showCurrentTime_withoutFormat(); // EditLyricsBundle
+        showVideo(
+            edit_video_id,
+            edit_video_name,
+            edit_video_description,
+            edit_video_image,
+            edit_video_content,
+            edit_video_updateDate,
+            edit_video_amount_views,
+            edit_video_amount_comments,
+            edit_video_likes,
+            edit_video_dislikes,
+            edit_video_userId,
+            edit_video_userName
+        ); // general_functions.js
+    }
+    
+    
+    $('#currentVideoCronometro')
+    .mouseover(function () {
+        document.getElementById("leyend_videoFramesHeader").placeholder = "time";
+    })
+    .mouseout(function () {
+        document.getElementById("leyend_videoFramesHeader").placeholder = "";
+    });
+    
+    
+    $('#write_lyricsLine')
+    .mouseover(function () {
+        document.getElementById("leyend_videoFramesHeader").placeholder = "stanza";
+        document.getElementById("write_lyricsLine").placeholder = "-";
+
+        document.getElementById("write_lyricsLine").style.backgroundColor = "white";
+        document.getElementById("write_lyricsWord").style.backgroundColor = "white";
+        document.getElementById("leyend_videoFramesHeader").style.backgroundColor = "white";
+        document.getElementById("zoom_lyricsSong").style.backgroundColor = "white";
+        document.getElementById("reduce_lyricsSong").style.backgroundColor = "white";
+    })
+    .mouseout(function () {
+        document.getElementById("leyend_videoFramesHeader").placeholder = "";
+        document.getElementById("write_lyricsLine").placeholder = "";
+
+        document.getElementById("write_lyricsLine").style.backgroundColor = "#ccc";
+        document.getElementById("write_lyricsWord").style.backgroundColor = "#ccc";
+        document.getElementById("leyend_videoFramesHeader").style.backgroundColor = "#ccc";
+        document.getElementById("zoom_lyricsSong").style.backgroundColor = "#ccc";
+        document.getElementById("reduce_lyricsSong").style.backgroundColor = "#ccc";
+    });
+    
+    
+    $('#write_lyricsWord')
+    .mouseover(function () {
+        document.getElementById("leyend_videoFramesHeader").placeholder = "word";
+        document.getElementById("write_lyricsWord").placeholder = "-";
+
+        document.getElementById("write_lyricsLine").style.backgroundColor = "white";
+        document.getElementById("write_lyricsWord").style.backgroundColor = "white";
+        document.getElementById("leyend_videoFramesHeader").style.backgroundColor = "white";
+        document.getElementById("zoom_lyricsSong").style.backgroundColor = "white";
+        document.getElementById("reduce_lyricsSong").style.backgroundColor = "white";
+    })
+    .mouseout(function () {
+        document.getElementById("leyend_videoFramesHeader").placeholder = "";
+        document.getElementById("write_lyricsWord").placeholder = "";
+
+        document.getElementById("write_lyricsLine").style.backgroundColor = "#ccc";
+        document.getElementById("write_lyricsWord").style.backgroundColor = "#ccc";
+        document.getElementById("leyend_videoFramesHeader").style.backgroundColor = "#ccc";
+        document.getElementById("zoom_lyricsSong").style.backgroundColor = "#ccc";
+        document.getElementById("reduce_lyricsSong").style.backgroundColor = "#ccc";
+    });
+    
+    
+    $('#zoom_lyricsSong')
+    .mouseover(function () {
+        document.getElementById("leyend_videoFramesHeader").placeholder = "zoom";
+
+        document.getElementById("write_lyricsLine").style.backgroundColor = "white";
+        document.getElementById("write_lyricsWord").style.backgroundColor = "white";
+        document.getElementById("leyend_videoFramesHeader").style.backgroundColor = "white";
+        document.getElementById("zoom_lyricsSong").style.backgroundColor = "white";
+        document.getElementById("reduce_lyricsSong").style.backgroundColor = "white";
+    })
+    .mouseout(function () {
+        document.getElementById("leyend_videoFramesHeader").placeholder = "";
+
+        document.getElementById("write_lyricsLine").style.backgroundColor = "#ccc";
+        document.getElementById("write_lyricsWord").style.backgroundColor = "#ccc";
+        document.getElementById("leyend_videoFramesHeader").style.backgroundColor = "#ccc";
+        document.getElementById("zoom_lyricsSong").style.backgroundColor = "#ccc";
+        document.getElementById("reduce_lyricsSong").style.backgroundColor = "#ccc";
+    })
+    .click(function () {
+        zoom_lyricsSong();
+    });
+    
+    $('#reduce_lyricsSong')
+    .mouseover(function () {
+        document.getElementById("leyend_videoFramesHeader").placeholder = "reduce";
+
+        document.getElementById("write_lyricsLine").style.backgroundColor = "white";
+        document.getElementById("write_lyricsWord").style.backgroundColor = "white";
+        document.getElementById("leyend_videoFramesHeader").style.backgroundColor = "white";
+        document.getElementById("zoom_lyricsSong").style.backgroundColor = "white";
+        document.getElementById("reduce_lyricsSong").style.backgroundColor = "white";
+    })
+    .mouseout(function () {
+        document.getElementById("leyend_videoFramesHeader").placeholder = "";
+
+        document.getElementById("write_lyricsLine").style.backgroundColor = "#ccc";
+        document.getElementById("write_lyricsWord").style.backgroundColor = "#ccc";
+        document.getElementById("leyend_videoFramesHeader").style.backgroundColor = "#ccc";
+        document.getElementById("zoom_lyricsSong").style.backgroundColor = "#ccc";
+        document.getElementById("reduce_lyricsSong").style.backgroundColor = "#ccc";
+    })
+    .click(function () {
+        reduce_lyricsSong();
+    });
+    
+    
+    $('#leyend_videoFramesHeader')
+    .mouseover(function () {
+        document.getElementById("write_lyricsLine").style.backgroundColor = "white";
+        document.getElementById("write_lyricsWord").style.backgroundColor = "white";
+        
+        document.getElementById("write_lyricsLine").placeholder = "-";
+        document.getElementById("write_lyricsWord").placeholder = "-";
+    })
+    .mouseout(function () {
+        document.getElementById("write_lyricsLine").style.backgroundColor = "#ccc";
+        document.getElementById("write_lyricsWord").style.backgroundColor = "#ccc";
+        
+        document.getElementById("write_lyricsLine").placeholder = "";
+        document.getElementById("write_lyricsWord").placeholder = "";
+    });
+    
+    function zoom_lyricsSong()
+    {
+        document.getElementById("reduce_lyricsSong").style.display = "block";
+        document.getElementById("zoom_lyricsSong").style.display = "none";
+    }
+    
+    function reduce_lyricsSong()
+    {
+        document.getElementById("zoom_lyricsSong").style.display = "block";
+        document.getElementById("reduce_lyricsSong").style.display = "none";
+    }
+    
+    function prepare_edit_video_lyrics()
+    {
+        var getInfoVideo = setInterval(function() {
+            
+            var my_video = document.getElementById("my_video");
+            var videoDuration = my_video.duration;
+            var videoDurationInteger = parseInt(videoDuration);
+
+            if (videoDurationInteger)
+            {
+                getLyric(); // me dibuja la letra de la canción al costado derecho
+                drawFrames(videoDurationInteger); // me dibuja la cantidad maxima de los frames que debe de tener la canción
+                get_lyricsWord_crud(); // me pinta los frames que contengan alguna letra de la canción
+                clearInterval(getInfoVideo); // esta función me interrumpe el ciclo, es una función nativa de javascript
+            } 
+        });
+    }
+    
+    var position_lyrics = 0;
+    
+    function getLyric()
+    {
+        var form = $('#get-lyric-ajax');
+        var url = form.attr('action');
+ 
+        $.post(url, {current_video_id: current_video_id}, function (data)
+        {
+            var lyricsline_MaxValue = data[0][0].lyricsline_MaxValue;
+            
+            position_lyrics = 0;
+            document.getElementById("currentVideoLyricsContent").innerHTML = "";
+            
+            for (d=0; d<=lyricsline_MaxValue; d++)
+            {
+                var lyricslineId = data[d][0].lyricslineId;
+                var wordsPerLyricsline_MaxValue = data[d][0].wordsPerLyricsline_MaxValue;
+                
+                drawNewLine_lyrics(lyricslineId);
+
+                for (e=0; e<=wordsPerLyricsline_MaxValue; e++)
+                {
+                    var keywordId = data[d][e].keywordId;
+                    var keywordContent = data[d][e].keywordContent;
+                    var lyricslineId = data[d][e].lyricslineId;
+                    var lyricslinePosition = data[d][e].lyricslinePosition;
+                    var lyricswordId = data[d][e].lyricswordId;
+                    var lyricswordStarttime = data[d][e].lyricswordStarttime;
+                    var lyricswordEndtime = data[d][e].lyricswordEndtime;
+                    var palabra = data[d][e].palabra;
+                    var estrofa = data[d][e].estrofa;
+                    var lyricsline_MaxValue = data[d][e].lyricsline_MaxValue;
+                    var wordsPerLyricsline_MaxValue = data[d][e].wordsPerLyricsline_MaxValue;
+                    
+                    appendWordToLine_lyrics(
+                        keywordId, 
+                        keywordContent, 
+                        lyricslineId
+                    );
+                }
+            }
+            
+        }).fail(function () {
+            alert('ERROR get-lyric-ajax');
+        });
+    }
+    
+    function drawNewLine_lyrics(lyricslineId)
+    {
+        position_lyrics += 25;
+        $("#currentVideoLyricsContent").append(
+            "<div id='currentVideo_lyricsLine"+lyricslineId+"' class='lyricsLine_lyrics' style='top: "+position_lyrics+"px;'>"+
+            " "+
+            "</div>"
+        );
+    }
+    
+    function appendWordToLine_lyrics(
+        keywordId, 
+        keywordContent, 
+        lyricslineId
+    )
+    {    
+        $("#currentVideo_lyricsLine"+lyricslineId).append(
+            "<div id='currentVideo_lyricsWord"+keywordId+"' class='lyricsWord_lyrics'>"+
+            "&nbsp"+keywordContent+"&nbsp"+
+            "</div>"
+        );
+    }
+    
+    function drawFrames(videoDurationInteger)
+    {
+        var videoFrames = document.getElementById("videoFrames");
+        videoFrames.innerHTML = "";
+        var j=0;
+        
+        for(i=0; i<videoDurationInteger; i+=0.1)
+        {   
+            $("#videoFrames").append(
+                "<div id='frame"+j+"' class='video_frame' {#draw_status='available'#} data-id3='"+i+"' data-id4='"+j+"'>"+
+                    "<div id='start_time"+j+"' class='start_time' data-id3='"+i+"' data-id4='"+j+"'>"+
+                    i.toFixed(1)+
+                    "</div>"+
+                                        
+                    "<input id='lyricsLine_position"+j+"' class='lyricsLine_position' data-id3='"+i+"' data-id4='"+j+"' "+
+                    "type='text' value='' placeholder='' name='keyword' readonly='readonly'/>"+
+
+                    "<div id='word_lyrics"+j+"' class='word_lyrics' draw_status='available' start_id='"+j+"' start_time='"+i+"' data-id3='"+i+"' data-id4='"+j+"'>"+
+                    
+                        "<input id='write_lyricsWord_frame"+j+"' class='write_lyricsWord_frame'  data-id3='"+i+"' data-id4='"+j+"' "+
+                        "type='text' value='' name='keyword' readonly='readonly'/>"+
+                    
+                        "<div id='menu_lyricsWord_frame"+j+"' class='menu_lyricsWord_frame'>"+
+
+                            "<div id='save_lyricsWord_frame"+j+"' class='save_lyricsWord_frame' data-id3='"+i+"' data-id4='"+j+"'>"+
+                            "S"+
+                            "</div>"+
+
+                            "<div id='edit_lyricsWord_frame"+j+"' class='edit_lyricsWord_frame' data-id3='"+i+"' data-id4='"+j+"'>"+
+                            "E"+
+                            "</div>"+
+
+                            "<div id='replay_lyricsWord_frame"+j+"' class='replay_lyricsWord_frame' data-id3='"+i+"' data-id4='"+j+"'>"+
+                            "R"+
+                            "</div>"+
+
+                            "<div id='delete_lyricsWord_frame"+j+"' class='delete_lyricsWord_frame' data-id3='"+i+"' data-id4='"+j+"'>"+
+                            "D"+
+                            "</div>"+
+
+                            "<div id='leyend_lyricsWord_frame"+j+"' class='leyend_lyricsWord_frame' data-id3='"+i+"' data-id4='"+j+"'>"+
+                            ""+
+                            "</div>"+
+
+                        "</div>"+
+                        
+                        
+                        "<div id='delete_only_frame"+j+"' class='delete_only_frame animatedButton' data-id3='"+i+"' data-id4='"+j+"'>"+
+                        "-"+
+                        "</div>"+
+                        "<div id='add_only_frame"+j+"' class='add_only_frame animatedButton' data-id3='"+i+"' data-id4='"+j+"'>"+
+                        "+"+
+                        "</div>"+
+                    
+                    "</div>"+
+                "</div>"
+            );
+    
+         
+    
+            $('#delete_only_frame'+j)
+            .click(function () {
+                var time = $(this).data('id3');
+                var id = $(this).data('id4');
+                
+                var thisFrame = "frame"+id;
+                var thisWordId = "word_lyrics"+id;
+                var thisTimeId = "start_time"+id;
+                
+                var frame = document.getElementById(thisFrame);
+                var word_lyrics = document.getElementById(thisWordId);
+                var start_time = document.getElementById(thisTimeId);
+                
+                ///////////////////////////////////////////////////////////////
+                
+                var previousId = id - 1;
+                var nextId = id + 1;
+                
+                var previousFrameId = "frame"+previousId;
+                var previousFrame = document.getElementById(previousFrameId);
+                var previousWord_lyricsId = "word_lyrics"+previousId;
+                var previousWord_lyrics = document.getElementById(previousWord_lyricsId);
+                var previousWord_lyrics_drawStatus = previousWord_lyrics.getAttribute("draw_status");
+                var previousWord_lyrics_startId = parseInt(previousWord_lyrics.getAttribute("start_id"));
+                var previousWord_lyrics_endId = parseInt(previousWord_lyrics.getAttribute("end_id"));
+                var previousWord_lyrics_startTime = parseFloat(previousWord_lyrics.getAttribute("start_time")).toFixed(1);
+                var previousWord_lyrics_endTime = parseFloat(previousWord_lyrics.getAttribute("end_time")).toFixed(1);
+                
+                var thisFrameId = "frame"+id;
+                var thisFrame = document.getElementById(thisFrameId);
+                var thisWrite_lyricsWord_frameId = "write_lyricsWord_frame"+id;
+                var thisWrite_lyricsWord_frame = document.getElementById(thisWrite_lyricsWord_frameId);
+                var thisWord_lyricsId = "word_lyrics"+id;
+                var thisWord_lyrics = document.getElementById(thisWord_lyricsId);
+                var thisWord_lyrics_drawStatus = thisWord_lyrics.getAttribute("draw_status");
+                var thisWord_lyrics_startId = parseInt(thisWord_lyrics.getAttribute("start_id"));
+                var thisWord_lyrics_endId = parseInt(thisWord_lyrics.getAttribute("end_id"));
+                var thisWord_lyrics_startTime = parseFloat(thisWord_lyrics.getAttribute("start_time")).toFixed(1);
+                var thisWord_lyrics_endTime = parseFloat(thisWord_lyrics.getAttribute("end_time")).toFixed(1);
+        
+                var nextFrameId = "frame"+nextId;
+                var nextFrame = document.getElementById(nextFrameId);
+                var nextWord_lyricsId = "word_lyrics"+nextId;
+                var nextWord_lyrics = document.getElementById(nextWord_lyricsId);
+                var nextWord_lyrics_drawStatus = nextWord_lyrics.getAttribute("draw_status");
+                var nextWord_lyrics_startId = parseInt(nextWord_lyrics.getAttribute("start_id"));
+                var nextWord_lyrics_endId = parseInt(nextWord_lyrics.getAttribute("end_id"));
+                var nextWord_lyrics_startTime = parseFloat(nextWord_lyrics.getAttribute("start_time")).toFixed(1);
+                var nextWord_lyrics_endTime = parseFloat(nextWord_lyrics.getAttribute("end_time")).toFixed(1);
+                
+                currentWord = thisWrite_lyricsWord_frame.value;
+                
+                if (previousWord_lyrics_drawStatus === "unavailable" && 
+                    previousWord_lyrics_startId === thisWord_lyrics_startId) // incrementar valor superior
+                {
+                    var previousWord_lyrics_startId = thisWord_lyrics_startId;
+                    var previousWord_lyrics_startTime = thisWord_lyrics_startTime;
+                    var previousWord_lyrics_endId = thisWord_lyrics_endId - 1;
+                    var previousWord_lyrics_endTime = (parseFloat(thisWord_lyrics_endTime) - parseFloat(0.1)).toFixed(1);
+                    
+                    firstFrameId = previousWord_lyrics_startId;
+                    firstFrameTime = previousWord_lyrics_startTime; 
+                    lastFrameId = previousWord_lyrics_endId;
+                    lastFrameTime = previousWord_lyrics_endTime;
+                }
+                
+                if (nextWord_lyrics_drawStatus === "unavailable" &&
+                    nextWord_lyrics_startId === thisWord_lyrics_startId) // incrementar valor inferior
+                {
+                    var nextWord_lyrics_startId = thisWord_lyrics_endId;
+                    var nextWord_lyrics_startTime = thisWord_lyrics_endTime;
+                    var nextWord_lyrics_endId = thisWord_lyrics_startId + 1;
+                    var nextWord_lyrics_endTime = (parseFloat(thisWord_lyrics_startTime) + parseFloat(0.1)).toFixed(1);
+                    
+                    firstFrameId = nextWord_lyrics_endId;
+                    firstFrameTime = nextWord_lyrics_endTime;
+                    lastFrameId = nextWord_lyrics_startId; 
+                    lastFrameTime = nextWord_lyrics_startTime; 
+                }
+                
+                updateLyricsSong_status = "deleteOnlyFrame";
+                edit_lyricsWord_crud(id, time);
+            });
+            
+            $('#add_only_frame'+j)
+            .click(function () {
+                var time = $(this).data('id3');
+                var id = $(this).data('id4');
+                
+                var thisFrame = "frame"+id;
+                var thisWordId = "word_lyrics"+id;
+                var thisTimeId = "start_time"+id;
+                
+                var frame = document.getElementById(thisFrame);
+                var word_lyrics = document.getElementById(thisWordId);
+                var start_time = document.getElementById(thisTimeId);
+                
+                ///////////////////////////////////////////////////////////////
+                
+                var previousId = id - 1;
+                var nextId = id + 1;
+                
+                var previousFrameId = "frame"+previousId;
+                var previousFrame = document.getElementById(previousFrameId);
+                var previousWord_lyricsId = "word_lyrics"+previousId;
+                var previousWord_lyrics = document.getElementById(previousWord_lyricsId);
+                var previousWord_lyrics_drawStatus = previousWord_lyrics.getAttribute("draw_status");
+                
+                var thisFrameId = "frame"+id;
+                var thisFrame = document.getElementById(thisFrameId);
+                var thisWrite_lyricsWord_frameId = "write_lyricsWord_frame"+id;
+                var thisWrite_lyricsWord_frame = document.getElementById(thisWrite_lyricsWord_frameId);
+                var thisWord_lyricsId = "word_lyrics"+id;
+                var thisWord_lyrics = document.getElementById(thisWord_lyricsId);
+                var thisWord_lyrics_drawStatus = thisWord_lyrics.getAttribute("draw_status");
+                var thisWord_lyrics_startId = parseInt(thisWord_lyrics.getAttribute("start_id"));
+                var thisWord_lyrics_endId = parseInt(thisWord_lyrics.getAttribute("end_id"));
+                var thisWord_lyrics_startTime = parseFloat(thisWord_lyrics.getAttribute("start_time")).toFixed(1);
+                var thisWord_lyrics_endTime = parseFloat(thisWord_lyrics.getAttribute("end_time")).toFixed(1);
+        
+                var nextFrameId = "frame"+nextId;
+                var nextFrame = document.getElementById(nextFrameId);
+                var nextWord_lyricsId = "word_lyrics"+nextId;
+                var nextWord_lyrics = document.getElementById(nextWord_lyricsId);
+                var nextWord_lyrics_drawStatus = nextWord_lyrics.getAttribute("draw_status");
+                
+                currentWord = thisWrite_lyricsWord_frame.value;
+                
+                if (previousWord_lyrics_drawStatus === "available") // incrementar valor superior
+                {
+                    var previousWord_lyrics_startId = thisWord_lyrics_startId - 1;
+                    var previousWord_lyrics_startTime = (parseFloat(thisWord_lyrics_startTime) - parseFloat(0.1)).toFixed(1);
+                    var previousWord_lyrics_endId = thisWord_lyrics_endId;
+                    var previousWord_lyrics_endTime = thisWord_lyrics_endTime;
+                    
+                    firstFrameId = previousWord_lyrics_startId;
+                    firstFrameTime = previousWord_lyrics_startTime;
+                    lastFrameId = previousWord_lyrics_endId;
+                    lastFrameTime = previousWord_lyrics_endTime;
+                }
+                
+                if (nextWord_lyrics_drawStatus === "available") // incrementar valor inferior
+                {
+                    var nextWord_lyrics_startId = thisWord_lyrics_startId;
+                    var nextWord_lyrics_startTime = thisWord_lyrics_startTime;
+                    var nextWord_lyrics_endId = thisWord_lyrics_endId + 1;
+                    var nextWord_lyrics_endTime = (parseFloat(thisWord_lyrics_endTime) + parseFloat(0.1)).toFixed(1);
+                    
+                    firstFrameId = nextWord_lyrics_startId;
+                    firstFrameTime = nextWord_lyrics_startTime;
+                    lastFrameId = nextWord_lyrics_endId;
+                    lastFrameTime = nextWord_lyrics_endTime;
+                }
+                
+                updateLyricsSong_status = "addOnlyFrame";
+                edit_lyricsWord_crud(id, time);
+            });
+            
+            $('#save_lyricsWord_frame'+j)
+            .click(function () {
+                var time = $(this).data('id3');
+                var id = $(this).data('id4');
+                
+                document.getElementById("edit_lyricsWord_frame"+id).style.display = "block";
+                document.getElementById("save_lyricsWord_frame"+id).style.display = "none";
+                
+                
+                document.getElementById("lyricsLine_position"+id).style.backgroundColor = "gray";
+                document.getElementById("lyricsLine_position"+id).style.cursor = "pointer";
+                document.getElementById("lyricsLine_position"+id).style.opacity = "0.4";
+                document.getElementById("lyricsLine_position"+id).readOnly = true;
+                document.getElementById("write_lyricsWord_frame"+id).style.backgroundColor = "white";
+                document.getElementById("write_lyricsWord_frame"+id).style.cursor = "pointer";
+                document.getElementById("write_lyricsWord_frame"+id).readOnly = true;
+                
+                
+                var thisWordId = "word_lyrics"+id;
+                var word_lyrics = document.getElementById(thisWordId);
+                firstFrameId = parseInt(word_lyrics.getAttribute("start_id"));
+                lastFrameId = parseInt(word_lyrics.getAttribute("end_id"));
+                firstFrameTime = parseFloat(word_lyrics.getAttribute("start_time")).toFixed(1);
+                lastFrameTime = parseFloat(word_lyrics.getAttribute("end_time")).toFixed(1);
+                currentWord = document.getElementById("write_lyricsWord_frame"+id).value;
+                
+                updateLyricsSong_status = "editWord"; 
+                edit_lyricsWord_crud(id, time);
+            })
+            .mouseover(function () {
+                var id = $(this).data('id4');
+                
+                document.getElementById("leyend_lyricsWord_frame"+id).style.display = "block";
+                document.getElementById("leyend_lyricsWord_frame"+id).innerHTML = "save";
+            })
+            .mouseout(function () {
+                var id = $(this).data('id4');
+                
+                document.getElementById("leyend_lyricsWord_frame"+id).style.display = "none";
+            });
+    
+            $('#edit_lyricsWord_frame'+j)
+            .click(function () {
+                var id = $(this).data('id4');
+                
+                document.getElementById("edit_lyricsWord_frame"+id).style.display = "none";
+                document.getElementById("save_lyricsWord_frame"+id).style.display = "block";
+                
+                
+                
+                
+                document.getElementById("lyricsLine_position"+id).style.backgroundColor = "purple";
+                document.getElementById("lyricsLine_position"+id).style.cursor = "text";
+                document.getElementById("lyricsLine_position"+id).style.opacity = "1";
+                document.getElementById("lyricsLine_position"+id).readOnly = false;
+                document.getElementById("write_lyricsWord_frame"+id).style.backgroundColor = "purple";
+                document.getElementById("write_lyricsWord_frame"+id).style.cursor = "text";
+                document.getElementById("write_lyricsWord_frame"+id).readOnly = false;
+            })
+            .mouseover(function () {
+                var id = $(this).data('id4');
+                
+                document.getElementById("leyend_lyricsWord_frame"+id).style.display = "block";
+                document.getElementById("leyend_lyricsWord_frame"+id).innerHTML = "edit";
+                
+            })
+            .mouseout(function () {
+                var id = $(this).data('id4');
+                
+                document.getElementById("leyend_lyricsWord_frame"+id).style.display = "none";
+                
+            });
+    
+            $('#replay_lyricsWord_frame'+j)
+            .mouseover(function () {
+                var id = $(this).data('id4');
+                
+                document.getElementById("leyend_lyricsWord_frame"+id).style.display = "block";
+                document.getElementById("leyend_lyricsWord_frame"+id).innerHTML = "replay";
+                
+            })
+            .mouseout(function () {
+                var id = $(this).data('id4');
+                
+                document.getElementById("leyend_lyricsWord_frame"+id).style.display = "none";
+                
+            })
+            .click(function () { // cuando el mouse se mueve sobre el div
+                replay_lyricsWord(); //GUI
+            });
+    
+            $('#delete_lyricsWord_frame'+j)
+            .mouseover(function () {
+                var id = $(this).data('id4');
+                
+                document.getElementById("leyend_lyricsWord_frame"+id).style.display = "block";
+                document.getElementById("leyend_lyricsWord_frame"+id).innerHTML = "delete";
+                
+            })
+            .mouseout(function () {
+                var id = $(this).data('id4');
+                
+                document.getElementById("leyend_lyricsWord_frame"+id).style.display = "none";
+                
+            })
+            .click(function () { // cuando el mouse se mueve sobre el div
+                var time = $(this).data('id3');
+                var id = $(this).data('id4');
+        
+                delete_lyricsWord_crud(id, time);// CRUD
+                
+                {#alert("delete_lyricsWord");#}
+            });
+            
+            $('#word_lyrics'+j)
+            .mousemove(function () { // cuando el mouse se mueve sobre el div
+                var time = $(this).data('id3');
+                var id = $(this).data('id4');
+                
+                var thisFrame = "frame"+id;
+                var thisWordId = "word_lyrics"+id;
+                var thisTimeId = "start_time"+id;
+                
+                var frame = document.getElementById(thisFrame);
+                var word_lyrics = document.getElementById(thisWordId);
+                var start_time = document.getElementById(thisTimeId);
+                
+                var write_lyricsWord = document.getElementById("write_lyricsWord");
+                currentWord = write_lyricsWord.value;
+                
+                var write_lyricsLine = document.getElementById("write_lyricsLine");
+                currentLyricsLine = write_lyricsLine.value;
+                
+                if (word_lyrics.getAttribute('draw_status') === "unavailable" && mouse_status === 1)
+                {
+                    mouse_status = 0;
+                    updateLyricsSong_status = "insertWord";
+                    save_lyricsWord_crud(availableId);
+                    displace_video(time);
+                } else if (word_lyrics.getAttribute('draw_status') === "available" && mouse_status === 1)
+                {
+                    availableId = id;
+                    
+                    lastFrameTime = time.toFixed(1);
+                    lastFrameId = id;
+                    
+                    draw_frame();
+                    displace_video(time);
+                }
+                
+                document.getElementById("write_lyricsLine").style.backgroundColor = "white";
+                document.getElementById("write_lyricsWord").style.backgroundColor = "white";
+                document.getElementById("leyend_videoFramesHeader").style.backgroundColor = "white";
+                document.getElementById("zoom_lyricsSong").style.backgroundColor = "white";
+                document.getElementById("reduce_lyricsSong").style.backgroundColor = "white";
+                
+                document.getElementById("write_lyricsLine").placeholder = "-";
+                document.getElementById("write_lyricsWord").placeholder = "-";
+            })
+            .mouseup(function () { // cuando el boton del mouse se deja de oprimir
+                var time = $(this).data('id3');
+                var id = $(this).data('id4');
+                
+                var thisFrame = "frame"+id;
+                var thisWordId = "word_lyrics"+id;
+                var thisTimeId = "start_time"+id;
+                
+                var frame = document.getElementById(thisFrame);
+                var word_lyrics = document.getElementById(thisWordId);
+                var start_time = document.getElementById(thisTimeId);
+                
+                var write_lyricsWord = document.getElementById("write_lyricsWord");
+                currentWord = write_lyricsWord.value;
+                
+                var write_lyricsLine = document.getElementById("write_lyricsLine");
+                currentLyricsLine = write_lyricsLine.value;
+                
+                if (word_lyrics.getAttribute('draw_status') === "unavailable" && mouse_status === 1)
+                {
+                    
+                } else if (word_lyrics.getAttribute('draw_status') === "available" && mouse_status === 1)
+                {
+                    lastFrameTime = time.toFixed(1);
+                    lastFrameId = id;
+                    
+                    updateLyricsSong_status = "insertWord";
+                    save_lyricsWord_crud(id);
+                }
+                
+                mouse_status = 0;
+            })
+            .mousedown(function () { // cuando el boton del mouse se encuentra oprimido sobre el word_lyrics
+                var write_lyricsWord = document.getElementById("write_lyricsWord").value;
+                var write_lyricsLine = document.getElementById("write_lyricsLine").value;
+                var write_lyricsLine_int = parseInt(write_lyricsLine);
+                
+                currentWord = write_lyricsWord;
+                currentLyricsLine = write_lyricsLine_int;
+                
+                var time = $(this).data('id3');
+                var id = $(this).data('id4');
+
+                var thisFrame = "frame"+id;
+                var thisWordId = "word_lyrics"+id;
+                var thisTimeId = "start_time"+id;
+                var thisLyricsLineId = "lyricsLine_position"+id;
+                
+                var frame = document.getElementById(thisFrame);
+                var word_lyrics = document.getElementById(thisWordId);
+                var start_time = document.getElementById(thisTimeId);
+                var lyricsLine_position = document.getElementById(thisLyricsLineId).value;
+                
+                if ((write_lyricsWord && write_lyricsLine_int) 
+                        && (write_lyricsLine_int !== 0)) // en caso de que existan ambas... 
+                {
+                    getLyricsLinePosition(id); // acá obtenemos las variables: previousLyricsLinePosition, nextLyricsLinePosition
+                if (
+                    (write_lyricsLine_int >= previousLyricsLinePosition && write_lyricsLine_int <= nextLyricsLinePosition) ||
+                    (write_lyricsLine_int <= nextLyricsLinePosition && previousLyricsLinePosition === "notPreviousFrame") ||
+                    (write_lyricsLine_int >= previousLyricsLinePosition && nextLyricsLinePosition === "notNextFrame") ||
+                    (previousLyricsLinePosition === "notPreviousFrame" && nextLyricsLinePosition === "notNextFrame")
+                   )
+                    {
+                        mouse_status = 1;
+                    } else 
+                    {
+
+                        if (
+                            previousLyricsLinePosition === "notPreviousFrame" 
+                            && nextLyricsLinePosition <= write_lyricsLine_int
+                           )
+                        {
+                            var message = "Write a stanza lower than: "+nextLyricsLinePosition+
+                                    "write_lyricsLine_int: "+write_lyricsLine_int;
+                        } else if (
+                            nextLyricsLinePosition === "notNextFrame"
+                            && previousLyricsLinePosition >= write_lyricsLine_int
+                            )
+                        {
+                            var message = 
+                            "Write a stanza bigger than: "+previousLyricsLinePosition+
+                            "write_lyricsLine_int: "+write_lyricsLine_int;
+                        } else if (
+                            nextLyricsLinePosition <= write_lyricsLine_int 
+                            && previousLyricsLinePosition >= write_lyricsLine_int
+                            )
+                        {
+                            var message = 
+                            "Write a stanza lower than: "+nextLyricsLinePosition+
+                            "and bigger than: "+previousLyricsLinePosition+
+                            "write_lyricsLine_int: "+write_lyricsLine_int;
+                        } else
+                        {
+                            var message = 
+                            "This is the first word";
+                        }
+
+                        showMessage_EmergentWindow("previous: "+message);
+                    }
+                }
+                else if ((!write_lyricsWord && !write_lyricsLine_int) 
+                        && (write_lyricsLine_int !== 0)
+                        && word_lyrics.getAttribute('draw_status') === "available")
+                {
+                    var message = "Is mandatory to input a word and a verse";
+                    showMessage_EmergentWindow(message);
+                } 
+                else if ((!write_lyricsWord) 
+                        && (write_lyricsLine_int !== 0)
+                        && word_lyrics.getAttribute('draw_status') === "available")
+                {
+                    var message = "Is mandatory to input a word";
+                    showMessage_EmergentWindow(message);
+                } 
+                else if ((!write_lyricsLine_int) 
+                        && (write_lyricsLine_int !== 0)
+                        && word_lyrics.getAttribute('draw_status') === "available")
+                {
+                    var message = "Is mandatory to input a verse";
+                    showMessage_EmergentWindow(message);
+                }
+                else if ((write_lyricsLine_int === 0)
+                        && word_lyrics.getAttribute('draw_status') === "available")
+                {
+                    var message = "Write a lyrics line different than 0";
+                    showMessage_EmergentWindow(message);
+                }
+
+                
+
+                if (word_lyrics.getAttribute('draw_status') === "unavailable" && mouse_status === 1)
+                {
+                    mouse_status = 0;
+                } else if (word_lyrics.getAttribute('draw_status') === "available" && mouse_status === 1)
+                {
+                    lastFrameId = id;
+                    firstFrameId = id;
+                
+                    lastFrameTime = time.toFixed(1);
+                    firstFrameTime = time.toFixed(1);
+
+                    draw_frame();
+                    displace_video(time);
+                }
+
+            })
+            .mouseover(function () { // cuando el cursor se encuentra por encima del frame
+        
+                var time = $(this).data('id3');
+                var id = $(this).data('id4');
+                
+                var thisFrame = "frame"+id;
+                var thisWordId = "word_lyrics"+id;
+                var thisTimeId = "start_time"+id;
+                var thisLyricsLineId = "lyricsLine_position"+id;
+                var thismenu_lyricsWord_frame = "menu_lyricsWord_frame"+id;
+                
+                var frame = document.getElementById(thisFrame);
+                var word_lyrics = document.getElementById(thisWordId);
+                var start_time = document.getElementById(thisTimeId);
+                var lyricsLine_position = document.getElementById(thisLyricsLineId);
+                
+                var write_lyricsWord = document.getElementById("write_lyricsWord");
+                currentWord = write_lyricsWord.value;
+                var write_lyricsLine = document.getElementById("write_lyricsLine");
+                currentLyricsLine = write_lyricsLine.value;
+                
+                if (word_lyrics.getAttribute('draw_status') === "unavailable" && mouse_status === 1)
+                {
+                    
+                } else if (word_lyrics.getAttribute('draw_status') === "available" && mouse_status === 1)
+                {
+                    
+                } 
+                
+        
+                if (word_lyrics.getAttribute('draw_status') === "unavailable") {
+                    start_time.style.opacity = "1";
+                    lyricsLine_position.style.opacity = "1";
+                    document.getElementById(thismenu_lyricsWord_frame).style.display = "block";
+                } else if (word_lyrics.getAttribute('draw_status') === "available") {
+                    word_lyrics.style.opacity = "1";
+                    start_time.style.opacity = "1";
+                    lyricsLine_position.style.opacity = "1";
+                }
+                
+                
+            })
+            .mouseout(function () { // cuando el cursor se sale del frame
+                var time = $(this).data('id3');
+                var id = $(this).data('id4');
+                
+                var thisFrame = "frame"+id;
+                var thisWordId = "word_lyrics"+id;
+                var thisTimeId = "start_time"+id;
+                var thisLyricsLineId = "lyricsLine_position"+id;
+                var thismenu_lyricsWord_frame = "menu_lyricsWord_frame"+id;
+                
+                var frame = document.getElementById(thisFrame);
+                var word_lyrics = document.getElementById(thisWordId);
+                var start_time = document.getElementById(thisTimeId);
+                var lyricsLine_position = document.getElementById(thisLyricsLineId);
+                
+                var write_lyricsWord = document.getElementById("write_lyricsWord");
+                currentWord = write_lyricsWord.value;
+                var write_lyricsLine = document.getElementById("write_lyricsLine");
+                currentLyricsLine = write_lyricsLine.value;
+                
+                if (word_lyrics.getAttribute('draw_status') === "unavailable" && mouse_status === 1)
+                {
+                    
+                } else if (word_lyrics.getAttribute('draw_status') === "available" && mouse_status === 1)
+                {
+                    previousFrameId = id;
+                    previousFrameTime = time;
+                } 
+                
+                if (word_lyrics.getAttribute('draw_status') === "unavailable") {
+                    start_time.style.opacity = "0.4";
+                    lyricsLine_position.style.opacity = "0.4";
+                    document.getElementById(thismenu_lyricsWord_frame).style.display = "none";
+                } else if (word_lyrics.getAttribute('draw_status') === "available") {
+                    word_lyrics.style.opacity = "0.4";
+                    start_time.style.opacity = "0.4";
+                    lyricsLine_position.style.opacity = "0.4";
+                }
+                
+                document.getElementById("write_lyricsLine").style.backgroundColor = "#ccc";
+                document.getElementById("write_lyricsWord").style.backgroundColor = "#ccc";
+                document.getElementById("leyend_videoFramesHeader").style.backgroundColor = "#ccc";
+                document.getElementById("zoom_lyricsSong").style.backgroundColor = "#ccc";
+                document.getElementById("reduce_lyricsSong").style.backgroundColor = "#ccc";
+                
+                document.getElementById("write_lyricsLine").placeholder = "";
+                document.getElementById("write_lyricsWord").placeholder = "";
+            });
+            
+            $('#start_time'+j)
+            .mouseup(function () {
+                var time = $(this).data('id3');
+                displace_video(time);
+            })
+            .mousemove(function () {
+                var time = $(this).data('id3');
+        
+                if (moveAutomaticallyVideo === 0)
+                {
+                    document.getElementById("currentVideoCronometro").style.backgroundColor = "#1ab7ea";
+                }
+                else if (moveAutomaticallyVideo === 1)
+                {
+                    displace_video(time);
+                }
+            })
+            .mousedown(function () {
+                var time = $(this).data('id3');
+        
+                if (moveAutomaticallyVideo === 0)
+                {
+                    document.getElementById("currentVideoCronometro").style.backgroundColor = "#1ab7ea";
+                }
+                else if (moveAutomaticallyVideo === 1)
+                {
+                    displace_video(time);
+                }
+            })
+            .mouseover(function () {
+                var time = $(this).data('id3');
+                var id = $(this).data('id4');
+                
+                var thisFrame = "frame"+id;
+                var thisWordId = "word_lyrics"+id;
+                var thisTimeId = "start_time"+id;
+                var thisLyricsLineId = "lyricsLine_position"+id;
+                
+                var frame = document.getElementById(thisFrame);
+                var word_lyrics = document.getElementById(thisWordId);
+                var start_time = document.getElementById(thisTimeId);
+                var lyricsLine_position = document.getElementById(thisLyricsLineId);
+                
+                if (word_lyrics.getAttribute('draw_status') === "unavailable" && mouse_status === 1)
+                {
+                    
+                } else if (word_lyrics.getAttribute('draw_status') === "available" && mouse_status === 1)
+                {
+                    
+                }
+                
+                if (word_lyrics.getAttribute('draw_status') === "unavailable") {
+                    start_time.style.opacity = "1";
+                } else if (word_lyrics.getAttribute('draw_status') === "available") {
+                    word_lyrics.style.opacity = "1";
+                    start_time.style.opacity = "1";
+                    lyricsLine_position.style.opacity = "1";
+                }
+                
+                if (moveAutomaticallyVideo === 1)
+                {
+                    document.getElementById("currentVideoCronometroBackground").style.opacity = "0.5";
+                } else if (moveAutomaticallyVideo === 0)
+                {
+                    document.getElementById("currentVideoCronometroBackground").style.opacity = "0";
+                }
+                
+            })
+            .mouseout(function () {
+                var time = $(this).data('id3');
+                var id = $(this).data('id4');
+                
+                var thisFrame = "frame"+id;
+                var thisWordId = "word_lyrics"+id;
+                var thisTimeId = "start_time"+id;
+                var thisLyricsLineId = "lyricsLine_position"+id;
+                
+                var frame = document.getElementById(thisFrame);
+                var word_lyrics = document.getElementById(thisWordId);
+                var start_time = document.getElementById(thisTimeId);
+                var lyricsLine_position = document.getElementById(thisLyricsLineId);
+                
+                if (word_lyrics.getAttribute('draw_status') === "unavailable" && mouse_status === 1)
+                {
+                    
+                } else if (word_lyrics.getAttribute('draw_status') === "available" && mouse_status === 1)
+                {
+                    previousFrameId = id;
+                    previousFrameTime = time;
+                } 
+                
+                if (word_lyrics.getAttribute('draw_status') === "unavailable") {
+                    start_time.style.opacity = "0.4";
+                } else if (word_lyrics.getAttribute('draw_status') === "available") {
+                    word_lyrics.style.opacity = "0.4";
+                    start_time.style.opacity = "0.4";
+                    lyricsLine_position.style.opacity = "0.4";
+                }
+                
+                document.getElementById("currentVideoCronometroBackground").style.opacity = "0";
+                
+                if (moveAutomaticallyVideo === 0)
+                {
+                    // poner en gris
+                    document.getElementById("currentVideoCronometro").style.backgroundColor = "gray";
+                }
+                
+            });
+            
+            $('#lyricsLine_position'+j)
+            .mouseover(function () {
+                var time = $(this).data('id3');
+                var id = $(this).data('id4');
+                
+                var thisFrame = "frame"+id;
+                var thisWordId = "word_lyrics"+id;
+                var thisTimeId = "start_time"+id;
+                var thisLyricsLineId = "lyricsLine_position"+id;
+                
+                var frame = document.getElementById(thisFrame);
+                var word_lyrics = document.getElementById(thisWordId);
+                var start_time = document.getElementById(thisTimeId);
+                var lyricsLine_position = document.getElementById(thisLyricsLineId);
+                
+                if (word_lyrics.getAttribute('draw_status') === "unavailable") {
+                    start_time.style.opacity = "1";
+                    lyricsLine_position.style.opacity = "1";
+                } else if (word_lyrics.getAttribute('draw_status') === "available") {
+                    word_lyrics.style.opacity = "1";
+                    start_time.style.opacity = "1";
+                    lyricsLine_position.style.opacity = "1";
+                }
+                
+            })
+            .mouseout(function () {
+                var time = $(this).data('id3');
+                var id = $(this).data('id4');
+                
+                var thisFrame = "frame"+id;
+                var thisWordId = "word_lyrics"+id;
+                var thisTimeId = "start_time"+id;
+                var thisLyricsLineId = "lyricsLine_position"+id;
+                
+                var frame = document.getElementById(thisFrame);
+                var word_lyrics = document.getElementById(thisWordId);
+                var start_time = document.getElementById(thisTimeId);
+                var lyricsLine_position = document.getElementById(thisLyricsLineId);
+                
+                if (word_lyrics.getAttribute('draw_status') === "unavailable") {
+                    start_time.style.opacity = "0.4";
+                    lyricsLine_position.style.opacity = "0.4";
+                } else if (word_lyrics.getAttribute('draw_status') === "available") {
+                    word_lyrics.style.opacity = "0.4";
+                    start_time.style.opacity = "0.4";
+                    lyricsLine_position.style.opacity = "0.4";
+                }
+            });
+            
+            j++;
+        }
+    }
+    
+    
+    function get_lyricsWord_crud()
+    {
+        var form = $('#get-lyrics-frame-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {current_video_id: current_video_id}, function (data)
+        {
+            {#alert("get-lyrics-frame-ajax");#}
+
+            var amountLyricsWord = data[0].amountLyricsWord;
+            
+            for (i = 0; i < amountLyricsWord; i++)
+            {
+                var keywordContent = data[i].keywordContent;
+                var lyricslinePosition = data[i].lyricslinePosition;
+                var lyricswordId = data[i].lyricswordId;
+                var lyricswordStarttime = data[i].lyricswordStarttime;
+                var lyricswordEndtime = data[i].lyricswordEndtime;
+                
+                firstFrameId = lyricswordStarttime * 10;
+                lastFrameId = lyricswordEndtime * 10;
+                firstFrameTime = lyricswordStarttime;
+                lastFrameTime = lyricswordEndtime;
+                currentWord = keywordContent;
+                currentLyricsLine = lyricslinePosition;
+                currentLyricsWordId = lyricswordId;
+                
+                draw_word();
+            }
+                
+        }).fail(function () {
+            alert('ERROR... get-lyrics-frame-ajax');
+        });
+    }
+    
+    
+    
+    
+    
+    function save_lyricsWord_crud(id) // I guess insert: "insertWord"
+    {
+        var thisWrite_lyricsWord = document.getElementById("write_lyricsWord").value;
+        var thisWrite_lyricsLine = document.getElementById("write_lyricsLine").value;
+        
+        var form = $('#save-lyricsWord-ajax');
+        var url = form.attr('action');
+
+        $.post(url, 
+        {
+            current_video_id: current_video_id, 
+            startTime: firstFrameTime, 
+            endTime: lastFrameTime, 
+            lyricsWord: thisWrite_lyricsWord, 
+            lyricsLine: thisWrite_lyricsLine
+        }, function (data)
+        {
+            var lyricswordId_value = data[0].lyricswordId;
+            var lyricswordStarttime_value = data[0].lyricswordStarttime;
+            var lyricswordEndtime_value = data[0].lyricswordEndtime;
+            var keywordContent_value = data[0].keywordContent;
+            var lyricslinePosition_value = data[0].lyricslinePosition;
+            
+            firstFrameId = lyricswordStarttime_value * 10;
+            lastFrameId = lyricswordEndtime_value * 10;
+            firstFrameTime = lyricswordStarttime_value;
+            lastFrameTime = lyricswordEndtime_value;
+            currentWord = keywordContent_value;
+            currentLyricsLine = lyricslinePosition_value;
+            currentLyricsWordId = lyricswordId_value;
+        
+            alert("works");
+    
+            draw_word();
+        }).fail(function () {
+            alert('ERROR save-lyricsWord-ajax');
+        });
+        
+        
+    }
+    
+    function delete_lyricsWord_crud(id, time) // I guess delete: "deleteWord"
+    {
+        var word_lyricsId = "word_lyrics"+id;
+        var word_lyrics = document.getElementById(word_lyricsId);
+        var lyricsWordId = word_lyrics.getAttribute("word_id");
+        
+        var thisWrite_lyricsWord_frameId = "write_lyricsWord_frame"+id;
+        var thisWrite_lyricsWord_frame = document.getElementById(thisWrite_lyricsWord_frameId);
+        var lyricsWord = thisWrite_lyricsWord_frame.value;
+        
+        var thisLyricsLine_positionId = "lyricsLine_position"+id;
+        var thisLyricsLine_position = document.getElementById(thisLyricsLine_positionId);
+        var lyricsLine = thisLyricsLine_position.value;
+        
+{#        alert("maybe dont error... lyricsWord: " + lyricsWord + 
+              "\n lyricsLine: " + lyricsLine + 
+              "\n lyricsWordId: " + lyricsWordId + 
+              "\n current_video_id: "+current_video_id);#}
+            
+        var form = $('#delete-lyricsWord-ajax');
+        var url = form.attr('action');
+
+        $.post(url,
+        {
+            current_video_id: current_video_id, 
+            lyricsWord: lyricsWord, 
+            lyricsLine: lyricsLine,
+            lyricsWordId: lyricsWordId
+        },
+        function (data)
+        {
+            var variable = data[0].variable;
+{#            alert("delete-lyricsWord-ajax... \nid: "+id+"\ntime: "+time+"\nvariable: "+variable);#}
+
+            delete_word_frames(id, time); //GUI, no va el drawWord() porque no se tiene que redibijudar, sino simplemente eliminar
+            getLyric();
+        }).fail(function () {
+            {#alert('ERROR delete-lyricsWord-ajax');#}
+                
+            // or reload all frames
+            delete_word_frames(id, time); //GUI, no va el drawWord() porque no se tiene que redibijudar, sino simplemente eliminar
+            getLyric();
+        });
+    }
+    
+    function edit_lyricsWord_crud(id, time) // I guess edit: "editWordLineContent", "editWordLinePosition", "addOnlyFrame", "deleteOnlyFrame"
+    {
+        // esta funcion aplica para los siguientes eventos:
+        // $('#add_only_frame'+j): 
+        // $('#delete_only_frame'+j): 
+        // EDITAR Lyricsword and Lyricsline too 
+        
+        var word_lyricsId = "word_lyrics"+id;
+        var word_lyrics = document.getElementById(word_lyricsId);
+        var lyricsWordId = word_lyrics.getAttribute("word_id");
+        
+        // to next events: $('#add_only_frame'+j), $('#delete_only_frame'+j), 
+        var thisWrite_lyricsWord_frameId = "write_lyricsWord_frame"+id;
+        var thisWrite_lyricsWord_frame = document.getElementById(thisWrite_lyricsWord_frameId);
+        var lyricsWord = thisWrite_lyricsWord_frame.value;
+        
+        var thisLyricsLine_positionId = "lyricsLine_position"+id;
+        var thisLyricsLine_position = document.getElementById(thisLyricsLine_positionId);
+        var lyricsLine = thisLyricsLine_position.value;
+        
+        var form = $('#edit-lyricsWord-ajax');
+        var url = form.attr('action');
+
+        $.post(url,
+        {
+            current_video_id: current_video_id, 
+            startTime: firstFrameTime, 
+            endTime: lastFrameTime, 
+            lyricsWord: lyricsWord, 
+            lyricsLine: lyricsLine,
+            lyricsWordId: lyricsWordId
+        }, function (data)
+        {
+{#            alert("edit-lyricsWord-ajax... "+
+                   "\n firstFrameTime: "+firstFrameTime+
+                   "\n lastFrameTime: "+lastFrameTime);#}
+            
+            var current_video_id_value = data[0].current_video_id;
+            var startTime_value = data[0].startTime;
+            var endTime_value = data[0].endTime;
+            var lyricsWord_value = data[0].lyricsWord;
+            var lyricsWordId_value = data[0].lyricsWordId;
+            var lyricslinePosition_value = data[0].lyricslinePosition;
+                            
+            firstFrameId = startTime_value * 10;
+            lastFrameId = endTime_value * 10;
+            firstFrameTime = startTime_value;
+            lastFrameTime = endTime_value;
+            currentWord = lyricsWord_value;
+            currentLyricsLine = lyricslinePosition_value;
+            currentLyricsWordId = lyricsWordId_value;
+            
+            delete_word_frames(id, time); // gui
+            draw_word();
+            
+        }).fail(function () {
+            {#alert('ERROR edit-lyricsWord-ajax');#}
+            
+            delete_word_frames(id, time); // gui
+            {#draw_word();#}
+        });
+    }
+
+</script>
+
+<script>
+    $('#currentVideoCronometro')
+    .click(function () {
+        
+        if (moveAutomaticallyVideo === 0)
+        {
+            moveAutomaticallyVideo = 1;
+            document.getElementById("currentVideoCronometro").style.backgroundColor = "#1ab7ea";
+            document.getElementById("currentVideoCronometroBackground").style.opacity = "0.6";
+        }
+        else if (moveAutomaticallyVideo === 1)
+        {
+            moveAutomaticallyVideo = 0;
+            document.getElementById("currentVideoCronometro").style.backgroundColor = "gray";
+            document.getElementById("currentVideoCronometroBackground").style.opacity = "0.1";
+        }
+        
+    })
+    .mouseover(function () { 
+        
+        if (moveAutomaticallyVideo === 0)
+        {
+            document.getElementById("currentVideoCronometro").style.backgroundColor = "#1ab7ea";
+        }
+        else if (moveAutomaticallyVideo === 1)
+        {
+            document.getElementById("currentVideoCronometro").style.backgroundColor = "#1ab7ea";
+            document.getElementById("currentVideoCronometroBackground").style.opacity = "0.6";
+        }
+        
+    })
+    .mouseout(function () {
+        if (moveAutomaticallyVideo === 0)
+        {
+            document.getElementById("currentVideoCronometro").style.backgroundColor = "gray";
+            document.getElementById("currentVideoCronometroBackground").style.opacity = "0";
+        }
+        else if (moveAutomaticallyVideo === 1)
+        {
+            document.getElementById("currentVideoCronometro").style.backgroundColor = "#1ab7ea";
+            document.getElementById("currentVideoCronometroBackground").style.opacity = "0";
+        }
+
+    });
+   
+    
+    function showCurrentTime_withoutFormat()
+    {
+        var v = document.getElementById("my_video");
+        
+        speed_millisecond = video_speedButton * 1000;
+        var videoDuration_2 = v.duration;
+        
+        var currentVideoCronometro = document.getElementById("currentVideoCronometro");
+        
+        currentVideo_playing = setInterval(function() {
+            currentVideoCronometro.innerHTML = v.currentTime.toFixed(1);
+
+            v.onended = function() {
+                clearInterval(currentVideo_playing);
+            };
+            
+        }, 100);
+    }
+</script>

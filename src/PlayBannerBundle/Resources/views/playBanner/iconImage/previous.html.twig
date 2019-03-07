@@ -1,0 +1,69 @@
+<style>
+    #previousVideoImage {
+        position: absolute;
+        {#background-color: white;#}
+        height: 200px;
+        width: 200px;
+        top: -200px;
+        left: -285px;
+        z-index: 1;
+        border: #1ab7ea;
+        display: none;
+    }
+</style>
+
+<div id='previousVideoImage'>
+    
+</div>
+
+<div id='previousIconButton' class='animatedButton'
+     style="position: absolute;
+     height: 30px;
+     width: 30px;
+     top: 0px;
+     left: 0px;
+     z-index: 1;">
+    <img class="shortIcon" 
+         src="files/images/icons/playBanner/previous.png" alt="Mountain View">
+</div>
+
+<script>
+    $('#previousIconButton')
+    .mouseover(function () {
+        explainPreviousVideo();
+    })
+    .click(function () {
+        showPreviousVideo();
+    })
+    .mouseout(function () {
+        hidePreviousVideo();
+    });
+        
+    function showPreviousVideo()
+    {        
+        var previous_current_videoPosition = current_videoPosition - 1;
+        play_specificList(current_specificlistId, previous_current_videoPosition);
+    }
+    
+    function explainPreviousVideo()
+    {
+        var previousVideoImage = document.getElementById("previousVideoImage");
+        previousVideoImage.innerHTML = 
+            "<img "+
+            "style='"+
+            "left: 0px; "+
+            "position: absolute; "+
+            "width:100%; "+
+            "bottom:0px; "+
+            "z-index: 1;' "+
+            "src='files/"+previous_video_image+"' alt='Mountain View'>"+
+            "";
+        previousVideoImage.style.display = "block";
+    }
+    
+    function hidePreviousVideo()
+    {
+        var previousVideoImage = document.getElementById("previousVideoImage");
+        previousVideoImage.style.display = "none";
+    }
+</script>

@@ -1,0 +1,3 @@
+index_qualityCurrentVideo:
+    path:     /qualityCurrentVideo
+    defaults: { _controller: HomeBundle:f_Presentation:qualityCurrentVideo }

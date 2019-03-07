@@ -1,0 +1,46 @@
+<?php
+
+namespace VideoBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Playpause
+ *
+ * @ORM\Table(name="playPause", indexes={@ORM\Index(name="user_id", columns={"user_id"}), @ORM\Index(name="environment_id", columns={"environment_id"})})
+ * @ORM\Entity
+ */
+class Playpause
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="playPause_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $playpauseId;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
+     * })
+     */
+    private $user;
+
+    /**
+     * @var \Environment
+     *
+     * @ORM\ManyToOne(targetEntity="Environment")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="environment_id", referencedColumnName="environment_id")
+     * })
+     */
+    private $environment;
+
+
+}
+

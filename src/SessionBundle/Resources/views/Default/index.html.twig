@@ -1,0 +1,177 @@
+{{ form_start(get_task_properties_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-task-properties-ajax'|default('form')} }) }}
+{{ form_end(get_task_properties_form_ajax) }}
+
+{{ form_start(check_session_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'check-session-ajax'|default('form')} }) }}
+{{ form_end(check_session_form_ajax) }}
+
+{{ form_start(log_in_user_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'log-in-user-ajax'|default('form')} }) }}
+{{ form_end(log_in_user_form_ajax) }}
+
+{{ form_start(log_out_user_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'log-out-user-ajax'|default('form')} }) }}
+{{ form_end(log_out_user_form_ajax) }}
+
+{{ form_start(re_log_in_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 're-log-in-ajax'|default('form')} }) }}
+{{ form_end(re_log_in_form_ajax) }}
+
+{{ form_start(sign_up_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'sign-up-ajax'|default('form')} }) }}
+{{ form_end(sign_up_form_ajax) }}
+
+{{ form_start(get_city_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-city-ajax'|default('form')} }) }}
+{{ form_end(get_city_form_ajax) }}
+
+{{ form_start(get_country_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-country-ajax'|default('form')} }) }}
+{{ form_end(get_country_form_ajax) }}
+
+{{ form_start(upload_profile_photo_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'upload-profile-photo-ajax'|default('form')} }) }}
+{{ form_end(upload_profile_photo_form_ajax) }}
+
+
+{{ include('@Session/i_Session/logInUser.html.twig') }}
+{{ include('@Session/i_Session/logOutUser.html.twig') }}
+{{ include('@Session/i_Session/signUpUser.html.twig') }}
+
+<script>
+    var btnLogIn = document.getElementById("btnLogIn");
+    btnLogIn.addEventListener("click", logInUser, false);
+    
+    var btnLogIn2 = document.getElementById("btnLogIn2");
+    btnLogIn2.addEventListener("click", reLogIn, false);
+    
+    var btnLogOut = document.getElementById("btnLogOut");
+    btnLogOut.addEventListener("click", logOutUser, false);
+
+    function logInUser()
+    {
+        var form = $('#log-in-user-ajax');
+        var url = form.attr('action');
+
+        var user_name = document.getElementById('user_name').value;
+        var user_password = document.getElementById('user_password').value;
+
+        if (!user_name || !user_password) {
+            alert("You need to introduce all information");
+        } else
+        {
+            $.post(url, {user_name: user_name, user_password: user_password}, function (data)
+            {
+                
+                var id = data[0].id;
+                var userName = data[0].userName;
+                var prueba123 = data[0].prueba123;
+                
+{#                alert("LOGIN: "+id+" - "+userName+" - "+prueba123);#}
+                
+                session_userId = data[0].id;
+                session_userName = data[0].userName;
+                
+                checkSession();
+            }).fail(function () {
+                alert('ERROR #log-in-user-ajax');
+            });
+        }
+    }
+
+    function logOutUser()
+    {
+        var form = $('#log-out-user-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            document.getElementById("btnLogIn").style.display = "none";
+            document.getElementById("btnLogIn2").style.display = "block";
+            document.getElementById("user_password").value = "";
+            document.getElementById("inputPasswordDeleteVideo").value = "";
+            document.getElementById("inputPasswordDeclineDeleteVideo").value = "";
+            
+            checkSession();
+        }).fail(function () {
+            alert('ERROR #log-out-user-ajax');
+        });
+    }
+    
+    function reLogIn()
+    {
+        var form = $('#re-log-in-ajax');
+        var url = form.attr('action');
+        var user_name = document.getElementById('user_name').value;
+        var user_password = document.getElementById('user_password').value;
+        if (!user_name || !user_password) {
+            alert("You need to introduce all information");
+        } else
+        {
+            $.post(url, {user_name: user_name, user_password: user_password}, function (data)
+            {
+                
+                var id = data[0].id;
+                var userName = data[0].userName;
+                var prueba123 = data[0].prueba123;
+                
+{#                alert("RE LOGIN: "+id+" - "+userName+" - "+prueba123);#}
+                
+                session_userId = data[0].id;
+                session_userName = data[0].userName;
+                
+                checkSession();
+            }).fail(function () {
+                alert('ERROR #re-log-in-ajax');
+            });
+        }
+    }
+    
+
+    window.onload = checkSession();
+
+    function checkSession()
+    {
+        var form = $('#check-session-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            var sessionStatus = data[0].sessionStatus;
+
+            if (sessionStatus === "0")
+            {
+                showCloseSession();
+            } else
+            {
+                session_userId = data[0].sessionId;
+                session_userName = data[0].userName;
+                session_userFirstgivenname = data[0].userFirstgivenname;
+                session_userSecondgivenname = data[0].userSecondgivenname;
+                session_userFirstfamilyname = data[0].userFirstfamilyname;
+                session_userSecondfamilyname = data[0].userSecondfamilyname;
+                session_userEmail = data[0].userEmail;
+                session_userPassword = data[0].userPassword;
+                session_userBiography = data[0].userBiography;
+                session_amountFollowers = data[0].amountFollowers;
+                session_amountInfluencers = data[0].amountInfluencers;
+                session_amountVideos = data[0].amountVideos;
+                session_amountSpecificLists = data[0].amountSpecificLists;
+            
+                showOpenSession();
+            }
+        }).fail(function () {
+            alert('ERROR #check-session-ajax');
+        });
+    }
+
+    function showCloseSession()
+    {
+        document.getElementById("logIn").style.display = "block";
+        document.getElementById("logOut").style.display = "none";
+        {#Profile2Bundle();#}
+    }
+
+    function showOpenSession()
+    {
+        document.getElementById("logIn").style.display = "none";
+        document.getElementById("logOut").style.display = "block";
+        // CRUD FUNCTIONS        
+        ProfileBundle();    // logOutUser.html.twig
+        // GUI FUNCTIONS
+        drawSpecificlistProfile(); // logOutUser.html.twig // default option
+        
+    }
+</script>

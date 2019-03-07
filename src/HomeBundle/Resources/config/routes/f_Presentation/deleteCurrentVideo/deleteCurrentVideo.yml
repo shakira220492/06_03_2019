@@ -1,0 +1,3 @@
+index_deleteCurrentVideo:
+    path:     /deleteCurrentVideo
+    defaults: { _controller: HomeBundle:f_Presentation:deleteCurrentVideo }

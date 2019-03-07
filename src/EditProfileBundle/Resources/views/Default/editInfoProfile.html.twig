@@ -1,0 +1,227 @@
+<div>
+    <table width='600px' border='0'>
+        <tr height='40px'>
+            <td>
+                Username: 
+            </td>
+            <td>
+
+                <input type='text' id='userName_profileInput' placeholder='' name='userId_profileInput'
+                style='width: 100%;
+                height: 30px;
+                background-color: white;
+                color: gray;
+                border: 0;
+                text-transform: uppercase;
+                align-content: center;'/>
+
+            </td>
+        </tr>
+
+        <tr height='40px'>
+            <td>
+                First given name: 
+            </td>
+            <td>
+
+                <input type='text' id='userFirstgivenname_profileInput' placeholder='' name='userFirstgivenname_profileInput'
+                style='width: 100%;
+                height: 30px;
+                background-color: white;
+                color: gray;
+                border: 0;
+                text-transform: uppercase;
+                align-content: center;'/>
+
+            </td>
+        </tr>
+
+        <tr height='40px'>
+            <td>
+                Second given name: 
+            </td>
+            <td>
+
+                <input type='text' id='userSecondgivenname_profileInput' placeholder='' name='userSecondgivenname_profileInput'
+                style='width: 100%;
+                height: 30px;
+                background-color: white;
+                color: gray;
+                border: 0;
+                text-transform: uppercase;
+                align-content: center;'/>
+
+            </td>
+        </tr>
+
+        <tr height='40px'>
+            <td>
+                First family name: 
+            </td>
+            <td>
+
+                <input type='text' id='userFirstfamilyname_profileInput' placeholder='' name='userFirstfamilyname_profileInput'
+                style='width: 100%;
+                height: 30px;
+                background-color: white;
+                color: gray;
+                border: 0;
+                text-transform: uppercase;
+                align-content: center;'/>
+
+            </td>
+        </tr>
+
+        <tr height='40px'>
+            <td>
+                Second family name: 
+            </td>
+            <td>
+
+                <input type='text' id='userSecondfamilyname_profileInput' placeholder='' name='userSecondfamilyname_profileInput'
+                style='width: 100%;
+                height: 30px;
+                background-color: white;
+                color: gray;
+                border: 0;
+                text-transform: uppercase;
+                align-content: center;'/>
+
+            </td>
+        </tr>
+
+        <tr height='40px'>
+            <td>
+                User email: 
+            </td>
+            <td>
+
+                <input type='text' id='userEmail_profileInput' placeholder='' name='userEmail_profileInput'
+                style='width: 100%;
+                height: 30px;
+                background-color: white;
+                color: gray;
+                border: 0;
+                text-transform: uppercase;
+                align-content: center;'/>
+
+            </td>
+        </tr>
+
+        <tr height='240px'>
+            <td height='240px'>
+                User biography: 
+            </td>
+            <td height='240px'>
+
+                <textarea 
+                id='userBiography_profileInput' name='userBiography_profileInput' 
+                style='
+                height: 100%;
+                width: 100%;
+                color: gray;
+                resize: none;
+                overflow-y: scroll;' 
+                ></textarea>
+
+            </td>
+        </tr>
+
+        <tr height='40px'>
+            <td colspan='2'>
+
+            <center>
+                <div id='save_editProfile' style='cursor:pointer; background-color:blue; padding:5px; opacity: 0.5; width:60px; height:30px;'>
+                SAVE
+                </div>
+            </center>
+
+
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+
+<script>
+    $('#save_editProfile').click(function () {
+
+        var userName_value = document.getElementById("userName_profileInput").value;
+        var userFirstgivenname_value = document.getElementById("userFirstgivenname_profileInput").value;
+        var userSecondgivenname_value = document.getElementById("userSecondgivenname_profileInput").value;
+        var userFirstfamilyname_value = document.getElementById("userFirstfamilyname_profileInput").value;
+        var userSecondfamilyname_value = document.getElementById("userSecondfamilyname_profileInput").value;
+        var userEmail_value = document.getElementById("userEmail_profileInput").value;
+        var userBiography_value = document.getElementById("userBiography_profileInput").value;
+
+        updateInfoProfile(
+            userName_value,
+            userFirstgivenname_value,
+            userSecondgivenname_value,
+            userFirstfamilyname_value,
+            userSecondfamilyname_value,
+            userEmail_value,
+            userBiography_value
+        );
+    });
+    
+    var ContactInfoProfile = document.getElementById("ContactInfoProfile");
+    ContactInfoProfile.addEventListener("click", editInfoProfile, false);
+    
+    function editInfoProfile() // borrar crud y extraer info de las variables globales
+    {
+        var userName_profileInput = document.getElementById("userName_profileInput");
+        var userFirstgivenname_profileInput = document.getElementById("userFirstgivenname_profileInput");
+        var userSecondgivenname_profileInput = document.getElementById("userSecondgivenname_profileInput");
+        var userFirstfamilyname_profileInput = document.getElementById("userFirstfamilyname_profileInput");
+        var userSecondfamilyname_profileInput = document.getElementById("userSecondfamilyname_profileInput");
+        var userEmail_profileInput = document.getElementById("userEmail_profileInput");
+        var userBiography_profileInput = document.getElementById("userBiography_profileInput");
+
+        userName_profileInput.value = session_userName;
+        userFirstgivenname_profileInput.value = session_userFirstgivenname;
+        userSecondgivenname_profileInput.value = session_userSecondgivenname;
+        userFirstfamilyname_profileInput.value = session_userFirstfamilyname;
+        userSecondfamilyname_profileInput.value = session_userSecondfamilyname;
+        userEmail_profileInput.value = session_userEmail;
+        userBiography_profileInput.value = session_userBiography;
+    }
+    
+    function updateInfoProfile(
+                userName_value,
+                userFirstgivenname_value,
+                userSecondgivenname_value,
+                userFirstfamilyname_value,
+                userSecondfamilyname_value,
+                userEmail_value,
+                userBiography_value
+            )
+    {
+        var form = $('#update-info-profile-ajax');
+        var url = form.attr('action');
+
+        $.post(url, {
+            userName_value: userName_value,
+            userFirstgivenname_value: userFirstgivenname_value,
+            userSecondgivenname_value: userSecondgivenname_value,
+            userFirstfamilyname_value: userFirstfamilyname_value,
+            userSecondfamilyname_value: userSecondfamilyname_value,
+            userEmail_value: userEmail_value,
+            userBiography_value: userBiography_value
+        }, function (data)
+        {
+            
+            var ContactInfoProfile = document.getElementById("ContactInfoProfile");
+            ContactInfoProfile.innerHTML = 
+                    "USERNAME: "+userName_value+"<br>"+
+                    userFirstgivenname_value+" "+userSecondgivenname_value+" "+userFirstfamilyname_value+" "+userSecondfamilyname_value+"<br>"+
+                    "EMAIL: "+userEmail_value+"<br><br>"+
+                    "ABOUT ME: "+userBiography_value+"<br>";
+        
+        }).fail(function () {
+            alert('UPDATE INFO PROFILE ERROR');
+        });
+        
+    }
+</script>

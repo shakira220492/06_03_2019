@@ -1,0 +1,30 @@
+{{ form_start(get_following_profile_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-following-profile-ajax'|default('form')} }) }}
+{{ form_end(get_following_profile_form_ajax) }}
+
+Hello World!
+
+<script>
+    
+    function FollowingBundle()
+    {
+        getFollowingProfile();
+    }
+        
+    // pasar a su respectivo bundle; este bundle se activa (refresca) solamente cuando el usuario inicia la sesion... o en un intervalo de 1 hora
+    function getFollowingProfile()
+    {
+{#        alert("getFollowingProfile");#}
+        
+        var form = $('#get-following-profile-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            {#alert("GET FOLLOWING PROFILE works fantastic");#}
+        }).fail(function () {
+            alert('GET FOLLOWING PROFILE ERROR');
+        });
+    }
+    
+    
+</script>

@@ -1,0 +1,3 @@
+index_shoppingCurrentVideo:
+    path:     /shoppingCurrentVideo
+    defaults: { _controller: HomeBundle:f_Presentation:shoppingCurrentVideo }

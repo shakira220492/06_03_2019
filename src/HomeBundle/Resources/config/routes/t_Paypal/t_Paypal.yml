@@ -1,0 +1,14 @@
+checkout_form:
+    path:     /checkout
+    defaults: { _controller: PaypalBundle:Default:checkout }
+    methods:  POST
+
+post_payment_form:
+    path:     /postPayment
+    defaults: { _controller: PaypalBundle:Default:postPayment }
+    methods:  POST
+
+get_payment_status_form:
+    path:     /getPaymentStatus
+    defaults: { _controller: PaypalBundle:Default:getPaymentStatus }
+    methods:  POST

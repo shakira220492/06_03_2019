@@ -1,0 +1,4 @@
+services:
+#    options.example:
+#        class: OptionsBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

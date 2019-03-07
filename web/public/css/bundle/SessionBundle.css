@@ -1,0 +1,323 @@
+/*logInUser.html.twig */
+#logIn
+{
+    position: absolute; 
+    top: 0px; 
+    right: 0px; 
+    width: 100%; 
+    height: 100%; 
+    z-index: 3;
+}
+
+#logOut
+{
+    position: absolute; 
+    top: 0px; 
+    right: 0px; 
+    width: 100%; 
+    height: 100%; 
+    z-index: 3;
+}
+
+#user_name
+{
+    position: absolute;
+    top: 5px;
+    right: 165px;
+    width: 80px;
+    height: 33px;
+    color: black;
+}
+
+#user_password
+{
+    position: absolute;
+    top: 5px;
+    right: 80px;
+    width: 80px;
+    height: 33px;
+    color: black;
+}
+
+#btnLogIn
+{
+    position: absolute;
+    height: 15px;
+    width: 70px;
+    top: 5px;
+    right: 5px;
+    display: block;
+    background-color: white;
+    color: black;
+    font-size: smaller;
+}
+
+#btnLogIn2
+{
+    position: absolute;
+    height: 15px;
+    width: 70px;
+    top: 5px;
+    right: 5px;
+    display: none;
+    background-color: white;
+    color: black;
+    font-size: smaller;
+}
+
+#btnSignUp
+{
+    position: absolute;
+    height: 15px;
+    width: 70px;
+    top: 23px;
+    right: 5px;
+    z-index: 3;
+    display: block;
+    background-color: white;
+    color: black;
+    font-size: smaller;
+}
+
+
+#logInForm {
+    position: absolute;
+    width: 100%;
+    height: 45px;
+    border-bottom-color: gray;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+}
+
+
+
+
+/*logOutUser.html.twig */
+
+
+#content_logOutUser {
+    position: absolute;
+    top: 50px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;         
+    overflow: hidden;
+    transition-property: all;
+    transition-duration: 0.2s;
+}
+
+#btnLogOut {
+    position: absolute;
+    height: 15px;
+    width: 60px;
+    top: 5px;
+    right: 5px;
+    z-index: 3;
+    display: block;
+    background-color: white;
+    color: black;
+    font-size: smaller;
+}
+
+#uploadVideoIconButton {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    top: 60px;
+    right: 0px;
+    z-index: 1;
+}
+
+#videoIconButton {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    top: 30px;
+    right: 0px;
+    z-index: 1;
+}
+
+
+
+
+
+
+
+
+#name_profileButton
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 170px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#playlist_profileButton
+{
+    position: absolute;
+    top: 20px;
+    left: 0px;
+    width: 170px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#dataminingButton {
+    position: absolute;
+    top: 0px;
+    right: 95px;
+}
+
+#historyButton {
+    position: absolute;
+    top: 0px;
+    right: 65px;
+}
+
+#uploadVideoIconButton {
+    position: absolute;
+    top: 0px;
+    right: 125px;
+}
+
+#name_profile_content {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+#dataminingSongs {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+#historySongs {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+#specificListSongs {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+#uploadVideoIconContent {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+#declineDeleteVideo {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+
+#logOutForm {
+    position: absolute;
+    width: 100%;
+    height: 45px;
+    border-bottom-color: gray;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+}
+
+
+
+
+
+
+/*/////////////////////////////////////////////////////////////////////////////////*/
+
+#videosToDeleteButton {
+    position: absolute; 
+/*    background-color: white;*/
+    width: 100%; 
+    left: 0px; 
+    top: 0px; 
+    height: 50px;
+    overflow-y: scroll;
+    z-index: 30;
+    cursor: pointer;
+    border-bottom-color: gray;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+}
+
+#videosToDeleteButton::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+#videosToDeleteButton::-webkit-scrollbar-track {
+    background: white;
+}
+
+/* Handle */
+#videosToDeleteButton::-webkit-scrollbar-thumb {
+    background: #1ab7ea; 
+}
+
+/* Handle on hover */
+#videosToDeleteButton::-webkit-scrollbar-thumb:hover {
+    background: gray; 
+}
+
+#content_logOutUser_2 {
+    position: absolute;
+    top: 50px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;         
+    overflow: hidden;
+    transition-property: all;
+    transition-duration: 0.2s;
+}

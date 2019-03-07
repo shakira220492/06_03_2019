@@ -1,0 +1,3 @@
+index_listByCurrentArtist:
+    path:     /listByCurrentArtist
+    defaults: { _controller: HomeBundle:a_List:listByCurrentArtist }

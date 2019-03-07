@@ -1,0 +1,3 @@
+index_editLyricsCurrentVideo:
+    path:     /editLyricsCurrentVideo
+    defaults: { _controller: HomeBundle:f_Presentation:editLyricsCurrentVideo }

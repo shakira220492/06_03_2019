@@ -1,0 +1,3 @@
+edit_profile_homepage:
+    path:     /editProfile
+    defaults: { _controller: EditProfileBundle:Default:index }

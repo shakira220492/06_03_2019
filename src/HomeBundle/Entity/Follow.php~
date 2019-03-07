@@ -1,0 +1,46 @@
+<?php
+
+namespace HomeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Follow
+ *
+ * @ORM\Table(name="follow", indexes={@ORM\Index(name="follow_follower", columns={"follow_follower"}), @ORM\Index(name="follow_influencer", columns={"follow_influencer"})})
+ * @ORM\Entity
+ */
+class Follow
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="follow_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $followId;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="follow_follower", referencedColumnName="user_id")
+     * })
+     */
+    private $followFollower;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="follow_influencer", referencedColumnName="user_id")
+     * })
+     */
+    private $followInfluencer;
+
+
+}
+

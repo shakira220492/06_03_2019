@@ -1,0 +1,47 @@
+<?php
+
+namespace VideoBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Privilege
+ *
+ * @ORM\Table(name="privilege")
+ * @ORM\Entity
+ */
+class Privilege
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="privilege_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $privilegeId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="privilege_reading", type="integer", nullable=false)
+     */
+    private $privilegeReading;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="privilege_deleting", type="integer", nullable=false)
+     */
+    private $privilegeDeleting;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="privilege_writing", type="integer", nullable=false)
+     */
+    private $privilegeWriting;
+
+
+}
+

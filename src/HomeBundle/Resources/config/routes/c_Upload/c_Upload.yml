@@ -1,0 +1,7 @@
+index_upload:
+    path:     /upload
+    defaults: { _controller: HomeBundle:c_Upload:index }
+    
+#sub_newsFeed:
+#    resource: "sub_newsFeed.yml"
+#    prefix:   /sub_newsFeed

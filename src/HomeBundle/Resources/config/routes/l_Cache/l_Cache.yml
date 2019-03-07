@@ -1,0 +1,19 @@
+set_cacheList_form:
+    path:     /setCacheList
+    defaults: { _controller: CacheBundle:Default:setCacheList }
+    methods:  POST
+    
+get_cacheList_form:
+    path:     /getCacheList
+    defaults: { _controller: CacheBundle:Default:getCacheList }
+    methods:  POST
+    
+set_cacheListVideo_form:
+    path:     /setCacheListVideo
+    defaults: { _controller: CacheBundle:Default:setCacheListVideo }
+    methods:  POST
+    
+get_cacheListVideo_form:
+    path:     /getCacheListVideo
+    defaults: { _controller: CacheBundle:Default:getCacheListVideo }
+    methods:  POST

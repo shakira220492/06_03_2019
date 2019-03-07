@@ -1,0 +1,143 @@
+<div id='totalScreenIconButton' class='animatedButton'
+     style="position: absolute;
+     height: 30px;
+     width: 30px;
+     top: 0px;
+     left: 310px;
+     z-index: 1;">
+    <img style='
+         width:30px; 
+         height:30px; 
+         opacity: 0.9;
+         z-index: 1;' 
+         src="files/images/icons/playBanner/totalScreen.png" alt="Mountain View">
+</div>
+
+<script>
+    var totalScreenIconButton = document.getElementById("totalScreenIconButton");
+
+    totalScreenIconButton.addEventListener("click", function () {
+        totalScreenIconFunction();
+    });
+
+    function totalScreenIconFunction()
+    {
+        if (total_screen_mode === "complete")
+        {
+            total_screen_mode = "incomplete";
+            totalScreenIconButton.style.opacity = "0.3";
+        } else if (total_screen_mode === "incomplete")
+        {
+            total_screen_mode = "complete";
+            totalScreenIconButton.style.opacity = "1";
+        }
+    }
+
+    var temp = setTimeout(desactivateOptions, 600000);
+    document.addEventListener("mousemove", activateOptions, false);
+
+    function activateOptions()
+    {
+        if (total_screen_mode === "complete")
+        {
+            var playBanner = document.getElementById("playBanner");
+            var sessionArea = document.getElementById("sessionArea");
+            var searchBar = document.getElementById("searchBar");
+            var searchArea = document.getElementById("searchArea");
+            var videoInformation = document.getElementById("videoInformation");
+            var configurationBar = document.getElementById("configurationBar");
+            var configurationArea = document.getElementById("configurationArea");
+            var lyricsArea = document.getElementById("lyricsArea");
+            var listBar = document.getElementById("listBar");
+            var donateArea = document.getElementById("donateArea");
+
+            playBanner.style.display = "block";
+            sessionArea.style.display = "block";
+            searchBar.style.display = "block";
+            searchArea.style.display = "block";
+            videoInformation.style.display = "block";
+            configurationBar.style.display = "block";
+            configurationArea.style.display = "block";
+            lyricsArea.style.display = "block";
+            listBar.style.display = "block";
+            donateArea.style.display = "block";
+
+            clearTimeout(temp);
+            temp = setTimeout(desactivateOptions, 6000);
+
+            if (size === "1")
+            {
+                document.getElementById('presentationArea').style.transitionProperty = "all";
+                document.getElementById('presentationArea').style.transitionDuration = 0.5 + "s";
+                document.getElementById('presentationArea').style.width = $(window).width() - 280 + "px";
+
+                document.getElementById('playBanner').style.transitionProperty = "all";
+                document.getElementById('playBanner').style.transitionDuration = 0.5 + "s";
+                document.getElementById('playBanner').style.width = $(window).width() - 280 + "px";
+            } else if (size === "2")
+            {
+                document.getElementById('presentationArea').style.transitionProperty = "all";
+                document.getElementById('presentationArea').style.transitionDuration = 0.5 + "s";
+                document.getElementById('presentationArea').style.width =  {#$(window).width() -#} currentValue22 + "px";{#no me coje el currentValue22#}
+
+                document.getElementById('playBanner').style.transitionProperty = "all";
+                document.getElementById('playBanner').style.transitionDuration = 0.5 + "s";
+                document.getElementById('playBanner').style.width =  {#$(window).width() -#} currentValue22 + "px";{#no me coje el currentValue22#}
+            } else if (size === "3")
+            {
+                document.getElementById('presentationArea').style.transitionProperty = "all";
+                document.getElementById('presentationArea').style.transitionDuration = 0.5 + "s";
+                document.getElementById('presentationArea').style.width = $(window).width() - 280 + "px";
+
+                document.getElementById('playBanner').style.transitionProperty = "all";
+                document.getElementById('playBanner').style.transitionDuration = 0.5 + "s";
+                document.getElementById('playBanner').style.width = $(window).width() - 280 + "px";
+            } else if (size === "4")
+            {
+                document.getElementById('presentationArea').style.transitionProperty = "all";
+                document.getElementById('presentationArea').style.transitionDuration = 0.5 + "s";
+                document.getElementById('presentationArea').style.width = 100 + "%";
+
+                document.getElementById('playBanner').style.transitionProperty = "all";
+                document.getElementById('playBanner').style.transitionDuration = 0.5 + "s";
+                document.getElementById('playBanner').style.width = 100 + "%";
+            }
+        }
+    }
+
+    function desactivateOptions()
+    {
+        if (total_screen_mode === "complete")
+        {
+            var playBanner = document.getElementById("playBanner");
+            var sessionArea = document.getElementById("sessionArea");
+            var searchBar = document.getElementById("searchBar");
+            var searchArea = document.getElementById("searchArea");
+            var videoInformation = document.getElementById("videoInformation");
+            var configurationBar = document.getElementById("configurationBar");
+            var configurationArea = document.getElementById("configurationArea");
+            var lyricsArea = document.getElementById("lyricsArea");
+            var listBar = document.getElementById("listBar");
+            var donateArea = document.getElementById("donateArea");
+
+            playBanner.style.display = "none";
+            sessionArea.style.display = "none";
+            searchBar.style.display = "none";
+            searchArea.style.display = "none";
+            videoInformation.style.display = "none";
+            configurationBar.style.display = "none";
+            configurationArea.style.display = "none";
+            lyricsArea.style.display = "none";
+            listBar.style.display = "none";
+            donateArea.style.display = "none";
+
+            document.getElementById('presentationArea').style.transitionProperty = "all";
+            document.getElementById('presentationArea').style.transitionDuration = 0.5 + "s";
+            document.getElementById('presentationArea').style.width = 100 + "%";
+
+            document.getElementById('playBanner').style.transitionProperty = "all";
+            document.getElementById('playBanner').style.transitionDuration = 0.5 + "s";
+            document.getElementById('playBanner').style.width = 100 + "%";
+        }
+    }
+</script>

@@ -1,0 +1,417 @@
+{{ form_start(upload_video_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'upload-video-ajax'|default('form')} }) }}
+{{ form_end(upload_video_form_ajax) }}
+
+{{ form_start(update_video_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'update-video-ajax'|default('form')} }) }}
+{{ form_end(update_video_form_ajax) }}
+
+{{ form_start(upload_keyword_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'upload-keyword-ajax'|default('form')} }) }}
+{{ form_end(upload_keyword_form_ajax) }}
+
+<div id="environmentToUpdateVideo">
+
+<div id="formUpdateVideo">
+
+    <div class="formBgColor">
+    </div>
+
+    <div id="contentUpdateVideo">
+        <form id="updateVideo">
+            <div style="
+                 position: absolute;
+                 top: 5px;
+                 left: 0px; 
+                 width: 120px;
+                 text-align: right;">Video Name</div>
+            <div style="
+                 position: absolute;
+                 background-color: #1ab7ea;
+                 top: 5px; 
+                 left: 130px;
+                 right: 0px;
+                 height: 25px;
+                 z-index: 3;">
+
+                <input style="
+                       position: absolute;
+                       top: 0px;
+                       left: 0px;
+                       height: 100%;
+                       width: 100%;
+                       color: #1ab7ea;
+                       resize: none;
+                       overflow: hidden;" 
+                       type="text" 
+                       id="video_name"
+                       name="video_name"
+                       size="17"
+                       placeholder="Write here your video's name... "/>
+
+            </div>
+
+            <div style="
+                 position: absolute;
+                 top: 40px;
+                 left: 0px; 
+                 width: 120px;
+                 text-align: right;">Video Description</div>
+
+            <div style="
+                 position: absolute;
+                 background-color: #1ab7ea;
+                 top: 40px; 
+                 left: 130px;
+                 right: 0px;
+                 height: 70px;
+                 z-index: 3;">
+
+                <textarea 
+                    id="video_description" name="video_description" 
+                    style="
+                    position: absolute;
+                    top: 0px;
+                    left: 0px;
+                    height: 100%;
+                    width: 100%;
+                    color: #1ab7ea;
+                    resize: none;
+                    overflow-y: scroll;" 
+                    placeholder="Write here your video's description... " 
+                    ></textarea>
+
+            </div>
+
+            <div style="
+                 position: absolute;
+                 top: 110px;
+                 left: 0px; 
+                 width: 120px;
+                 text-align: right;">Video's content</div>
+
+            <input type="file" name="video_content" id="video_content" accept="video/mp4"
+                   style="
+                   position: absolute;
+                   top: 100px;
+                   left: 125px;" />
+
+            <div style="
+                 position: absolute;
+                 top: 130px;
+                 left: 0px; 
+                 width: 120px;
+                 text-align: right;">Video's portrait</div>
+
+            <input type="file" name="video_portrait" id="video_portrait" accept="image/jpeg,image/jpg,image/png"
+                style="
+                position: absolute;
+                top: 120px;
+                left: 125px;" />
+            
+            <div style="
+                 position: absolute;
+{#                 background-color: #1ab7ea;#}
+                 top: 150px; 
+                 left: 0px;
+                 right: 0px;
+                 height: 240px;
+                 z-index: 3;
+                 text-align: center;">
+                <output id="list" class="thumb"><br><br><br><br><br>Here we can watch the video's portrait's image</output>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+<div id="formUpdateKeywords">
+
+    <div class="formBgColor">
+    </div>
+
+    <div id="contentUpdateKeywords">
+
+        <div id="labelIdKeyword">
+            Keyword: 
+        </div>
+        
+        <input id="inputIdKeyword" type="text" name="video_name" size="17"
+               placeholder="Write here your keyword... "/>
+        
+        <div
+            id="buttonIdKeyword" 
+            onclick="createKeyword();">
+            <img class="shortIcon" 
+            src="files/images/icons/insert.png" alt="Mountain View">
+        </div>
+        
+        <div id="listOne">
+        </div>
+
+    </div>
+</div>
+
+<div id="formSendVideo">
+    <div class="formBgColor">
+    </div>
+
+    <div id="contentSendVideo">
+
+        <div
+            style=" 
+            position: absolute;
+            top: 50px; 
+            left: 0px; 
+            width: 100%;
+            height: 25px;
+            ">
+            <div class="barra">
+                <div class="barra_azul" id="barra_estado">
+                    <span id="span_estado"></span>
+                </div>
+            </div>
+        </div>
+
+        <center>
+            <div
+                id="buttonUploadVideo" 
+                style=" 
+                {#position: absolute;#} 
+                {#background-color: #017ebc;#}
+                height: 35px;
+                width: 70px;
+                top: 5px; 
+                {#left: 0px;#} 
+                cursor: pointer;
+                "
+                onClick="updateVideo(), uploadVideo();">
+
+                <div id="bgColorUploadVideo"
+                     style="position: absolute;
+                     height: 35px;
+                     width: 70px;
+                     background-color: white;
+                     opacity: 0.5;
+                     z-index: 1;">
+                </div>
+
+                <div style="position: absolute;
+                     z-index: 2;
+                     height: 35px;
+                     width: 70px;">
+                    <center>UPLOAD</center>
+                </div>
+            </div>
+        </center>
+    </div>
+</div>
+
+</div>
+
+<script>
+    $("#video_portrait").change(function () {
+        archivo(this);
+    });
+
+    function archivo(evt) {
+        var reader = new FileReader();
+        reader.readAsDataURL(evt.files[0]);
+        reader.onload = function (e) {
+        document.getElementById("list").innerHTML = ['<img class="thumb" src="', e.target.result, '"/>'].join('');
+        };
+    }
+
+    function uploadVideo() // upload content
+    {
+        var form = $('#upload-video-ajax');
+        var url = form.attr('action');
+
+        var content = document.getElementById("video_content").files[0];
+        var portrait = document.getElementById("video_portrait").files[0];
+
+        var formdata = new FormData();
+        formdata.append("video_content", content);
+        formdata.append("video_portrait", portrait);
+
+        var ajax = new XMLHttpRequest();
+
+        ajax.upload.addEventListener("progress", progressHandler, false);
+        ajax.addEventListener("load", completeHandler, false);
+        ajax.addEventListener("error", errorHandler, false);
+        ajax.addEventListener("abort", abortHandler, false);
+        ajax.open("POST", url);
+        ajax.send(formdata);
+        ajax.onload = function (data) {
+
+            var respuesta = this.response;
+    {#        alert(respuesta);#}
+        };
+
+    }
+
+
+    function progressHandler(event)
+    {
+        var porcentaje = Math.round((event.loaded / event.total) * 100);
+        console.log(porcentaje);
+        barra_estado.style.width = porcentaje + "%";
+    }
+
+    function completeHandler(event)
+    {
+        document.getElementById("video_name").value = "";
+        document.getElementById("video_description").value = "";
+        document.getElementById("video_content").value = "";
+        document.getElementById("video_portrait").value = "";
+        
+        var list = document.getElementById("list");
+        var listOne = document.getElementById("listOne");
+        
+        list.innerHTML = "";
+        listOne.innerHTML = "";
+        
+        alert("Success upload video");
+    }
+
+    function errorHandler(event)
+    {
+    {#        alert("error123");#}
+    }
+
+    function abortHandler(event)
+    {
+    {#        alert("abort123");#}
+    }
+
+    function updateVideo() // upload data
+    {
+        console.log("function updateVideo");
+        var form = $('#update-video-ajax');
+        var url = form.attr('action');
+
+        video_name = document.getElementById('video_name').value;
+        video_description = document.getElementById('video_description').value;
+        video_content = document.getElementById('video_content').value;
+        video_portrait = document.getElementById('video_portrait').value;
+
+        if (!video_name || !video_description || !video_content || !video_portrait) {
+            alert("You need to introduce all information");
+        } else {
+
+            var formData = new FormData($("#updateVideo")[0]);
+            var a = 2;
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                cache: false,
+                processData: false,
+                contentType: false
+            }).done(function (resp) {
+                console.log("user " + resp[0].user);
+                console.log("videoId " + resp[0].videoId);
+                console.log("videoAmountComments " + resp[0].videoAmountComments);
+                console.log("videoAmountViews " + resp[0].videoAmountViews);
+                console.log("videoContent " + resp[0].videoContent);
+                console.log("videoDescription " + resp[0].videoDescription);
+                console.log("videoDislikes " + resp[0].videoDislikes);
+                console.log("videoImage " + resp[0].videoImage);
+                console.log("videoLikes " + resp[0].videoLikes);
+                console.log("videoName " + resp[0].videoName);
+                console.log("videoUpdatedate" + resp[0].videoUpdatedate);
+                uploadKeywords(resp[0].videoId);
+            });
+        }
+    }
+
+</script>
+
+<script>
+    
+    var amountKeywords = 0; // amount of keywords user has created and deleted
+    var amountCurrentKeywords = 0; // only amount of keywords user hasn't deleted, and for that reason already exists
+
+    function createKeyword() // cuando se oprima el boton +
+    {
+        
+        var inputIdKeywordValue = document.getElementById("inputIdKeyword").value;
+        
+        if (!inputIdKeywordValue)
+        {
+            alert("Input a Keyword");
+        } else
+        {
+            if (amountCurrentKeywords <= 30)
+            {
+                amountKeywords++;
+                amountCurrentKeywords++;
+
+                $("#listOne").append(
+                        "<div id='keywordEnvironment" + amountKeywords + "' style='display:inline-block;'> " +
+                        "<input class='inputKeyword' data-id4='" + amountKeywords + "' " +
+                        "type='text' " +
+                        "id='keyword" + amountKeywords + "' " +
+                        "name='keyword" + amountKeywords + "' " +
+                        "value='" + inputIdKeywordValue + "' " +
+                        "onpaste='return false' /> " +
+                        "<div class='deleteKeyword' onclick='deleteKeyword(\"keywordEnvironment" + amountKeywords + "\");'> " +
+                        "<center>X</center> " +
+                        "</div> " +
+                        "</div> "
+                        );
+
+                $('#keyword'+amountKeywords)
+                .keypress(function (e) {
+                    return solo_letras_numeros(e);
+                });
+            }
+        }
+        
+    }
+
+    function deleteKeyword(id)
+    {
+        amountCurrentKeywords--;
+
+        var respectly = id;
+        var respectlyId = document.getElementById(respectly);
+        respectlyId.style.display = "none";
+
+        console.log(amountKeywords + " - " + amountCurrentKeywords);
+    }
+    
+    function uploadKeywords(videoId) // upload data from dinamic fields (delete this function)
+    {
+        var amountEmptyInput = 0;
+        for (var i = 1; i <= amountKeywords; i++)
+        {
+            var currentKeywordContent = document.getElementById('keyword' + i).value; //paso 1
+            if (!currentKeywordContent) {
+                amountEmptyInput++;
+            }
+        }
+        
+        if (amountEmptyInput === 0)
+        {
+            for (var i = 1; i <= amountKeywords; i++)
+            {
+                var form = $('#upload-keyword-ajax');
+                var url = form.attr('action');
+
+                var currentKeywordContent = document.getElementById('keyword' + i).value; //paso 1
+
+                $.post(url, {currentKeywordContent: currentKeywordContent, videoId: videoId
+                }, function (result) {
+                    alert("SUCCESS, #upload-keyword-ajax" + 
+                            result[0].keywordId + 
+                            result[0].keywordVideoId);
+                }).fail(function () {
+                    alert('ERROR, #upload-keyword-ajax');
+                });
+            }
+        } else
+        {
+            alert("ERROR, #upload-keyword-ajax");
+        }
+    }
+
+</script>

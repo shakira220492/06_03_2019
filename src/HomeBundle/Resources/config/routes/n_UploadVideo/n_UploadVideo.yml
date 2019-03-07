@@ -1,0 +1,14 @@
+upload_video_form:
+    path:     /uploadVideo
+    defaults: { _controller: UploadVideoBundle:Default:uploadVideo }
+    methods:  POST
+
+update_video_form:
+    path:     /updateVideo
+    defaults: { _controller: UploadVideoBundle:Default:updateVideo }
+    methods:  POST
+    
+upload_keyword_form:
+    path:     /uploadKeyword
+    defaults: { _controller: UploadVideoBundle:Default:uploadKeyword }
+    methods:  POST

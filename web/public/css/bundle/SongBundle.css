@@ -1,0 +1,53 @@
+#songInformation {
+    position: absolute;
+    /*background-color: #1ab7ea;*/
+    top: 0px;
+    height: 80px;
+    left: 0px;
+    width: 100%;
+    overflow-y: hidden;
+    border-bottom-color: gray;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+}
+
+#similarSongsLabel {
+    position: absolute;
+    /*background-color: #247CC0;*/
+    top: 0px;
+    height: 20px;
+    right: 0px;
+    left: 200px;
+    overflow-y: scroll;
+}
+
+#similarplaylists {
+    position: absolute;
+    /*background-color: #1ab7ea;*/
+    top: 20px;
+    height: 100px;
+    right: 0px;
+    left: 200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#similarSongs {
+    position: absolute;
+    /*background-color: #247CC0;*/
+    top: 120px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    display: none;
+}
+
+#commentSection {
+    position: absolute;
+    /*background-color: #ed1f3c;*/
+    top: 90px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    display: block;
+}

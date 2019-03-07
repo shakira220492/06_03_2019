@@ -1,0 +1,5 @@
+#routes:
+
+index_listByDataMining:
+    path:     /listByDataMining
+    defaults: { _controller: HomeBundle:a_List:listByDataMining }

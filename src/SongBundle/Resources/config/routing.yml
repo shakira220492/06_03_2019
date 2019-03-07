@@ -1,0 +1,3 @@
+song_homepage:
+    path:     /songBundle
+    defaults: { _controller: SongBundle:Default:index }

@@ -1,0 +1,363 @@
+{#EditProfileBundle#}
+{{ form_start(get_video_list_profile_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'get-video-list-profile-ajax'|default('form')} }) }}
+{{ form_end(get_video_list_profile_form_ajax) }}
+
+{{ form_start(update_info_profile_form_ajax, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form', 'id': 'update-info-profile-ajax'|default('form')} }) }}
+{{ form_end(update_info_profile_form_ajax) }}
+
+<div id="EditProfileBundle">
+    
+    <div id="ContactInfoProfile" class="animatedButton"> {#editar biografia#}
+    </div>
+    
+    <div id="VideoListProfile"> {#canciones del cantante#}
+    </div>
+    
+    
+    <div id="VideoEnvironment">
+        
+        
+            
+            <div id="VideoEnvironment_background">
+            </div>
+            
+            <div id="VideoEnvironment_content">
+                
+                <div id="deleteVideo_environment"> {#environment about DeleteVideo (to create) (don't icon)#}
+                    {{ include('@DeleteVideo/Default/index.html.twig') }}
+                </div>
+
+                <div id='editLyrics_environment'> {#environment about editlyrics (don't icon)#}
+                    {{ include('@EditLyrics/Default/index.html.twig') }}
+                </div>
+
+                <div id='editVideo_environment' > {#environment about editVideo (don't icon)#}
+                    {{ include('@EditVideo/Default/index.html.twig') }}
+                </div>
+
+                <div id='promoteVideo_environment'> {#environment about  promote (don't icon)#}
+                    {{ include('@PromoteVideo/Default/index.html.twig') }}
+                </div>
+
+                <div id='advertisingVideo_environment'> {#environment about advertising (don't icon)#}
+                    {{ include('@AdvertisingVideo/Default/index.html.twig') }}
+                </div>
+
+                <div id='editProfile_environment'> {#environment about editInfoProfile (don't icon)#}
+                    {{ include('@EditProfile/Default/editInfoProfile.html.twig') }}
+                </div>
+        
+            </div>
+        
+    </div>
+    
+</div>
+
+    
+<script>
+    
+    function EditProfileBundle()
+    {
+        getInfoProfile();
+        getVideoListProfile();
+    }
+    
+    
+    
+    $('#ContactInfoProfile')
+    .click(function () {
+        var emphasis = "session";
+        resize_configuration_session(emphasis);
+
+        var editProfile_environment = document.getElementById("editProfile_environment");
+        manage_videoEnvironment(editProfile_environment);
+    });
+    
+    function getInfoProfile() // borrar crud y extraer info de las variables globales
+    {
+        var ContactInfoProfile = document.getElementById("ContactInfoProfile");
+        ContactInfoProfile.innerHTML = 
+                "USERNAME: "+session_userName+"<br>"+
+                session_userFirstgivenname+" "+session_userSecondgivenname+" "+session_userFirstfamilyname+" "+session_userSecondfamilyname+"<br>"+
+                "EMAIL: "+session_userEmail+"<br><br>"+
+                "ABOUT ME: "+session_userBiography+"<br>";
+    }
+    
+    function getVideoListProfile()
+    {
+        var form = $('#get-video-list-profile-ajax');
+        var url = form.attr('action');
+
+        $.post(url, function (data)
+        {
+            var amountVideos = data[0].amountVideos;
+            
+            document.getElementById("VideoListProfile").innerHTML = "";
+            
+            for (i = 0; i < amountVideos; i++)
+            {
+                var videoId = data[i].videoId;
+                var videoName = data[i].videoName;
+                var videoDescription = data[i].videoDescription; //
+                var videoImage = data[i].videoImage; 
+                var videoContent = data[i].videoContent; //
+                var videoUpdatedate = data[i].videoUpdatedate;
+                var videoAmountViews = data[i].videoAmountViews;
+                var videoAmountComments = data[i].videoAmountComments;
+                var videoLikes = data[i].videoLikes;
+                var videoDislikes = data[i].videoDislikes;
+                var userId = data[i].userId;
+                var userName = data[i].userName;
+                var amountVideos = data[i].amountVideos;
+                
+                var percentageLikes = (100 * videoLikes) / (videoLikes + videoDislikes);
+                var percentageDislikes = (100 * videoDislikes) / (videoLikes + videoDislikes);
+                
+                $("#VideoListProfile").append(
+                    "<div id='video_Profile"+videoId+"' class='video_Profile' "
+                            +"data-id1='"+videoId+"' "
+                        +">"
+
+                        +"<table border='0' width='100%'>"
+                        +"<tr height='100px'>"
+                            +"<td width='75px' height='50px'>"
+                                +"<div id='videoPortrait_Profile"+videoId+"' class='videoPortrait_Profile'>"
+                                    +"<img style='"
+                                    +"width: 100%; cursor: pointer;"
+                                    +"opacity: 0.9; "
+                                    +"z-index: 1;' "
+                                    +"src='files/"+videoImage+"' "
+                                    +"alt='Mountain View'>"
+                                +"</div>"
+                                +"<div id='videoContaint_Profile"+videoId+"' class='videoContaint_Profile' data-id1='"+videoId+"'>"
+                                    +" <b>"+videoName+"</b><br>"
+                                    +" "+videoUpdatedate+"<br>"
+                                    +" "+videoAmountViews+" views<br>"
+                                    +" "+videoAmountComments+" comments<br>"
+                                    +" <div style='height: 5px; width: 100%;'>"
+                                        +"<div style='display: inline-block; height: 5px; width: "+percentageLikes+"%; background-color: blue; '></div>"
+                                        +"<div style='display: inline-block; height: 5px; width: "+percentageDislikes+"%; background-color: red; '></div>"
+                                    +" </div>"
+                                +"</div>"
+                            +"</td>"
+                        +"</tr>"
+                        +"<tr height='30px'>"
+                            +"<td width='30px' >"
+                                +"<div class='animatedButton'"
+                        
+                                    +"data-id1='"+videoId+"' "
+                                    +"data-id2='"+videoName+"' "
+                                    +"data-id3='"+videoDescription+"' "
+                                    +"data-id4='"+videoImage+"' "
+                                    +"data-id5='"+videoContent+"' "
+                                    +"data-id6='"+videoUpdatedate+"' "
+                                    +"data-id7='"+videoAmountViews+"' "
+                                    +"data-id8='"+videoAmountComments+"' "
+                                    +"data-id9='"+videoLikes+"' "
+                                    +"data-id10='"+videoDislikes+"' "
+                                    +"data-id11='"+userId+"' "
+                                    +"data-id12='"+userName+"' "
+                        
+                                    +">"
+                            
+                                    +"<img id='editLyrics_button"+videoId+"' class='shortIcon' "
+                                         +"src='files/images/icons/configuration/editLyrics.png' "
+                                         +"alt='Mountain View'>"
+                                    +"<img id='editVideo_button"+videoId+"' class='shortIcon' "
+                                         +"src='files/images/icons/configuration/editVideo.png' "
+                                         +"alt='Mountain View'>"
+                                    +"<img id='deleteVideo_button"+videoId+"' class='shortIcon' "
+                                         +"src='files/images/icons/configuration/deleteVideo.png' "
+                                         +"alt='Mountain View'>"
+                                    +"<img id='promoteVideo_button"+videoId+"' class='shortIcon' "
+                                         +"src='files/images/icons/configuration/promoteVideo.png' "
+                                         +"alt='Mountain View'>"
+                                    +"<img id='advertisingVideo_button"+videoId+"' class='shortIcon' "
+                                         +"src='files/images/icons/configuration/advertisingVideo.png' "
+                                         +"alt='Mountain View'>"
+                                 
+                                +"</div>"
+                        
+                            +"</td>"
+                        +"</tr>"                
+                        +"</table>"
+                    +"</div>"
+                );
+        
+                $('#video_Profile'+videoId)
+                .mouseover(function () {
+                    var videoId = $(this).data('id1');
+                    document.getElementById("videoPortrait_Profile"+videoId).style.opacity = 0.5;
+                    document.getElementById("videoContaint_Profile"+videoId).style.opacity = 1;
+                })
+                .mouseout(function () {
+                    var videoId = $(this).data('id1');
+                    document.getElementById("videoPortrait_Profile"+videoId).style.opacity = 1;
+                    document.getElementById("videoContaint_Profile"+videoId).style.opacity = 0;
+                });
+                
+                $('#editLyrics_button'+videoId)
+                .click(function () {
+                    var editLyrics_environment = document.getElementById("editLyrics_environment");
+                    manage_videoEnvironment(editLyrics_environment);
+                    
+                    edit_video_id = $(this).parents('div').data('id1');
+                    edit_video_name = $(this).parents('div').data('id2');
+                    edit_video_description = $(this).parents('div').data('id3');
+                    edit_video_image = $(this).parents('div').data('id4');
+                    edit_video_content = $(this).parents('div').data('id5');
+                    edit_video_updateDate = $(this).parents('div').data('id6');
+                    edit_video_amount_views = $(this).parents('div').data('id7');
+                    edit_video_amount_comments = $(this).parents('div').data('id8');
+                    edit_video_likes = $(this).parents('div').data('id9');
+                    edit_video_dislikes = $(this).parents('div').data('id10');
+                    edit_video_userId = $(this).parents('div').data('id11');
+                    edit_video_userName = $(this).parents('div').data('id12');
+                    
+                    var emphasis = "session";
+                    resize_configuration_session(emphasis);
+
+                    EditLyricsBundle(); // EditLyricsBundle
+                });
+                
+                $('#editVideo_button'+videoId)
+                .click(function () {
+                    var editVideo_environment = document.getElementById("editVideo_environment");
+                    manage_videoEnvironment(editVideo_environment);
+                    
+                    edit_video_id = $(this).parents('div').data('id1');
+                    edit_video_name = $(this).parents('div').data('id2');
+                    edit_video_description = $(this).parents('div').data('id3');
+                    edit_video_image = $(this).parents('div').data('id4');
+                    edit_video_content = $(this).parents('div').data('id5');
+                    edit_video_updateDate = $(this).parents('div').data('id6');
+                    edit_video_amount_views = $(this).parents('div').data('id7');
+                    edit_video_amount_comments = $(this).parents('div').data('id8');
+                    edit_video_likes = $(this).parents('div').data('id9');
+                    edit_video_dislikes = $(this).parents('div').data('id10');
+                    edit_video_userId = $(this).parents('div').data('id11');
+                    edit_video_userName = $(this).parents('div').data('id12');
+                    
+                    var emphasis = "session";
+                    resize_configuration_session(emphasis);
+
+                    EditVideoBundle(); // EditVideoBundle
+                });
+                
+                $('#deleteVideo_button'+videoId)
+                .click(function () {
+                    var deleteVideo_environment = document.getElementById("deleteVideo_environment");
+                    manage_videoEnvironment(deleteVideo_environment);
+                    
+                    edit_video_id = $(this).parents('div').data('id1');
+                    edit_video_name = $(this).parents('div').data('id2');
+                    edit_video_description = $(this).parents('div').data('id3');
+                    edit_video_image = $(this).parents('div').data('id4');
+                    edit_video_content = $(this).parents('div').data('id5');
+                    edit_video_updateDate = $(this).parents('div').data('id6');
+                    edit_video_amount_views = $(this).parents('div').data('id7');
+                    edit_video_amount_comments = $(this).parents('div').data('id8');
+                    edit_video_likes = $(this).parents('div').data('id9');
+                    edit_video_dislikes = $(this).parents('div').data('id10');
+                    edit_video_userId = $(this).parents('div').data('id11');
+                    edit_video_userName = $(this).parents('div').data('id12');
+                    
+                    var emphasis = "session";
+                    resize_configuration_session(emphasis);
+
+                    DeleteVideoBundle(); // DeleteVideoBundle
+                });
+                
+                $('#promoteVideo_button'+videoId)
+                .click(function () {
+                    var promoteVideo_environment = document.getElementById("promoteVideo_environment");
+                    manage_videoEnvironment(promoteVideo_environment);
+                    
+                    edit_video_id = $(this).parents('div').data('id1');
+                    edit_video_name = $(this).parents('div').data('id2');
+                    edit_video_description = $(this).parents('div').data('id3');
+                    edit_video_image = $(this).parents('div').data('id4');
+                    edit_video_content = $(this).parents('div').data('id5');
+                    edit_video_updateDate = $(this).parents('div').data('id6');
+                    edit_video_amount_views = $(this).parents('div').data('id7');
+                    edit_video_amount_comments = $(this).parents('div').data('id8');
+                    edit_video_likes = $(this).parents('div').data('id9');
+                    edit_video_dislikes = $(this).parents('div').data('id10');
+                    edit_video_userId = $(this).parents('div').data('id11');
+                    edit_video_userName = $(this).parents('div').data('id12');
+                    
+                    var emphasis = "session";
+                    resize_configuration_session(emphasis);
+
+                    PromoteVideoBundle(); // PromoteVideoBundle
+                });
+                
+                $('#advertisingVideo_button'+videoId)
+                .click(function () {
+                    var advertisingVideo_environment = document.getElementById("advertisingVideo_environment");
+                    manage_videoEnvironment(advertisingVideo_environment);
+                    
+                    edit_video_id = $(this).parents('div').data('id1');
+                    edit_video_name = $(this).parents('div').data('id2');
+                    edit_video_description = $(this).parents('div').data('id3');
+                    edit_video_image = $(this).parents('div').data('id4');
+                    edit_video_content = $(this).parents('div').data('id5');
+                    edit_video_updateDate = $(this).parents('div').data('id6');
+                    edit_video_amount_views = $(this).parents('div').data('id7');
+                    edit_video_amount_comments = $(this).parents('div').data('id8');
+                    edit_video_likes = $(this).parents('div').data('id9');
+                    edit_video_dislikes = $(this).parents('div').data('id10');
+                    edit_video_userId = $(this).parents('div').data('id11');
+                    edit_video_userName = $(this).parents('div').data('id12');
+                    
+                    var emphasis = "session";
+                    resize_configuration_session(emphasis);
+
+                    AdvertisingVideoBundle(); // AdvertisingVideoBundle
+                });
+                
+            }
+            
+        }).fail(function () {
+            alert('ERROR: #get-video-list-profile-ajax');
+        });
+    }
+    
+    function manage_videoEnvironment(currentEnvironment)
+    {
+        var advertisingVideo_environment = document.getElementById("advertisingVideo_environment");
+        var editLyrics_environment = document.getElementById("editLyrics_environment");
+        var editVideo_environment = document.getElementById("editVideo_environment");
+        var deleteVideo_environment = document.getElementById("deleteVideo_environment");
+        var promoteVideo_environment = document.getElementById("promoteVideo_environment");
+        var editProfile_environment = document.getElementById("editProfile_environment");
+
+        advertisingVideo_environment.style.display = "none";
+        editLyrics_environment.style.display = "none";
+        editVideo_environment.style.display = "none";
+        deleteVideo_environment.style.display = "none";
+        promoteVideo_environment.style.display = "none";
+        editProfile_environment.style.display = "none";
+        
+        currentEnvironment.style.display = "block";
+    }
+    
+    function resize_configuration_session(emphasis)
+    {
+        var sessionArea = document.getElementById("sessionArea");
+        var configurationArea = document.getElementById("configurationArea");
+        
+        if (emphasis === "session")
+        {
+            sessionArea.style.width = 640+"px";
+            configurationArea.style.width = 80+"px";
+            configurationArea.style.right = 820+"px";
+        } else if (emphasis === "equal")
+        {
+            sessionArea.style.width = 360+"px";
+            configurationArea.style.width = 360+"px";
+            configurationArea.style.right = 540+"px";
+        }
+    }
+        
+</script>

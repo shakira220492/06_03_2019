@@ -1,0 +1,3 @@
+datamining_homepage:
+    path:     /dataminingBundle
+    defaults: { _controller: DataminingBundle:Default:index }

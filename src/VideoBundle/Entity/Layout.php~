@@ -1,0 +1,64 @@
+<?php
+
+namespace VideoBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Layout
+ *
+ * @ORM\Table(name="layout", indexes={@ORM\Index(name="user_id", columns={"user_id"})})
+ * @ORM\Entity
+ */
+class Layout
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="layout_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $layoutId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="layout_backgroundColor", type="string", length=255, nullable=false)
+     */
+    private $layoutBackgroundcolor;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="layout_opacity", type="string", length=255, nullable=false)
+     */
+    private $layoutOpacity;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="layout_width", type="string", length=255, nullable=false)
+     */
+    private $layoutWidth;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="layout_height", type="string", length=255, nullable=false)
+     */
+    private $layoutHeight;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
+     * })
+     */
+    private $user;
+
+
+}
+
